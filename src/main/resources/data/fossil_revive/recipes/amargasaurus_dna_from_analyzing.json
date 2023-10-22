@@ -2,7 +2,7 @@
   "type": "fossil_revive:analyzing",
   "ingredients": [
     {
-      "item": "fossil_revive:amargasaurus_dna"
+      "item": "fossil_revive:fossil"
     }
   ],
   "output": {
