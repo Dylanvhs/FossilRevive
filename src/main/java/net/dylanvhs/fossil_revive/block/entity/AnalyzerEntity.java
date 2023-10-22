@@ -69,6 +69,7 @@ public class AnalyzerEntity extends BlockEntity implements MenuProvider {
                 }
             }
 
+
             @Override
             public int getCount() {
                 return 0;
@@ -115,7 +116,23 @@ public class AnalyzerEntity extends BlockEntity implements MenuProvider {
         return new AnalyzerMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
+    public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
+        if (stack.isEmpty()) {
+            return stack;
+        }
 
+        if (slot == 0 && stack.is(ModItems.FOSSIL.get())) {
+            return itemHandler.insertItem(slot, stack, simulate);
+        }
+
+        if (slot == 1 && stack.is(ModItems.DNA_BOTTLE.get())) {
+            return itemHandler.insertItem(slot, stack, simulate);
+        }
+        //if(slot == 1 && !AnalyzerRecipeJsonManager.getRecipes().isEmpty() && AnalyzerRecipeJsonManager.getRecipes().containsKey(stack.getItem())) {
+        //    return itemHandler.insertItem(slot, stack, simulate);
+        //}
+        return stack;
+    }
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", itemHandler.serializeNBT());
