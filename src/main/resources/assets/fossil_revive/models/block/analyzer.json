@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "fossil_revive:block/analyzer_front",
+    "side": "fossil_revive:block/analyzer_side",
+    "top": "fossil_revive:block/analyzer_top",
+    "bottom": "fossil_revive:block/analyzer_bottom"
+  }
+}

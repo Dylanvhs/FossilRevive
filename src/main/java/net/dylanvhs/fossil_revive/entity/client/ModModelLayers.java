@@ -1,0 +1,11 @@
+package net.dylanvhs.fossil_revive.entity.client;
+
+import net.dylanvhs.fossil_revive.FossilRevive;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.resources.ResourceLocation;
+
+public class ModModelLayers {
+    public static final ModelLayerLocation LIOPLEURODON_LAYER = new ModelLayerLocation(
+            new ResourceLocation(FossilRevive.MOD_ID, "liopleurodon_layer"), "main");
+
+}

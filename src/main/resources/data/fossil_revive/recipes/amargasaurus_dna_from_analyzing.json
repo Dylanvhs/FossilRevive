@@ -1,0 +1,12 @@
+{
+  "type": "fossil_revive:analyzing",
+  "ingredients": [
+    {
+      "item": "fossil_revive:amargasaurus_dna"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "item": "fossil_revive:amargasaurus_dna"
+  }
+}
