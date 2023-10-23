@@ -16,8 +16,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlockWithItem(ModBlocks.ANALYZER.get(),
-                new ModelFile.UncheckedModelFile(modLoc("block/analyzer")));
+
     }
 
     private void blockWithItem(RegistryObject<Block> blockRegistryObject) {

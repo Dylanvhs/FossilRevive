@@ -1,9 +1,12 @@
 {
-  "parent": "minecraft:block/orientable",
+  "parent": "block/cube",
   "textures": {
-    "front": "fossil_revive:block/analyzer_front",
-    "side": "fossil_revive:block/analyzer_side",
-    "top": "fossil_revive:block/analyzer_top",
-    "bottom": "fossil_revive:block/analyzer_bottom"
+    "down": "fossil_revive:block/analyzer_bottom",
+    "east": "fossil_revive:block/analyzer_side",
+    "north": "fossil_revive:block/analyzer_front",
+    "south": "fossil_revive:block/analyzer_back",
+    "up": "fossil_revive:block/analyzer_top",
+    "west": "fossil_revive:block/analyzer_side",
+    "particle": "fossil_revive:block/analyzer_side"
   }
 }

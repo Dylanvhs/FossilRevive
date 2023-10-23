@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fossil_revive:block/analyzer",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fossil_revive:block/analyzer"
+    },
+    "facing=south": {
+      "model": "fossil_revive:block/analyzer",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil_revive:block/analyzer",
+      "y": 270
+    }
+  }
+}
