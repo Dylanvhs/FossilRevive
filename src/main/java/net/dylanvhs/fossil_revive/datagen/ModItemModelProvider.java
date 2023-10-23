@@ -40,8 +40,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.TASMANIAN_TIGER_DNA);
         simpleItem(ModItems.TROODON_DNA);
 
-        simpleBlockItemBlockTexture(ModBlocks.ANALYZER);
-
         withExistingParent(ModItems.LIOPLEURODON_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
 
     }
