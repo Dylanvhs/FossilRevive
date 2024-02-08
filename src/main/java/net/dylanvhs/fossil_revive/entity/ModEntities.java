@@ -15,7 +15,12 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<LiopleurodonEntity>> LIOPLEURODON =
             ENTITY_TYPES.register("liopleurodon", () -> EntityType.Builder.of(LiopleurodonEntity::new, MobCategory.WATER_CREATURE)
-                    .sized(3f, 2.5f).build("liopleurodon"));
+                    .sized(2f, 1.5f).build("liopleurodon"));
+
+    public static final RegistryObject<EntityType<LiopleurodonEntity>> QUETZALCOATLUS =
+            ENTITY_TYPES.register("quetzalcoatlus", () -> EntityType.Builder.of(LiopleurodonEntity::new, MobCategory.CREATURE)
+                    .sized(1.5f, 3f).build("quetzalcoatlus"));
+
 
 
 
