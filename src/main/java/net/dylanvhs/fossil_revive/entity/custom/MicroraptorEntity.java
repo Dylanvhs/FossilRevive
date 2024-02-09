@@ -1,7 +1,7 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 import com.google.common.collect.Sets;
-import net.dylanvhs.fossil_revive.entity.client.Microraptor;
+import net.minecraft.util.Mth;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -17,10 +17,6 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Parrot;
-import net.minecraft.world.entity.animal.ShoulderRidingEntity;
-import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -40,6 +36,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     private static final Item POISONOUS_FOOD = Items.COOKIE;
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS, Items.TORCHFLOWER_SEEDS, Items.PITCHER_POD);
 
+    private int rideCooldown = 0;
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
 
@@ -102,6 +99,31 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         }
     }
 
+    public void rideTick() {
+        Entity mount = this.getVehicle();
+
+        if (this.isPassenger() && !mount.isAlive()) {
+            this.stopRiding();
+        } else if (mount instanceof Player player && this.isPassenger()) {
+            this.setDeltaMovement(0, 0, 0);
+            //this.yBodyRot = ((LivingEntity) player).yBodyRot;
+            //this.setYRot(player.getYRot());
+            //this.yHeadRot = ((LivingEntity) player).yHeadRot;
+            //this.yRotO = ((LivingEntity) player).yHeadRot;
+            float radius = 0F;
+            float angle = (0.01745329251F * (((LivingEntity) player).yBodyRot - 180F));
+            double extraX = radius * Mth.sin((float) (Math.PI + angle));
+            double extraZ = radius * Mth.cos(angle);
+            this.setPos(player.getX() + extraX, Math.max(player.getY() + player.getBbHeight() + 0.1, player.getY()), player.getZ() + extraZ);
+            if (!player.isAlive() || rideCooldown == 0 || player.isShiftKeyDown() || !mount.isAlive()) {
+                this.stopRiding();
+            }
+        } else {
+            super.rideTick();
+        }
+
+    }
+
     protected void playStepSound(BlockPos pPos, BlockState pBlock) {
         this.playSound(SoundEvents.PARROT_STEP, 0.15F, 1.0F);
     }
@@ -148,11 +170,22 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             }
 
             return InteractionResult.SUCCESS;
-        } else {
+        }
+        if (pPlayer.getPassengers().isEmpty() && isTame()) {
+            this.startRiding(pPlayer);
+            rideCooldown = 20;
+            return InteractionResult.SUCCESS;
+        }
+
+        else {
             return super.mobInteract(pPlayer, pHand);
         }
 
     }
+
+
+
+
 
     public void setIsCrouching(boolean pIsCrouching) {
         this.setFlag(4, pIsCrouching);

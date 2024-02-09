@@ -54,9 +54,7 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState flyAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
-    public int flyAnimationTimeOut = 0;
     public static final AnimationState attackAnimationState = new AnimationState();
-    public int attackAnimationTimeOut = 0;
 
 
 
@@ -67,17 +65,6 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
-        }
-
-        if (this.isAttacking() && attackAnimationTimeOut <= 0) {
-            attackAnimationTimeOut = 15; // Length in ticks of your animation
-            attackAnimationState.start(this.tickCount);
-        } else {
-            --this.attackAnimationTimeOut;
-        }
-
-        if (!this.isAttacking()) {
-            attackAnimationState.stop();
         }
 
     }
@@ -92,14 +79,6 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
         }
 
         this.walkAnimation.update(f, 0.2f);
-    }
-
-    public void setAttacking(boolean attacking) {
-        this.entityData.set(ATTACKING, attacking);
-    }
-
-    public boolean isAttacking() {
-        return this.entityData.get(ATTACKING);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
