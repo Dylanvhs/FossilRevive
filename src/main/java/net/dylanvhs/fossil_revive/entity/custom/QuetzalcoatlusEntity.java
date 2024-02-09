@@ -31,7 +31,7 @@ import java.util.EnumSet;
 import java.util.UUID;
 
 public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
-    public QuetzalcoatlusEntity(EntityType<? extends QuetzalcoatlusEntity> pEntityType, Level pLevel, Level level) {
+    public QuetzalcoatlusEntity(EntityType<? extends QuetzalcoatlusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         switchNavigator(true);
     }
