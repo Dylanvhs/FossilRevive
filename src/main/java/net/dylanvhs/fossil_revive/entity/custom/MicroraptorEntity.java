@@ -70,7 +70,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return WaterAnimal.createLivingAttributes()
+        return TamableAnimal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 10D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
