@@ -1,0 +1,10 @@
+{
+  "bones": {
+    "sounds": [
+      {
+        "name": "fossil_revive:bones",
+        "stream": true
+      }
+    ]
+  }
+}
