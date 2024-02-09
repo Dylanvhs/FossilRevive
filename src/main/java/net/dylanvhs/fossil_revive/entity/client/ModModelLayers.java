@@ -12,6 +12,6 @@ public class ModModelLayers {
             new ResourceLocation(FossilRevive.MOD_ID, "quetzalcoatlus_layer"), "main");
 
     public static final ModelLayerLocation MICRORAPTOR_LAYER = new ModelLayerLocation(
-            new ResourceLocation(FossilRevive.MOD_ID, "quetzalcoatlus_layer"), "main");
+            new ResourceLocation(FossilRevive.MOD_ID, "microraptor_layer"), "main");
 
 }

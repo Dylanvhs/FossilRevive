@@ -4,6 +4,8 @@ package net.dylanvhs.fossil_revive.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.dylanvhs.fossil_revive.entity.animations.ModAnimationDefinitions;
+import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
+import net.dylanvhs.fossil_revive.entity.custom.MicroraptorEntity;
 import net.dylanvhs.fossil_revive.entity.custom.QuetzalcoatlusEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -11,13 +13,14 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class Microraptor<T extends Entity> extends HierarchicalModel<T> {
 	private final ModelPart Microraptor;
 	private final ModelPart head;
 
 	public Microraptor(ModelPart root) {
-
 		this.Microraptor = root.getChild("Microraptor");
 		this.head = Microraptor.getChild("body").getChild("neck").getChild("head");
 	}
@@ -56,14 +59,13 @@ public class Microraptor<T extends Entity> extends HierarchicalModel<T> {
 		return LayerDefinition.create(meshdefinition, 32, 32);
 	}
 
-	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
 
 		this.animateWalk(ModAnimationDefinitions.MICRORAPTOR_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-		this.animate(((QuetzalcoatlusEntity) entity).idleAnimationState, ModAnimationDefinitions.MICRORAPTOR_IDLE, ageInTicks, 1f);
+		this.animate(((LiopleurodonEntity) entity).idleAnimationState, ModAnimationDefinitions.MICRORAPTOR_IDLE, ageInTicks, 1f);
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
@@ -72,10 +74,6 @@ public class Microraptor<T extends Entity> extends HierarchicalModel<T> {
 
 		this.head.yRot = pNetHeadYaw * ((float)Math.PI / 180F);
 		this.head.xRot = pHeadPitch * ((float)Math.PI / 180F);
-	}
-
-	public void renderOnShoulder(PoseStack pPoseStack, int pPackedLight, int pPackedOverlay, float pLimbSwing, float pLimbSwingAmount, float pNetHeadYaw, float pHeadPitch, int pTickCount) {
-
 	}
 
 	@Override
@@ -87,7 +85,5 @@ public class Microraptor<T extends Entity> extends HierarchicalModel<T> {
 	public ModelPart root() {
 		return Microraptor;
 	}
-
-
 
 }

@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MicroraptorRenderer extends MobRenderer<MicroraptorEntity, Microraptor<MicroraptorEntity>> {
     public MicroraptorRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new Microraptor<>(pContext.bakeLayer(ModModelLayers.MICRORAPTOR_LAYER)), 1f);
+        super(pContext, new Microraptor<>(pContext.bakeLayer(ModModelLayers.MICRORAPTOR_LAYER)), 0.5f);
     }
 
     @Override

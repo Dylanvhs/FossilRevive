@@ -26,7 +26,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<MicroraptorEntity>> MICRORAPTOR =
             ENTITY_TYPES.register("microraptor", () -> EntityType.Builder.of(MicroraptorEntity::new, MobCategory.CREATURE)
-                    .sized(1.5f, 3f).build("microraptor"));
+                    .sized(0.5f, 0.5f).build("microraptor"));
 
 
 
