@@ -2,7 +2,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 
 
-import net.dylanvhs.fossil_revive.entity.client.Quetzalcoatlus;
+import net.dylanvhs.fossil_revive.entity.ai.FlyingMoveController;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
