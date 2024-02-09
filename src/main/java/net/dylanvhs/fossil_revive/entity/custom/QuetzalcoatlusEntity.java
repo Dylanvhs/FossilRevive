@@ -70,8 +70,9 @@ public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
         if (!this.isAttacking()) {
             attackAnimationState.stop();
         }
+
         if (this.isFlying()) {
-            this.idleAnimationState.start(this.tickCount);
+            this.flyAnimationState.start(this.tickCount);
         } else {
             --this.flyAnimationTimeOut;
         }

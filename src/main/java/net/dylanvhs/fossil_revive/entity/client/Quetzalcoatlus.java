@@ -21,7 +21,7 @@ public class Quetzalcoatlus<T extends Entity> extends HierarchicalModel<T> {
 
 	public Quetzalcoatlus(ModelPart root) {
 		this.Quetzalcoatlus = root.getChild("Quetzalcoatlus");
-		this.head = Quetzalcoatlus.getChild("body").getChild("neck").getChild("head");
+		this.head = Quetzalcoatlus.getChild("body").getChild("neck").getChild("neck2").getChild("head");
 	}
 
 	public static LayerDefinition createBodyLayer() {
