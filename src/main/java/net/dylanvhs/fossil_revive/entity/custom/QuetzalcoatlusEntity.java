@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -30,10 +32,16 @@ import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 import java.util.UUID;
 
-public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
+public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     public QuetzalcoatlusEntity(EntityType<? extends QuetzalcoatlusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         switchNavigator(true);
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+        return null;
     }
     private static final EntityDataAccessor<Boolean> ATTACKING =
             SynchedEntityData.defineId(QuetzalcoatlusEntity.class, EntityDataSerializers.BOOLEAN);
@@ -72,13 +80,6 @@ public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
             attackAnimationState.stop();
         }
 
-        if (this.isFlying() && this.flyAnimationTimeOut <= 0) {
-            this.flyAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.flyAnimationState.start(this.tickCount);
-        } else {
-            --this.flyAnimationTimeOut;
-        }
-
     }
 
     @Override
@@ -105,7 +106,7 @@ public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
         return WaterAnimal.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 85D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
-                .add(Attributes.MOVEMENT_SPEED, 1D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.ATTACK_DAMAGE, 8f)
                 .add(Attributes.ATTACK_SPEED, 0.3f)
@@ -119,6 +120,7 @@ public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
         this.goalSelector.addGoal(1, new AIFlyIdle());
 
     }
+
 
     public boolean isFlying() {
         return this.entityData.get(FLYING);
