@@ -5,6 +5,7 @@ import net.dylanvhs.fossil_revive.block.ModBlocks;
 import net.dylanvhs.fossil_revive.block.entity.ModBlockEntities;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.entity.client.LiopleurodonRenderer;
+import net.dylanvhs.fossil_revive.entity.client.MicroraptorRenderer;
 import net.dylanvhs.fossil_revive.entity.client.QuetzalcoatlusRenderer;
 import net.dylanvhs.fossil_revive.item.ModCreativeModeTabs;
 import net.dylanvhs.fossil_revive.item.ModItems;
@@ -70,7 +71,7 @@ public class FossilRevive
 
             EntityRenderers.register(ModEntities.QUETZALCOATLUS.get(), QuetzalcoatlusRenderer::new );
 
-            EntityRenderers.register(ModEntities.MICRORAPTOR.get(), QuetzalcoatlusRenderer::new );
+            EntityRenderers.register(ModEntities.MICRORAPTOR.get(), MicroraptorRenderer::new );
 
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);

@@ -3,9 +3,11 @@ package net.dylanvhs.fossil_revive.item;
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -54,6 +56,7 @@ public static final RegistryObject<Item> TROODON_DNA = ITEMS.register("troodon_d
 public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_cloth",
         () -> new Item(new Item.Properties()));
 
+
 public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bones_music_disc",
         () -> new RecordItem(6, ModSounds.BONES, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4900));
 
@@ -61,6 +64,8 @@ public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bone
             () -> new ForgeSpawnEggItem(ModEntities.LIOPLEURODON, 0x7e9680, 0xc5d1c5, new Item.Properties()));
     public static final RegistryObject<Item> QUETZALCOATLUS_SPAWN_EGG = ITEMS.register("quetzalcoatlus_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.QUETZALCOATLUS, 0x7e4680, 0xc5d1c5, new Item.Properties()));
+    public static final RegistryObject<Item> MICRORAPTOR_SPAWN_EGG = ITEMS.register("microraptor_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.MICRORAPTOR, 0x7e4680, 0xc5d1c5, new Item.Properties()));
 
 
 

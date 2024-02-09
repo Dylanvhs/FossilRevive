@@ -1,7 +1,9 @@
 package net.dylanvhs.fossil_revive.entity;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
+import net.dylanvhs.fossil_revive.entity.client.Microraptor;
 import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
+import net.dylanvhs.fossil_revive.entity.custom.MicroraptorEntity;
 import net.dylanvhs.fossil_revive.entity.custom.QuetzalcoatlusEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -22,8 +24,8 @@ public class ModEntities {
             ENTITY_TYPES.register("quetzalcoatlus", () -> EntityType.Builder.of(QuetzalcoatlusEntity::new, MobCategory.CREATURE)
                     .sized(1.5f, 3f).build("quetzalcoatlus"));
 
-    public static final RegistryObject<EntityType<QuetzalcoatlusEntity>> MICRORAPTOR =
-            ENTITY_TYPES.register("microraptor", () -> EntityType.Builder.of(QuetzalcoatlusEntity::new, MobCategory.CREATURE)
+    public static final RegistryObject<EntityType<MicroraptorEntity>> MICRORAPTOR =
+            ENTITY_TYPES.register("microraptor", () -> EntityType.Builder.of(MicroraptorEntity::new, MobCategory.CREATURE)
                     .sized(1.5f, 3f).build("microraptor"));
 
 

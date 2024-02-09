@@ -40,8 +40,10 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.BONES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.DIRTY_CLOTH.get());
 
+
                         pOutput.accept(ModItems.LIOPLEURODON_SPAWN_EGG.get());
                         pOutput.accept(ModItems.QUETZALCOATLUS_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.MICRORAPTOR_SPAWN_EGG.get());
 
                         pOutput.accept(ModBlocks.ANALYZER.get());
 

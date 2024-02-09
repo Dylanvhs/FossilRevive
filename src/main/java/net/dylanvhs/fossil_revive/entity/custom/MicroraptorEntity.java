@@ -1,6 +1,7 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 import com.google.common.collect.Sets;
+import net.dylanvhs.fossil_revive.entity.client.Microraptor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -27,7 +28,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MicroraptorEntity extends ShoulderRidingEntity implements NeutralMob {
-    public MicroraptorEntity(EntityType<? extends Parrot> pEntityType, Level pLevel) {
+    public MicroraptorEntity(EntityType<? extends MicroraptorEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
     private static final Item POISONOUS_FOOD = Items.COOKIE;
