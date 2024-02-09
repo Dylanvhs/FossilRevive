@@ -14,5 +14,6 @@ public class ModEventBusEvents {
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.LIOPLEURODON.get(), LiopleurodonEntity.createAttributes().build());
         event.put(ModEntities.QUETZALCOATLUS.get(), QuetzalcoatlusEntity.createAttributes().build());
+        event.put(ModEntities.MICRORAPTOR.get(), QuetzalcoatlusEntity.createAttributes().build());
     }
 }
