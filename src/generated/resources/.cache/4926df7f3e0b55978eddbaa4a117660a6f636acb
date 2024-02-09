@@ -1,8 +1,9 @@
-// 1.20.1	2024-02-09T15:15:54.4057971	Item Models: fossil_revive
+// 1.20.1	2024-02-09T17:26:18.3432119	Item Models: fossil_revive
 d459a90a9e42f7832d0cf35b6f72debadb6a9755 assets/fossil_revive/models/item/amargasaurus_dna.json
 1b18c1c8e32ccddec1a248ced8b964c2c64b380d assets/fossil_revive/models/item/bones_music_disc.json
 df1875a0c0f53fcc24faa6716c40c109bca360ce assets/fossil_revive/models/item/carnotaurus_dna.json
 f03d9fed16e79e4d4e875beb953dd9ed08e2b124 assets/fossil_revive/models/item/dilophosaurus_dna.json
+d87eabd4aecba1f58415e5119a1ce957023b1f5a assets/fossil_revive/models/item/dirty_cloth.json
 a59b90aa58392f0ecc6236215e973bcb600bb162 assets/fossil_revive/models/item/dna_bottle.json
 86ce8becabc16c3f8b150bcd40601a2ba03bd8a4 assets/fossil_revive/models/item/dodo_dna.json
 a0017a88aa3059a65c20150c30341db0373a2128 assets/fossil_revive/models/item/fossil.json

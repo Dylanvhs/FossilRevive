@@ -1,0 +1,6 @@
+{
+  "parent": "fossil_revive:item/generated",
+  "textures": {
+    "layer0": "fossil_revive:item/fossil_torch"
+  }
+}

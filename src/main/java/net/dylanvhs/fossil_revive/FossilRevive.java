@@ -70,6 +70,8 @@ public class FossilRevive
 
             EntityRenderers.register(ModEntities.QUETZALCOATLUS.get(), QuetzalcoatlusRenderer::new );
 
+            EntityRenderers.register(ModEntities.MICRORAPTOR.get(), QuetzalcoatlusRenderer::new );
+
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);
         }

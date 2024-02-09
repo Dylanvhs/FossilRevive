@@ -40,6 +40,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.TASMANIAN_TIGER_DNA);
         simpleItem(ModItems.TROODON_DNA);
         simpleItem(ModItems.BONES_MUSIC_DISC);
+        simpleItem(ModItems.DIRTY_CLOTH);
 
         withExistingParent(ModItems.LIOPLEURODON_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.QUETZALCOATLUS_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));

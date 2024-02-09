@@ -37,6 +37,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.TAPEJARA_DNA.get());
                         pOutput.accept(ModItems.TASMANIAN_TIGER_DNA.get());
                         pOutput.accept(ModItems.TROODON_DNA.get());
+                        pOutput.accept(ModItems.BONES_MUSIC_DISC.get());
+                        pOutput.accept(ModItems.DIRTY_CLOTH.get());
 
                         pOutput.accept(ModItems.LIOPLEURODON_SPAWN_EGG.get());
                         pOutput.accept(ModItems.QUETZALCOATLUS_SPAWN_EGG.get());

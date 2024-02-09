@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "fossil_revive:block/fossil_torch"
+    },
+    "lit=true": {
+      "model": "fossil_revive:block/fossil_torch_lit"
+    }
+  }
+}

@@ -50,6 +50,10 @@ public static final RegistryObject<Item> TASMANIAN_TIGER_DNA = ITEMS.register("t
         () -> new Item(new Item.Properties()));
 public static final RegistryObject<Item> TROODON_DNA = ITEMS.register("troodon_dna",
         () -> new Item(new Item.Properties()));
+
+public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_cloth",
+        () -> new Item(new Item.Properties()));
+
 public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bones_music_disc",
         () -> new RecordItem(6, ModSounds.BONES, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4900));
 
