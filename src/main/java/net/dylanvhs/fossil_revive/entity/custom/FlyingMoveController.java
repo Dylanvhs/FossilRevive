@@ -59,17 +59,17 @@ public class FlyingMoveController extends MoveControl {
             this.operation = Operation.WAIT;
         }
     }
-
     private boolean canReach(Vec3 p_220673_1_, int p_220673_2_) {
         AABB axisalignedbb = this.parentEntity.getBoundingBox();
 
         for (int i = 1; i < p_220673_2_; ++i) {
             axisalignedbb = axisalignedbb.move(p_220673_1_);
-            if (!this.parentEntity.level.noCollision(this.parentEntity, axisalignedbb)) {
+            if (!this.parentEntity.level().noCollision(this.parentEntity, axisalignedbb)) {
                 return false;
             }
         }
 
         return true;
     }
+
 }

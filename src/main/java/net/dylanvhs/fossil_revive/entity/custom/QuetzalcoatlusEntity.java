@@ -8,6 +8,8 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -193,6 +195,16 @@ public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
         }
     }
 
+    public boolean hurt(DamageSource source, float amount) {
+        boolean prev = super.hurt(source, amount);
+        return prev;
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        return source.is(DamageTypes.IN_WALL)  || source.is(DamageTypes.FALL) || source.is(DamageTypes.CACTUS) || super.isInvulnerableTo(source);
+    }
+
 
     @Override
     public int getRemainingPersistentAngerTime() {
@@ -308,6 +320,26 @@ public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
         }
         if (!this.isTargetBlocked(Vec3.atCenterOf(ground.above()))) {
             return Vec3.atCenterOf(ground);
+        }
+        return null;
+    }
+
+    public Vec3 getBlockInViewAway(Vec3 fleePos, float radiusAdd) {
+        float radius = 5 + radiusAdd + this.getRandom().nextInt(5);
+        float neg = this.getRandom().nextBoolean() ? 1 : -1;
+        float renderYawOffset = this.yBodyRot;
+        float angle = (0.01745329251F * renderYawOffset) + 3.15F + (this.getRandom().nextFloat() * neg);
+        double extraX = radius * Mth.sin((float) (Math.PI + angle));
+        double extraZ = radius * Mth.cos(angle);
+        final BlockPos radialPos = new BlockPos((int) (fleePos.x() + extraX), (int) getY(), (int) (fleePos.z() + extraZ));
+        BlockPos ground = getQuetzalGround(radialPos);
+        int distFromGround = (int) this.getY() - ground.getY();
+        int flightHeight = 5 + this.getRandom().nextInt(5);
+        int j = this.getRandom().nextInt(5) + 5;
+
+        BlockPos newPos = ground.above(distFromGround > 5 ? flightHeight : j);
+        if (!this.isTargetBlocked(Vec3.atCenterOf(newPos)) && this.distanceToSqr(Vec3.atCenterOf(newPos)) > 1) {
+            return Vec3.atCenterOf(newPos);
         }
         return null;
     }

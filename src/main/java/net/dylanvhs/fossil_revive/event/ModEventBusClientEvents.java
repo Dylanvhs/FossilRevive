@@ -3,6 +3,7 @@ package net.dylanvhs.fossil_revive.event;
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.client.Liopleurodon;
 import net.dylanvhs.fossil_revive.entity.client.ModModelLayers;
+import net.dylanvhs.fossil_revive.entity.client.Quetzalcoatlus;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,6 +15,7 @@ public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.LIOPLEURODON_LAYER, Liopleurodon::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.QUETZALCOATLUS_LAYER, Quetzalcoatlus::createBodyLayer);
     }
 
 }
