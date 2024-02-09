@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 
 
+import net.dylanvhs.fossil_revive.entity.client.Quetzalcoatlus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -30,7 +31,7 @@ import java.util.EnumSet;
 import java.util.UUID;
 
 public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
-    protected QuetzalcoatlusEntity(EntityType<? extends Mob> pEntityType, Level pLevel, Level level) {
+    public QuetzalcoatlusEntity(EntityType<? extends QuetzalcoatlusEntity> pEntityType, Level pLevel, Level level) {
         super(pEntityType, pLevel);
         switchNavigator(true);
     }

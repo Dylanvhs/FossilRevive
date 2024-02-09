@@ -5,6 +5,7 @@ import net.dylanvhs.fossil_revive.block.ModBlocks;
 import net.dylanvhs.fossil_revive.block.entity.ModBlockEntities;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.entity.client.LiopleurodonRenderer;
+import net.dylanvhs.fossil_revive.entity.client.QuetzalcoatlusRenderer;
 import net.dylanvhs.fossil_revive.item.ModCreativeModeTabs;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.screens.AnalyzerScreen;
@@ -63,6 +64,8 @@ public class FossilRevive
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             EntityRenderers.register(ModEntities.LIOPLEURODON.get(), LiopleurodonRenderer::new);
+
+            EntityRenderers.register(ModEntities.QUETZALCOATLUS.get(), QuetzalcoatlusRenderer::new );
 
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);

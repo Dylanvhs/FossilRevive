@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.entity;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
+import net.dylanvhs.fossil_revive.entity.custom.QuetzalcoatlusEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,8 +18,8 @@ public class ModEntities {
             ENTITY_TYPES.register("liopleurodon", () -> EntityType.Builder.of(LiopleurodonEntity::new, MobCategory.WATER_CREATURE)
                     .sized(2f, 1.5f).build("liopleurodon"));
 
-    public static final RegistryObject<EntityType<LiopleurodonEntity>> QUETZALCOATLUS =
-            ENTITY_TYPES.register("quetzalcoatlus", () -> EntityType.Builder.of(LiopleurodonEntity::new, MobCategory.CREATURE)
+    public static final RegistryObject<EntityType<QuetzalcoatlusEntity>> QUETZALCOATLUS =
+            ENTITY_TYPES.register("quetzalcoatlus", () -> EntityType.Builder.of(QuetzalcoatlusEntity::new, MobCategory.CREATURE)
                     .sized(1.5f, 3f).build("quetzalcoatlus"));
 
 
