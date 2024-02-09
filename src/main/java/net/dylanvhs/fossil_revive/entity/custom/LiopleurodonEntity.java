@@ -1,7 +1,6 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 
-import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonAttackGoal;
 import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonJumpGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -37,14 +36,13 @@ public class LiopleurodonEntity extends WaterAnimal {
     public LiopleurodonEntity(EntityType<? extends LiopleurodonEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new SmoothSwimmingLookControl(this, 10);
+        this.lookControl = new SmoothSwimmingLookControl(this, 15);
         this.setCanPickUpLoot(true);
     }
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
     public static final AnimationState attackAnimationState = new AnimationState();
-    public int attackAnimationTimeOut = 0;
 
 
     private void setupAnimationState() {
@@ -53,16 +51,6 @@ public class LiopleurodonEntity extends WaterAnimal {
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
-        }
-        if(this.isAttacking() && attackAnimationTimeOut <= 0) {
-            attackAnimationTimeOut = 15; // Length in ticks of your animation
-            attackAnimationState.start(this.tickCount);
-        } else {
-            --this.attackAnimationTimeOut;
-        }
-
-        if(!this.isAttacking()) {
-            attackAnimationState.stop();
         }
     }
 
@@ -78,13 +66,7 @@ public class LiopleurodonEntity extends WaterAnimal {
         this.walkAnimation.update(f, 0.2f);
     }
 
-    public void setAttacking(boolean attacking) {
-        this.entityData.set(ATTACKING, attacking);
-    }
 
-    public boolean isAttacking() {
-        return this.entityData.get(ATTACKING);
-    }
 
     public static AttributeSupplier.Builder createAttributes() {
         return WaterAnimal.createLivingAttributes()
@@ -100,14 +82,23 @@ public class LiopleurodonEntity extends WaterAnimal {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BreathAirGoal(this));
-        this.goalSelector.addGoal(6, new LiopleurodonAttackGoal(this, 1.0D, true ));
+        this.goalSelector.addGoal(6, new LiopleurodonJumpGoal(this, 1));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(5, new LiopleurodonJumpGoal(this, 10));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
+        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
+    }
+
+    @Override
+    public void handleEntityEvent(byte b) {
+        if (b == 4) {
+            this.attackAnimationState.start(this.tickCount);
+        } else {
+            super.handleEntityEvent(b);
+        }
     }
 
     protected PathNavigation createNavigation(Level p_27480_) {

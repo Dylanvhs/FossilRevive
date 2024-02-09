@@ -3,6 +3,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 import com.google.common.collect.Sets;
 import net.dylanvhs.fossil_revive.entity.client.Microraptor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.animal.ShoulderRidingEntity;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +39,8 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
+
+    private int ticksSinceEaten;
 
     private void setupAnimationState() {
         if (this.idleAnimationTimeOut <= 0) {
@@ -67,6 +71,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
         this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
+        this.goalSelector.addGoal(0, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -100,15 +105,15 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             }
 
             if (!this.isSilent()) {
-                this.level().playSound((Player)null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
+                this.level().playSound((Player) null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
 
             if (!this.level().isClientSide) {
                 if (this.random.nextInt(10) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
                     this.tame(pPlayer);
-                    this.level().broadcastEntityEvent(this, (byte)7);
+                    this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
-                    this.level().broadcastEntityEvent(this, (byte)6);
+                    this.level().broadcastEntityEvent(this, (byte) 6);
                 }
             }
 
@@ -133,6 +138,67 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         } else {
             return super.mobInteract(pPlayer, pHand);
         }
+
+    }
+
+    public void setIsCrouching(boolean pIsCrouching) {
+        this.setFlag(4, pIsCrouching);
+    }
+
+    public void setIsInterested(boolean pIsInterested) {
+        this.setFlag(8, pIsInterested);
+    }
+
+    private void setFlag(int pFlagId, boolean pValue) {
+        if (pValue) {
+            this.entityData.set(DATA_FLAGS_ID, (byte) (this.entityData.get(DATA_FLAGS_ID) | pFlagId));
+        } else {
+            this.entityData.set(DATA_FLAGS_ID, (byte) (this.entityData.get(DATA_FLAGS_ID) & ~pFlagId));
+        }
+    }
+
+
+        private void spitOutItem(ItemStack pStack) {
+        if (!pStack.isEmpty() && !this.level().isClientSide) {
+            ItemEntity itementity = new ItemEntity(this.level(), this.getX() + this.getLookAngle().x, this.getY() + 1.0D, this.getZ() + this.getLookAngle().z, pStack);
+            itementity.setPickUpDelay(40);
+            itementity.setThrower(this.getUUID());
+            this.playSound(SoundEvents.FOX_SPIT, 1.0F, 1.0F);
+            this.level().addFreshEntity(itementity);
+        }
+    }
+
+    private void dropItemStack(ItemStack pStack) {
+        ItemEntity itementity = new ItemEntity(this.level(), this.getX(), this.getY(), this.getZ(), pStack);
+        this.level().addFreshEntity(itementity);
+    }
+
+    protected void pickUpItem(ItemEntity pItemEntity) {
+        ItemStack itemstack = pItemEntity.getItem();
+        if (this.canHoldItem(itemstack)) {
+            int i = itemstack.getCount();
+            if (i > 1) {
+                this.dropItemStack(itemstack.split(i - 1));
+            }
+
+            this.spitOutItem(this.getItemBySlot(EquipmentSlot.MAINHAND));
+            this.onItemPickup(pItemEntity);
+            this.setItemSlot(EquipmentSlot.MAINHAND, itemstack.split(1));
+            this.setGuaranteedDrop(EquipmentSlot.MAINHAND);
+            this.take(pItemEntity, itemstack.getCount());
+            pItemEntity.discard();
+            this.ticksSinceEaten = 0;
+        }
+
+    }
+
+    public void readAdditionalSaveData(CompoundTag pCompound) {
+        super.readAdditionalSaveData(pCompound);
+        this.setIsCrouching(pCompound.getBoolean("Crouching"));
+    }
+
+    private boolean canEat(ItemStack pStack) {
+        return pStack.getItem().isEdible() && this.getTarget() == null && this.onGround() && !this.isSleeping();
     }
 
     @Nullable
