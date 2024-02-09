@@ -38,7 +38,7 @@ public class FlyingMoveController extends MoveControl {
                 this.operation = MoveControl.Operation.WAIT;
                 parentEntity.setDeltaMovement(parentEntity.getDeltaMovement().scale(0.5D));
             } else {
-                parentEntity.setDeltaMovement(parentEntity.getDeltaMovement().add(vector3d.scale(this.speedModifier * speedGeneral * 0.05D / d0)));
+                parentEntity.setDeltaMovement(parentEntity.getDeltaMovement().add(vector3d.scale(this.speedModifier * speedGeneral * 0.03D / d0)));
                 if (needsYSupport) {
                     double d1 = this.wantedY - parentEntity.getY();
                     parentEntity.setDeltaMovement(parentEntity.getDeltaMovement().add(0.0D, (double) parentEntity.getSpeed() * speedGeneral * Mth.clamp(d1, -1, 1) * 0.6F, 0.0D));

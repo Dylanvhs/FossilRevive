@@ -122,30 +122,6 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     }
 
 
-    public boolean isFlying() {
-        return this.entityData.get(FLYING);
-    }
-
-    public void setFlying(boolean flying) {
-        if (flying && isBaby()) {
-            return;
-        }
-        this.entityData.set(FLYING, flying);
-    }
-
-    protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return 0.3F;
-    }
-
-
-    public int getMaxHeadXRot() {
-        return 1;
-    }
-
-    public int getMaxHeadYRot() {
-        return 1;
-    }
-
 
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -168,6 +144,18 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
             this.isLandNavigator = false;
         }
     }
+
+    public boolean isFlying() {
+        return this.entityData.get(FLYING);
+    }
+
+    public void setFlying(boolean flying) {
+        if (flying && isBaby()) {
+            return;
+        }
+        this.entityData.set(FLYING, flying);
+    }
+
 
     public void tick() {
         super.tick();
