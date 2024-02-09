@@ -19,7 +19,11 @@
   "item.fossil_revive.tasmanian_tiger_dna": "Tasmanian Tiger DNA",
   "item.fossil_revive.troodon_dna": "Troodon DNA",
 
+  "item.fossil_revive.bones_music_disc": "Bones Music Disc",
+  "item.fossil_revive.bones_music_disc.desc": "Dylanvhs - Bones",
+
   "item.fossil_revive.liopleurodon_spawn_egg": "Liopleurodon Spawn Egg",
+  "item.fossil_revive.quetzalcoatlus_spawn_egg": "Quetzalcoatlus Spawn Egg",
 
   "block.fossil_revive.analyzer": "DNA Analyzer",
 

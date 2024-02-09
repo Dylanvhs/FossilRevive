@@ -2,7 +2,9 @@ package net.dylanvhs.fossil_revive.item;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
+import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.RecordItem;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -47,6 +49,8 @@ public static final RegistryObject<Item> TASMANIAN_TIGER_DNA = ITEMS.register("t
         () -> new Item(new Item.Properties()));
 public static final RegistryObject<Item> TROODON_DNA = ITEMS.register("troodon_dna",
         () -> new Item(new Item.Properties()));
+public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bones_music_disc",
+        () -> new RecordItem(6, ModSounds.BONES, new Item.Properties().stacksTo(1), 4900));
 
     public static final RegistryObject<Item> LIOPLEURODON_SPAWN_EGG = ITEMS.register("liopleurodon_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.LIOPLEURODON, 0x7e9680, 0xc5d1c5, new Item.Properties()));

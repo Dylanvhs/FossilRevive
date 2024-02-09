@@ -18,8 +18,6 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> BONES = registerSoundEvents("bones");
 
-    public static final ForgeSoundType SOUND_BLOCK_SOUNDS = new ForgeSoundType(1f,1f, );
-
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(FossilRevive.MOD_ID, name)));
     }

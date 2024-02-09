@@ -10,6 +10,7 @@ import net.dylanvhs.fossil_revive.item.ModCreativeModeTabs;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.screens.AnalyzerScreen;
 import net.dylanvhs.fossil_revive.screens.ModMenuTypes;
+import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,6 +43,8 @@ public class FossilRevive
 
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+
+        ModSounds.register(modEventBus);
 
 
         modEventBus.addListener(this::commonSetup);
