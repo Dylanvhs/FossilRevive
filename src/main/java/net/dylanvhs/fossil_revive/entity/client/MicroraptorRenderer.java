@@ -15,7 +15,7 @@ public class MicroraptorRenderer extends MobRenderer<MicroraptorEntity, Microrap
 
     @Override
     public ResourceLocation getTextureLocation(MicroraptorEntity pEntity) {
-        return new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/liopleurodon.png");
+        return new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/microraptor.png");
     }
 
     @Override
