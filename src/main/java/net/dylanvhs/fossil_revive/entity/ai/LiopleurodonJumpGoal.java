@@ -61,7 +61,7 @@ public class LiopleurodonJumpGoal extends JumpGoal {
 
     public void start() {
         Direction direction = this.liopleurodon.getMotionDirection();
-        this.liopleurodon.setDeltaMovement(this.liopleurodon.getDeltaMovement().add((double)direction.getStepX() * 0.6D, 0.7D, (double)direction.getStepZ() * 0.6D));
+        this.liopleurodon.setDeltaMovement(this.liopleurodon.getDeltaMovement().add((double)direction.getStepX() * 0.6D, 1D, (double)direction.getStepZ() * 0.6D));
         this.liopleurodon.getNavigation().stop();
     }
 
