@@ -60,6 +60,7 @@ public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
         } else {
             --this.idleAnimationTimeOut;
         }
+
         if (this.isAttacking() && attackAnimationTimeOut <= 0) {
             attackAnimationTimeOut = 15; // Length in ticks of your animation
             attackAnimationState.start(this.tickCount);
@@ -71,11 +72,13 @@ public class QuetzalcoatlusEntity extends Mob implements NeutralMob {
             attackAnimationState.stop();
         }
 
-        if (this.isFlying()) {
+        if (this.isFlying() && this.flyAnimationTimeOut <= 0) {
+            this.flyAnimationTimeOut = this.random.nextInt(40) + 80;
             this.flyAnimationState.start(this.tickCount);
         } else {
             --this.flyAnimationTimeOut;
         }
+
     }
 
     @Override
