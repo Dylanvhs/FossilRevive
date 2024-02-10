@@ -39,6 +39,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.TAPEJARA_DNA);
         simpleItem(ModItems.TASMANIAN_TIGER_DNA);
         simpleItem(ModItems.TROODON_DNA);
+        simpleItem(ModItems.QUETZALCOATLUS_DNA);
+        simpleItem(ModItems.MICRORAPTOR_DNA);
         simpleItem(ModItems.BONES_MUSIC_DISC);
         simpleItem(ModItems.DIRTY_CLOTH);
 

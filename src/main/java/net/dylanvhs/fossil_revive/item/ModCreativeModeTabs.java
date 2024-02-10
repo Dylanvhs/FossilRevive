@@ -18,6 +18,9 @@ public class ModCreativeModeTabs {
 
                     .title(Component.translatable("creativetab.fossil_revive_tab"))
                     .displayItems((pParameters, pOutput) -> {
+
+                        pOutput.accept(ModBlocks.ANALYZER.get());
+
                         pOutput.accept(ModItems.FOSSIL.get());
                         pOutput.accept(ModItems.ROUGH_FOSSIL.get());
                         pOutput.accept(ModItems.PLANT_FOSSIL.get());
@@ -32,20 +35,24 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.KELENKEN_DNA.get());
                         pOutput.accept(ModItems.KELENTAURUS_DNA.get());
                         pOutput.accept(ModItems.LIOPLEURODON_DNA.get());
+                        pOutput.accept(ModItems.MICRORAPTOR_DNA.get());
                         pOutput.accept(ModItems.OVIRAPTOR_DNA.get());
+                        pOutput.accept(ModItems.QUETZALCOATLUS_DNA.get());
                         pOutput.accept(ModItems.SMILODON_DNA.get());
                         pOutput.accept(ModItems.TAPEJARA_DNA.get());
                         pOutput.accept(ModItems.TASMANIAN_TIGER_DNA.get());
                         pOutput.accept(ModItems.TROODON_DNA.get());
+
                         pOutput.accept(ModItems.BONES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.DIRTY_CLOTH.get());
 
 
                         pOutput.accept(ModItems.LIOPLEURODON_SPAWN_EGG.get());
-                        pOutput.accept(ModItems.QUETZALCOATLUS_SPAWN_EGG.get());
                         pOutput.accept(ModItems.MICRORAPTOR_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.QUETZALCOATLUS_SPAWN_EGG.get());
 
-                        pOutput.accept(ModBlocks.ANALYZER.get());
+
+
 
                     })
                     .build());

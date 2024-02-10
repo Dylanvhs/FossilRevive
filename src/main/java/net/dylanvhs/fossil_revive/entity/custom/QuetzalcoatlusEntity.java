@@ -19,8 +19,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -55,21 +58,17 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     private int timeFlying;
 
     public final AnimationState idleAnimationState = new AnimationState();
-    public final AnimationState flyAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
 
 
     private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0 && !this.isFlying()) {
+        if (this.idleAnimationTimeOut <= 0 && this.onGround()) {
             this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
         }
-        if (this.isFlying()) {
-                this.flyAnimationState.start(this.tickCount);
-            }
-        }
+    }
 
 
     @Override
@@ -91,7 +90,7 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.ATTACK_DAMAGE, 8f)
-                .add(Attributes.ATTACK_SPEED, 0.3f)
+                .add(Attributes.ATTACK_SPEED, 0.1f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.6f);
     }
 
@@ -100,7 +99,9 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new AIFlyIdle());
-
+        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
     }
 
 

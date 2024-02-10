@@ -49,7 +49,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState flapAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
-
     private int ticksSinceEaten;
 
     @Override
@@ -67,10 +66,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
-        }
-
-        if (!this.onGround()) {
-            this.flapAnimationState.start(this.tickCount);
         }
     }
 
@@ -136,6 +131,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             float angle = (0.01745329251F * (((LivingEntity) player).yBodyRot - 180F));
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20), this);
 
             this.setPos(player.getX() + extraX, Math.max(player.getY() + player.getBbHeight() + 0.1, player.getY()), player.getZ() + extraZ);
             if (!player.isAlive() || rideCooldown == 0 || player.isShiftKeyDown() || !mount.isAlive()) {
@@ -231,6 +227,13 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
     protected void onFlap() {
         this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
+    }
+
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
+        return false;
+    }
+
+    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
     }
 
 

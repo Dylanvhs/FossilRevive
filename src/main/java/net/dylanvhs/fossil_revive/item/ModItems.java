@@ -53,6 +53,13 @@ public static final RegistryObject<Item> TASMANIAN_TIGER_DNA = ITEMS.register("t
 public static final RegistryObject<Item> TROODON_DNA = ITEMS.register("troodon_dna",
         () -> new Item(new Item.Properties()));
 
+public static final RegistryObject<Item> QUETZALCOATLUS_DNA = ITEMS.register("quetzalcoatlus_dna",
+        () -> new Item(new Item.Properties()));
+
+public static final RegistryObject<Item> MICRORAPTOR_DNA = ITEMS.register("microraptor_dna",
+        () -> new Item(new Item.Properties()));
+
+
 public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_cloth",
         () -> new Item(new Item.Properties()));
 
