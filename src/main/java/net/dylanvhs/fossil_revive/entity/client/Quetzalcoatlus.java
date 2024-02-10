@@ -93,8 +93,9 @@ public class Quetzalcoatlus<T extends Entity> extends HierarchicalModel<T> {
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
 
-		this.animateWalk(ModAnimationDefinitions.QUETZALCOATLUS_FLY, limbSwing, limbSwingAmount, 2f, 2.5f);
+		this.animateWalk(ModAnimationDefinitions.QUETZALCOATLUS_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(((QuetzalcoatlusEntity) entity).idleAnimationState, ModAnimationDefinitions.QUETZALCOATLUS_IDLE, ageInTicks, 1f);
+		this.animate(((QuetzalcoatlusEntity) entity).flyAnimationState, ModAnimationDefinitions.QUETZALCOATLUS_FLY, ageInTicks, 1f);
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

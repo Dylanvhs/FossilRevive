@@ -58,6 +58,7 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     private int timeFlying;
 
     public final AnimationState idleAnimationState = new AnimationState();
+    public final AnimationState flyAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
 
 

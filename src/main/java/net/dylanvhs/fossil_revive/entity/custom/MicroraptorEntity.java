@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -131,11 +132,11 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             float angle = (0.01745329251F * (((LivingEntity) player).yBodyRot - 180F));
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
-            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20), this);
-
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 1, false, false ));
             this.setPos(player.getX() + extraX, Math.max(player.getY() + player.getBbHeight() + 0.1, player.getY()), player.getZ() + extraZ);
             if (!player.isAlive() || rideCooldown == 0 || player.isShiftKeyDown() || !mount.isAlive()) {
                 this.stopRiding();
+                this.removeEffect(MobEffects.SLOW_FALLING);
             }
         } else {
             super.rideTick();
