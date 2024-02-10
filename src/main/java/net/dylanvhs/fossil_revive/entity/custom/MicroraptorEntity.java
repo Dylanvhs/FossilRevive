@@ -24,6 +24,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
@@ -33,6 +35,13 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     public MicroraptorEntity(EntityType<? extends MicroraptorEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
+
+    public float flap;
+    public float flapSpeed;
+    public float oFlapSpeed;
+    public float oFlap;
+    public float flapping = 1.0F;
+    private float nextFlap = 1.0F;
     private static final Item POISONOUS_FOOD = Items.COOKIE;
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS, Items.TORCHFLOWER_SEEDS, Items.PITCHER_POD);
 
@@ -190,6 +199,34 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             return super.mobInteract(pPlayer, pHand);
         }
 
+    }
+
+    public void aiStep() {
+        super.aiStep();
+        this.oFlap = this.flap;
+        this.oFlapSpeed = this.flapSpeed;
+        this.flapSpeed += (this.onGround() ? -1.0F : 4.0F) * 0.3F;
+        this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
+        if (!this.onGround() && this.flapping < 1.0F) {
+            this.flapping = 1.0F;
+        }
+
+        this.flapping *= 0.9F;
+        Vec3 vec3 = this.getDeltaMovement();
+        if (!this.onGround() && vec3.y < 0.0D) {
+            this.setDeltaMovement(vec3.multiply(1.0D, 0.6D, 1.0D));
+        }
+
+        this.flap += this.flapping * 2.0F;
+    }
+
+
+    protected boolean isFlapping() {
+        return this.flyDist > this.nextFlap;
+    }
+
+    protected void onFlap() {
+        this.nextFlap = this.flyDist + this.flapSpeed / 2.0F;
     }
 
 
