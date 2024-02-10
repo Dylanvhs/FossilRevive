@@ -95,7 +95,6 @@ public class Quetzalcoatlus<T extends Entity> extends HierarchicalModel<T> {
 
 		this.animateWalk(ModAnimationDefinitions.QUETZALCOATLUS_FLY, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(((QuetzalcoatlusEntity) entity).idleAnimationState, ModAnimationDefinitions.QUETZALCOATLUS_IDLE, ageInTicks, 1f);
-		this.animate(QuetzalcoatlusEntity.attackAnimationState, ModAnimationDefinitions.LIOPLEURODON_ATTACK, ageInTicks, 1f);
 		this.animate(((QuetzalcoatlusEntity) entity).flyAnimationState, ModAnimationDefinitions.QUETZALCOATLUS_WALK, ageInTicks, 1f);
 	}
 

@@ -66,6 +66,8 @@ public class Microraptor<T extends Entity> extends HierarchicalModel<T> {
 
 		this.animateWalk(ModAnimationDefinitions.MICRORAPTOR_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(((MicroraptorEntity) entity).idleAnimationState, ModAnimationDefinitions.MICRORAPTOR_IDLE, ageInTicks, 1f);
+		this.animate(((MicroraptorEntity) entity).flapAnimationState, ModAnimationDefinitions.MICRORAPTOR_FLAP, ageInTicks, 1f);
+
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
