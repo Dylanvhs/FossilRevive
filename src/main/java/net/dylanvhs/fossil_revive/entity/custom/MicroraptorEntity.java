@@ -20,7 +20,9 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -31,13 +33,19 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     public MicroraptorEntity(EntityType<? extends MicroraptorEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
+    static final Predicate<ItemEntity> ALLOWED_ITEMS = (p_289438_) -> {
+        return !p_289438_.hasPickUpDelay() && p_289438_.isAlive();
+    };
 
     public float flap;
     public float flapSpeed;
@@ -105,9 +113,11 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.4D));
         this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
         this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
         this.goalSelector.addGoal(0, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
+        this.goalSelector.addGoal(11, new MicroraptorEntity.MicroraptorSearchForItemsGoal());
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -270,6 +280,28 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         }
 
     }
+    class MicroraptorSearchForItemsGoal extends Goal {
+        public MicroraptorSearchForItemsGoal() {
+            this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+        }
+
+        public boolean canUse() {
+            if (!MicroraptorEntity.this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
+                return false;
+            } else if (MicroraptorEntity.this.getTarget() == null && MicroraptorEntity.this.getLastHurtByMob() == null) {
+                if (!MicroraptorEntity.this.isInWater()) {
+                    return false;
+                } else if (MicroraptorEntity.this.getRandom().nextInt(reducedTickDelay(10)) != 0) {
+                    return false;
+                } else {
+                    List<ItemEntity> list = MicroraptorEntity.this.level().getEntitiesOfClass(ItemEntity.class, MicroraptorEntity.this.getBoundingBox().inflate(8.0D, 8.0D, 8.0D), MicroraptorEntity.ALLOWED_ITEMS);
+                    return !list.isEmpty() && MicroraptorEntity.this.getItemBySlot(EquipmentSlot.MAINHAND).isEmpty();
+                }
+            } else {
+                return false;
+            }
+        }
+    }
 
     protected void usePlayerItem(Player pPlayer, InteractionHand pHand, ItemStack pStack) {
         if (this.isFood(pStack)) {
@@ -377,6 +409,31 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
     private boolean canEat(ItemStack pStack) {
         return pStack.getItem().isEdible() && this.getTarget() == null && this.onGround() && !this.isSleeping();
+    }
+
+    void clearStates() {
+        this.setIsInterested(false);
+    }
+
+    protected void dropEquipment() { // Forge: move extra drops to dropEquipment to allow them to be captured by LivingDropsEvent
+        super.dropEquipment();
+        ItemStack itemstack = this.getItemBySlot(EquipmentSlot.MAINHAND);
+        if (!itemstack.isEmpty()) {
+            this.spawnAtLocation(itemstack);
+            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+        }
+
+    }
+
+    class MicroraptorMeleeAttackGoal extends MeleeAttackGoal {
+        public MicroraptorMeleeAttackGoal() {
+            super(MicroraptorEntity.this, 1.0D, true);
+        }
+
+        protected double getAttackReachSqr(LivingEntity pAttackTarget) {
+            float f = MicroraptorEntity.this.getBbWidth() - 0.1F;
+            return (double)(f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
+        }
     }
 
     @Nullable

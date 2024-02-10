@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -16,12 +17,15 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -32,6 +36,7 @@ public class LiopleurodonEntity extends WaterAnimal {
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(LiopleurodonEntity.class, EntityDataSerializers.INT);
     public static final int TOTAL_AIR_SUPPLY = 4800;
     private static final int TOTAL_MOISTNESS_LEVEL = 2400;
+    private int attackTick;
 
     public LiopleurodonEntity(EntityType<? extends LiopleurodonEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -82,22 +87,26 @@ public class LiopleurodonEntity extends WaterAnimal {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BreathAirGoal(this));
         this.goalSelector.addGoal(6, new LiopleurodonJumpGoal(this, 1));
+        this.goalSelector.addGoal(4, new LiopleurodonEntity.LiopleurodonMeleeAttackGoal());
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
-        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
+
     }
 
-    @Override
-    public void handleEntityEvent(byte b) {
-        if (b == 4) {
-            attackAnimationState.start(this.tickCount);
-        } else {
-            super.handleEntityEvent(b);
+    public void handleEntityEvent(byte pId) {
+        if (pId == 4) {
+            this.attackTick = 10;
         }
+        super.handleEntityEvent(pId);
+    }
+
+    public int getAttackTick() {
+        return this.attackTick;
     }
 
     protected PathNavigation createNavigation(Level p_27480_) {
@@ -153,6 +162,8 @@ public class LiopleurodonEntity extends WaterAnimal {
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("Moistness", this.getMoistnessLevel());
+        pCompound.putInt("AttackTick", this.attackTick);
+
     }
 
     /**
@@ -161,6 +172,7 @@ public class LiopleurodonEntity extends WaterAnimal {
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.setMoisntessLevel(pCompound.getInt("Moistness"));
+        this.attackTick = pCompound.getInt("AttackTick");
     }
 
     public void tick() {
@@ -221,6 +233,16 @@ public class LiopleurodonEntity extends WaterAnimal {
             super.travel(travelVector);
         }
 
+    }
+
+    class LiopleurodonMeleeAttackGoal extends MeleeAttackGoal {
+        public LiopleurodonMeleeAttackGoal() {
+            super(LiopleurodonEntity.this, 1.0D, true);
+        }
+        protected double getAttackReachSqr(LivingEntity pAttackTarget) {
+            float f = LiopleurodonEntity.this.getBbWidth() - 0.1F;
+            return (double)(f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
+        }
     }
 
     static class MoveHelperController extends MoveControl {
