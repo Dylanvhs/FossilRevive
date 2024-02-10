@@ -72,6 +72,7 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     }
 
 
+
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
@@ -82,6 +83,11 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
         }
 
         this.walkAnimation.update(f, 0.2f);
+
+        if (this.isFlying() && !onGround()) {
+            this.flyAnimationState.start(this.tickCount);
+            this.idleAnimationState.stop();
+        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -167,6 +173,7 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
                 if (this.isFlying() && !this.onGround()) {
                     if (!this.isInWaterOrBubble()) {
                         this.setDeltaMovement(this.getDeltaMovement().multiply(1F, 0.6F, 1F));
+
                     }
                 }
                 if (this.onGround() && timeFlying > 20) {
