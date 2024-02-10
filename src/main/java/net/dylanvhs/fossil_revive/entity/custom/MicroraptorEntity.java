@@ -42,6 +42,15 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
     private int ticksSinceEaten;
 
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (this.level().isClientSide()) {
+            setupAnimationState();
+        }
+    }
+
     private void setupAnimationState() {
         if (this.idleAnimationTimeOut <= 0) {
             this.idleAnimationTimeOut = this.random.nextInt(40) + 80;

@@ -56,9 +56,6 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     private int idleAnimationTimeOut = 0;
     public static final AnimationState attackAnimationState = new AnimationState();
 
-
-
-
     private void setupAnimationState() {
         if (this.idleAnimationTimeOut <= 0) {
             this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
@@ -138,6 +135,11 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
 
     public void tick() {
         super.tick();
+
+        if (this.level().isClientSide()) {
+            setupAnimationState();
+        }
+
         this.prevFlyProgress = flyProgress;
         if (this.isFlying() && flyProgress < 5F) {
             flyProgress++;

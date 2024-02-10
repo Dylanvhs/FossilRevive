@@ -44,7 +44,6 @@ public class LiopleurodonEntity extends WaterAnimal {
     private int idleAnimationTimeOut = 0;
     public static final AnimationState attackAnimationState = new AnimationState();
 
-
     private void setupAnimationState() {
         if (this.idleAnimationTimeOut <= 0) {
             this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
@@ -166,6 +165,11 @@ public class LiopleurodonEntity extends WaterAnimal {
 
     public void tick() {
         super.tick();
+
+        if (this.level().isClientSide()) {
+            setupAnimationState();
+        }
+
         if (this.isNoAi()) {
             this.setAirSupply(this.getMaxAirSupply());
         } else {
