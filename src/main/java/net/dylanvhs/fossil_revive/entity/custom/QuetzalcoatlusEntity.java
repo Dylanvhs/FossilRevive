@@ -3,9 +3,11 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 
 import net.dylanvhs.fossil_revive.entity.ai.FlyingMoveController;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -20,7 +22,6 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.WaterAnimal;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -31,6 +32,8 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 import java.util.UUID;
+
+import static net.minecraft.network.syncher.EntityDataSerializers.registerSerializer;
 
 public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     public QuetzalcoatlusEntity(EntityType<? extends QuetzalcoatlusEntity> pEntityType, Level pLevel) {
@@ -54,22 +57,25 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState flyAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
-    public static final AnimationState attackAnimationState = new AnimationState();
+
 
     private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0) {
+        if (this.idleAnimationTimeOut <= 0 && !this.isFlying()) {
             this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
         }
+        if (this.isFlying()) {
+                this.flyAnimationState.start(this.tickCount);
+            }
+        }
 
-    }
 
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
-        if (this.getPose() == Pose.STANDING) {
+        if (this.getPose() == net.minecraft.world.entity.Pose.STANDING) {
             f = Math.min(pPartialTick * 6F, 1f);
         } else {
             f = 0f;

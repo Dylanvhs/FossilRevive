@@ -49,7 +49,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
     public final AnimationState flapAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
-    private int flapAnimationTimeOut = 0;
 
     private int ticksSinceEaten;
 
@@ -70,13 +69,9 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             --this.idleAnimationTimeOut;
         }
 
-        if (this.flapAnimationTimeOut <= 0 && this.getPose() == Pose.FALL_FLYING) {
-            this.flapAnimationTimeOut = this.random.nextInt(40) + 80;
+        if (!this.onGround()) {
             this.flapAnimationState.start(this.tickCount);
-        } else {
-            --this.flapAnimationTimeOut;
         }
-
     }
 
     @Override
@@ -141,7 +136,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             float angle = (0.01745329251F * (((LivingEntity) player).yBodyRot - 180F));
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
-            setPose(Pose.FALL_FLYING);
+
             this.setPos(player.getX() + extraX, Math.max(player.getY() + player.getBbHeight() + 0.1, player.getY()), player.getZ() + extraZ);
             if (!player.isAlive() || rideCooldown == 0 || player.isShiftKeyDown() || !mount.isAlive()) {
                 this.stopRiding();
@@ -162,7 +157,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             if (!pPlayer.getAbilities().instabuild) {
                 itemstack.shrink(1);
             }
-
             if (!this.isSilent()) {
                 this.level().playSound((Player) null, this.getX(), this.getY(), this.getZ(), SoundEvents.PARROT_EAT, this.getSoundSource(), 1.0F, 1.0F + (this.random.nextFloat() - this.random.nextFloat()) * 0.2F);
             }
@@ -201,6 +195,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         }
         if (pPlayer.getPassengers().isEmpty() && isTame()) {
             this.startRiding(pPlayer);
+            new MobEffectInstance(MobEffects.SLOW_FALLING);
             rideCooldown = 20;
             return InteractionResult.SUCCESS;
         }
@@ -219,8 +214,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround() && this.flapping < 1.0F) {
             this.flapping = 1.0F;
-        }
-
+    }
         this.flapping *= 0.9F;
         Vec3 vec3 = this.getDeltaMovement();
         if (!this.onGround() && vec3.y < 0.0D) {

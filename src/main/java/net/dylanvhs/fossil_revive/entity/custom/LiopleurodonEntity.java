@@ -94,7 +94,7 @@ public class LiopleurodonEntity extends WaterAnimal {
     @Override
     public void handleEntityEvent(byte b) {
         if (b == 4) {
-            this.attackAnimationState.start(this.tickCount);
+            attackAnimationState.start(this.tickCount);
         } else {
             super.handleEntityEvent(b);
         }
