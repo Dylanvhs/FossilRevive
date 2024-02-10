@@ -69,6 +69,11 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
         } else {
             --this.idleAnimationTimeOut;
         }
+
+        if (!this.onGround()) {
+            this.flyAnimationState.start(this.tickCount);
+            this.idleAnimationState.stop();
+        }
     }
 
 
@@ -83,11 +88,6 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
         }
 
         this.walkAnimation.update(f, 0.2f);
-
-        if (this.isFlying() && !onGround()) {
-            this.flyAnimationState.start(this.tickCount);
-            this.idleAnimationState.stop();
-        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {

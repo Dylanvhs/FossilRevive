@@ -1,6 +1,8 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 import com.google.common.collect.Sets;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -43,6 +45,9 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     public float oFlap;
     public float flapping = 1.0F;
     private float nextFlap = 1.0F;
+
+    private float interestedAngle;
+    private float interestedAngleO;
     private static final Item POISONOUS_FOOD = Items.COOKIE;
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.WHEAT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.BEETROOT_SEEDS, Items.TORCHFLOWER_SEEDS, Items.PITCHER_POD);
 
@@ -58,6 +63,14 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
         if (this.level().isClientSide()) {
             setupAnimationState();
+        }
+
+
+        this.interestedAngleO = this.interestedAngle;
+        if (this.isInterested()) {
+            this.interestedAngle += (1.0F - this.interestedAngle) * 0.4F;
+        } else {
+            this.interestedAngle += (0.0F - this.interestedAngle) * 0.4F;
         }
     }
 
@@ -192,7 +205,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         }
         if (pPlayer.getPassengers().isEmpty() && isTame()) {
             this.startRiding(pPlayer);
-            new MobEffectInstance(MobEffects.SLOW_FALLING);
             rideCooldown = 20;
             return InteractionResult.SUCCESS;
         }
@@ -219,6 +231,56 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         }
 
         this.flap += this.flapping * 2.0F;
+
+        if (!this.level().isClientSide && this.isAlive() && this.isEffectiveAi()) {
+            ++this.ticksSinceEaten;
+            ItemStack itemstack = this.getItemBySlot(EquipmentSlot.MAINHAND);
+            if (this.canEat(itemstack)) {
+                if (this.ticksSinceEaten > 600) {
+                    ItemStack itemstack1 = itemstack.finishUsingItem(this.level(), this);
+                    if (!itemstack1.isEmpty()) {
+                        this.setItemSlot(EquipmentSlot.MAINHAND, itemstack1);
+                    }
+
+                    this.ticksSinceEaten = 0;
+                } else if (this.ticksSinceEaten > 560 && this.random.nextFloat() < 0.1F) {
+                    this.playSound(this.getEatingSound(itemstack), 1.0F, 1.0F);
+                    this.level().broadcastEntityEvent(this, (byte) 45);
+                }
+            }
+
+            LivingEntity livingentity = this.getTarget();
+            if (livingentity == null || !livingentity.isAlive()) {
+                this.setIsInterested(false);
+            }
+        }
+    }
+
+    public void handleEntityEvent(byte pId) {
+        if (pId == 45) {
+            ItemStack itemstack = this.getItemBySlot(EquipmentSlot.MAINHAND);
+            if (!itemstack.isEmpty()) {
+                for(int i = 0; i < 8; ++i) {
+                    Vec3 vec3 = (new Vec3(((double)this.random.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D)).xRot(-this.getXRot() * ((float)Math.PI / 180F)).yRot(-this.getYRot() * ((float)Math.PI / 180F));
+                    this.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, itemstack), this.getX() + this.getLookAngle().x / 2.0D, this.getY(), this.getZ() + this.getLookAngle().z / 2.0D, vec3.x, vec3.y + 0.05D, vec3.z);
+                }
+            }
+        } else {
+            super.handleEntityEvent(pId);
+        }
+
+    }
+
+    protected void usePlayerItem(Player pPlayer, InteractionHand pHand, ItemStack pStack) {
+        if (this.isFood(pStack)) {
+            this.playSound(this.getEatingSound(pStack), 1.0F, 1.0F);
+        }
+
+        super.usePlayerItem(pPlayer, pHand, pStack);
+    }
+
+    protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
+        return this.isBaby() ? pSize.height * 0.85F : 0.4F;
     }
 
 
@@ -249,12 +311,28 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         this.setFlag(8, pIsInterested);
     }
 
+    public boolean isInterested() {
+        return this.getFlag(8);
+    }
+
+
     private void setFlag(int pFlagId, boolean pValue) {
         if (pValue) {
             this.entityData.set(DATA_FLAGS_ID, (byte) (this.entityData.get(DATA_FLAGS_ID) | pFlagId));
         } else {
             this.entityData.set(DATA_FLAGS_ID, (byte) (this.entityData.get(DATA_FLAGS_ID) & ~pFlagId));
         }
+    }
+
+    private boolean getFlag(int pFlagId) {
+        return (this.entityData.get(DATA_FLAGS_ID) & pFlagId) != 0;
+    }
+
+
+    public boolean canHoldItem(ItemStack pStack) {
+        Item item = pStack.getItem();
+        ItemStack itemstack = this.getItemBySlot(EquipmentSlot.MAINHAND);
+        return itemstack.isEmpty() || this.ticksSinceEaten > 0 && item.isEdible() && !itemstack.getItem().isEdible();
     }
 
 
