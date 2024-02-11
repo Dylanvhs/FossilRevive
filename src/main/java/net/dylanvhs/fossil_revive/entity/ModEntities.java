@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.entity;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.client.Microraptor;
+import net.dylanvhs.fossil_revive.entity.custom.DilophosaurusEntity;
 import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
 import net.dylanvhs.fossil_revive.entity.custom.MicroraptorEntity;
 import net.dylanvhs.fossil_revive.entity.custom.QuetzalcoatlusEntity;
@@ -27,6 +28,11 @@ public class ModEntities {
     public static final RegistryObject<EntityType<MicroraptorEntity>> MICRORAPTOR =
             ENTITY_TYPES.register("microraptor", () -> EntityType.Builder.of(MicroraptorEntity::new, MobCategory.CREATURE)
                     .sized(0.5f, 0.5f).build("microraptor"));
+
+    public static final RegistryObject<EntityType<DilophosaurusEntity>> DILOPHOSAURUS =
+            ENTITY_TYPES.register("dilophosaurus", () -> EntityType.Builder.of(DilophosaurusEntity::new, MobCategory.CREATURE)
+                    .sized(0.5f, 0.5f).build("dilophosaurus"));
+
 
 
 

@@ -108,7 +108,7 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
         this.goalSelector.addGoal(1, new AIFlyIdle());
         this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MicroraptorEntity.class, true));
     }
 
 

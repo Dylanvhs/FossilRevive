@@ -18,6 +18,7 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.LIOPLEURODON_LAYER, Liopleurodon::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.QUETZALCOATLUS_LAYER, Quetzalcoatlus::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.MICRORAPTOR_LAYER, Microraptor::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.DILOPHOSAURUS_LAYER, Microraptor::createBodyLayer);
     }
 
 }

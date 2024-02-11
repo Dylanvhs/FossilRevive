@@ -3,6 +3,7 @@ package net.dylanvhs.fossil_revive.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.dylanvhs.fossil_revive.entity.animations.ModAnimationDefinitions;
+import net.dylanvhs.fossil_revive.entity.custom.DilophosaurusEntity;
 import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,7 +13,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 
 public class Dilophosaurus<T extends Entity> extends HierarchicalModel<T> {
-	// This layer location should be baked with EntityRendererProvider.Context in the entity renderer and passed into this model's constructor
 		private final ModelPart Dilophosaurus;
 		private final ModelPart head;
 
@@ -101,8 +101,8 @@ public class Dilophosaurus<T extends Entity> extends HierarchicalModel<T> {
 
 
 		this.animateWalk(ModAnimationDefinitions.DILOPHOSAURUS_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
-		this.animate(((LiopleurodonEntity) entity).idleAnimationState, ModAnimationDefinitions.DILOPHOSAURUS_IDLE, ageInTicks, 1f);
-		this.animate(LiopleurodonEntity.attackAnimationState, ModAnimationDefinitions.DILOPHOSAURUS_ATTACK, ageInTicks, 1f);
+		this.animate(((DilophosaurusEntity) entity).idleAnimationState, ModAnimationDefinitions.DILOPHOSAURUS_IDLE, ageInTicks, 1f);
+		this.animate(DilophosaurusEntity.attackAnimationState, ModAnimationDefinitions.DILOPHOSAURUS_ATTACK, ageInTicks, 1f);
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

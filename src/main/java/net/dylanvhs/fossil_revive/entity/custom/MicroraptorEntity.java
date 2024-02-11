@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -42,6 +43,8 @@ import java.util.function.Predicate;
 public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     public MicroraptorEntity(EntityType<? extends MicroraptorEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+
+        this.setCanPickUpLoot(true);
     }
     static final Predicate<ItemEntity> ALLOWED_ITEMS = (p_289438_) -> {
         return !p_289438_.hasPickUpDelay() && p_289438_.isAlive();
@@ -113,11 +116,12 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.4D));
+        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
         this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
         this.goalSelector.addGoal(0, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
         this.goalSelector.addGoal(11, new MicroraptorEntity.MicroraptorSearchForItemsGoal());
+        this.goalSelector.addGoal(4, new MicroraptorEntity.MicroraptorMeleeAttackGoal());
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -423,6 +427,12 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
         }
 
+    }
+
+    public void die(DamageSource pCause) {
+            this.stopRiding();
+            this.removeEffect(MobEffects.SLOW_FALLING);
+        super.die(pCause);
     }
 
     class MicroraptorMeleeAttackGoal extends MeleeAttackGoal {
