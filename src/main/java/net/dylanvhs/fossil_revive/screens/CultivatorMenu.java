@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.screens;
 
 import net.dylanvhs.fossil_revive.block.ModBlocks;
 import net.dylanvhs.fossil_revive.block.entity.AnalyzerEntity;
+import net.dylanvhs.fossil_revive.block.entity.CultivatorEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,19 +13,19 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class AnalyzerMenu extends AbstractContainerMenu {
-    public final AnalyzerEntity blockEntity;
+public class CultivatorMenu extends AbstractContainerMenu {
+    public final CultivatorEntity blockEntity;
     private final Level level;
     private final ContainerData data;
 
-    public AnalyzerMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
+    public CultivatorMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
         this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
     }
 
-    public AnalyzerMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+    public CultivatorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.ANALYZER_MENU.get(), pContainerId);
-        checkContainerSize(inv, 11);
-        blockEntity = ((AnalyzerEntity) entity);
+        checkContainerSize(inv, 2);
+        blockEntity = ((CultivatorEntity) entity);
         this.level = inv.player.level();
         this.data = data;
 
@@ -34,15 +35,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
             this.addSlot(new SlotItemHandler(iItemHandler, 0, 26, 17));
             this.addSlot(new SlotItemHandler(iItemHandler, 1, 26, 53));
-            this.addSlot(new SlotItemHandler(iItemHandler, 2, 98, 17));
-            this.addSlot(new SlotItemHandler(iItemHandler, 3, 98, 35));
-            this.addSlot(new SlotItemHandler(iItemHandler, 4, 98, 53));
-            this.addSlot(new SlotItemHandler(iItemHandler, 5, 116, 17));
-            this.addSlot(new SlotItemHandler(iItemHandler, 6, 116, 35));
-            this.addSlot(new SlotItemHandler(iItemHandler, 7, 116, 53));
-            this.addSlot(new SlotItemHandler(iItemHandler, 8, 134, 17));
-            this.addSlot(new SlotItemHandler(iItemHandler, 9, 134, 35));
-            this.addSlot(new SlotItemHandler(iItemHandler, 10, 134, 53));
+            this.addSlot(new SlotItemHandler(iItemHandler, 2, 116, 35));
         });
 
         addDataSlots(data);

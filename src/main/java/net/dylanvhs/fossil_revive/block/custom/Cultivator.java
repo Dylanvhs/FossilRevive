@@ -1,5 +1,6 @@
 package net.dylanvhs.fossil_revive.block.custom;
 
+
 import net.dylanvhs.fossil_revive.block.entity.AnalyzerEntity;
 import net.dylanvhs.fossil_revive.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -21,9 +22,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class Analyzer extends BaseEntityBlock {
+public class Cultivator extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public Analyzer(Properties pProperties) {
+    public Cultivator(Properties pProperties) {
 
         super(pProperties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
@@ -100,3 +101,4 @@ public class Analyzer extends BaseEntityBlock {
                 (pLevel1, pPos, pState1, pBlockEntity) -> pBlockEntity.tick(pLevel1, pPos, pState1));
     }
 }
+

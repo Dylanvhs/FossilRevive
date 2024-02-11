@@ -9,12 +9,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
+public class CultivatorScreen extends AbstractContainerScreen<CultivatorMenu> {
     private static final ResourceLocation TEXTURE =
             new ResourceLocation(FossilRevive.MOD_ID, "textures/gui/analyzer_gui.png");
 
 
-    public AnalyzerScreen(AnalyzerMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
+    public CultivatorScreen(CultivatorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
     }
 
@@ -40,7 +40,7 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
 
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x + 59, y + 39, 176, 0, menu.getScaledProgress(), 11 );
+            guiGraphics.blit(TEXTURE, x + 68, y + 38, 176, 0, menu.getScaledProgress(), 12 );
         }
     }
 
