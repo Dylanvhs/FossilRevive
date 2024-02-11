@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class CultivatorScreen extends AbstractContainerScreen<CultivatorMenu> {
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(FossilRevive.MOD_ID, "textures/gui/analyzer_gui.png");
+            new ResourceLocation(FossilRevive.MOD_ID, "textures/gui/cultivator_gui.png");
 
 
     public CultivatorScreen(CultivatorMenu pMenu, Inventory pPlayerInventory, Component pTitle) {

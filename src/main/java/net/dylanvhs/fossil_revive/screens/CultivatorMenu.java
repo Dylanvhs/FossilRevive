@@ -24,7 +24,7 @@ public class CultivatorMenu extends AbstractContainerMenu {
 
     public CultivatorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
         super(ModMenuTypes.CULTIVATOR_MENU.get(), pContainerId);
-        checkContainerSize(inv, 2);
+        checkContainerSize(inv, 3);
         blockEntity = ((CultivatorEntity) entity);
         this.level = inv.player.level();
         this.data = data;

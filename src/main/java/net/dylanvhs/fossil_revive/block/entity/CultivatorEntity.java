@@ -32,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class CultivatorEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(2);
+    private final ItemStackHandler itemHandler = new ItemStackHandler(3);
     private static final int INPUT_SLOT = 0;
     private static final int OTHER_INPUT_SLOT = 1;
     private static final int OUTPUT_SLOT = 2;
