@@ -18,6 +18,11 @@ public class ModBlockEntities {
                     BlockEntityType.Builder.of(AnalyzerEntity::new,
                             ModBlocks.ANALYZER.get()).build(null));
 
+    public static final RegistryObject<BlockEntityType<CultivatorEntity>> CULTIVATOR_BE =
+            BLOCK_ENTITIES.register("analyzer_be", () ->
+                    BlockEntityType.Builder.of(CultivatorEntity::new,
+                            ModBlocks.CULTIVATOR.get()).build(null));
+
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

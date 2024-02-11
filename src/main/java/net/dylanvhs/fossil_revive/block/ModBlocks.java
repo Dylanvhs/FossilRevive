@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.block;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.block.custom.Analyzer;
+import net.dylanvhs.fossil_revive.block.custom.Cultivator;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,6 +22,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> ANALYZER = registerBlock("analyzer",
             () -> new Analyzer(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+
+    public static final RegistryObject<Block> CULTIVATOR = registerBlock("cultivator",
+            () -> new Cultivator(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

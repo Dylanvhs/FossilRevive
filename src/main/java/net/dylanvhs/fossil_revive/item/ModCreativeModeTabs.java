@@ -13,13 +13,14 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, FossilRevive.MOD_ID);
-    public static final RegistryObject<CreativeModeTab> FOSSIL_REVIVE_TAB = CREATIVE_MODE_TABS.register("ridiculous_weaponry_tab",
+    public static final RegistryObject<CreativeModeTab> FOSSIL_REVIVE_TAB = CREATIVE_MODE_TABS.register("fossil_revive_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.FOSSIL.get()))
 
                     .title(Component.translatable("creativetab.fossil_revive_tab"))
                     .displayItems((pParameters, pOutput) -> {
 
                         pOutput.accept(ModBlocks.ANALYZER.get());
+                        pOutput.accept(ModBlocks.CULTIVATOR.get());
 
                         pOutput.accept(ModItems.FOSSIL.get());
                         pOutput.accept(ModItems.ROUGH_FOSSIL.get());

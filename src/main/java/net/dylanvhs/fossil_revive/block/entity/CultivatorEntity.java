@@ -4,6 +4,7 @@ package net.dylanvhs.fossil_revive.block.entity;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.recipe.AnalyzerRecipe;
 import net.dylanvhs.fossil_revive.screens.AnalyzerMenu;
+import net.dylanvhs.fossil_revive.screens.CultivatorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -31,18 +32,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class CultivatorEntity extends BlockEntity implements MenuProvider {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(11);
+    private final ItemStackHandler itemHandler = new ItemStackHandler(2);
     private static final int INPUT_SLOT = 0;
     private static final int OTHER_INPUT_SLOT = 1;
     private static final int OUTPUT_SLOT = 2;
-    private static final int OUTPUT_SLOT2 = 3;
-    private static final int OUTPUT_SLOT3 = 4;
-    private static final int OUTPUT_SLOT4 = 5;
-    private static final int OUTPUT_SLOT5 = 6;
-    private static final int OUTPUT_SLOT6 = 7;
-    private static final int OUTPUT_SLOT7 = 8;
-    private static final int OUTPUT_SLOT8 = 9;
-    private static final int OUTPUT_SLOT9 = 10;
 
     private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
 
@@ -51,7 +44,7 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
     private int maxProgress = 78;
 
     public CultivatorEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.ANALYZER_BE.get(), pPos, pBlockState);
+        super(ModBlockEntities.CULTIVATOR_BE.get(), pPos, pBlockState);
         this.data = new ContainerData() {
             @Override
             public int get(int pIndex) {
@@ -108,13 +101,13 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public Component getDisplayName() {
-        return Component.translatable("block.fossil_revive.analyzer");
+        return Component.translatable("block.fossil_revive.cultivator");
     }
 
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new AnalyzerMenu(pContainerId, pPlayerInventory, this, this.data);
+        return new CultivatorMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 
     public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
@@ -122,7 +115,7 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
             return stack;
         }
 
-        if (slot == 0 && stack.is(ModItems.FOSSIL.get())) {
+        if (slot == 0 && stack.is(ModItems.DILOPHOSAURUS_DNA.get())) {
             return itemHandler.insertItem(slot, stack, simulate);
         }
 
