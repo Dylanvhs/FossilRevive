@@ -31,7 +31,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<DilophosaurusEntity>> DILOPHOSAURUS =
             ENTITY_TYPES.register("dilophosaurus", () -> EntityType.Builder.of(DilophosaurusEntity::new, MobCategory.CREATURE)
-                    .sized(0.5f, 0.5f).build("dilophosaurus"));
+                    .sized(1f, 1.8f).build("dilophosaurus"));
 
 
 

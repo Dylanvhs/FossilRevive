@@ -70,9 +70,12 @@ public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bone
     public static final RegistryObject<Item> LIOPLEURODON_SPAWN_EGG = ITEMS.register("liopleurodon_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.LIOPLEURODON, 0x7e9680, 0xc5d1c5, new Item.Properties()));
     public static final RegistryObject<Item> QUETZALCOATLUS_SPAWN_EGG = ITEMS.register("quetzalcoatlus_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.QUETZALCOATLUS, 0x7e4680, 0xc5d1c5, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.QUETZALCOATLUS, 0x7e4680, 0xc951c5, new Item.Properties()));
     public static final RegistryObject<Item> MICRORAPTOR_SPAWN_EGG = ITEMS.register("microraptor_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.MICRORAPTOR, 0x7e4680, 0xc5d1c5, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.MICRORAPTOR, 0x3e4580, 0xc391c5, new Item.Properties()));
+    public static final RegistryObject<Item> DILOPHOSAURUS_SPAWN_EGG = ITEMS.register("dilophosaurus_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.DILOPHOSAURUS, 0x5e4730, 0x1c31c5, new Item.Properties()));
+
 
 
 

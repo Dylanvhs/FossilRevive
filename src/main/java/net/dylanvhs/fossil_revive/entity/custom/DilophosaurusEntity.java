@@ -65,13 +65,14 @@ public class DilophosaurusEntity extends PathfinderMob {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return TamableAnimal.createLivingAttributes()
+        return PathfinderMob.createLivingAttributes()
                 .add(Attributes.MAX_HEALTH, 45D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 4f)
-                .add(Attributes.ATTACK_SPEED, 0.5f);
+                .add(Attributes.ATTACK_SPEED, 0.5f)
+                .add(Attributes.ATTACK_KNOCKBACK, 0.1f);
     }
 
     public void handleEntityEvent(byte pId) {
