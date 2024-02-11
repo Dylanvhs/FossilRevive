@@ -23,7 +23,7 @@ public class CultivatorMenu extends AbstractContainerMenu {
     }
 
     public CultivatorMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
-        super(ModMenuTypes.ANALYZER_MENU.get(), pContainerId);
+        super(ModMenuTypes.CULTIVATOR_MENU.get(), pContainerId);
         checkContainerSize(inv, 2);
         blockEntity = ((CultivatorEntity) entity);
         this.level = inv.player.level();
@@ -48,7 +48,7 @@ public class CultivatorMenu extends AbstractContainerMenu {
     public int getScaledProgress() {
         int progress = this.data.get(0);
         int maxProgress = this.data.get(1);  // Max Progress
-        int progressArrowSize = 23; // This is the width in pixels of your arrow
+        int progressArrowSize = 24; // This is the width in pixels of your arrow
 
         return maxProgress != 0 && progress != 0 ? progress * progressArrowSize / maxProgress : 0;
     }
@@ -106,7 +106,7 @@ public class CultivatorMenu extends AbstractContainerMenu {
     @Override
     public boolean stillValid(Player pPlayer) {
         return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()),
-                pPlayer, ModBlocks.ANALYZER.get());
+                pPlayer, ModBlocks.CULTIVATOR.get());
     }
 
     private void addPlayerInventory(Inventory playerInventory) {

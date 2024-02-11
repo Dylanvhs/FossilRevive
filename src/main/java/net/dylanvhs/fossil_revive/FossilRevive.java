@@ -11,6 +11,7 @@ import net.dylanvhs.fossil_revive.entity.client.QuetzalcoatlusRenderer;
 import net.dylanvhs.fossil_revive.item.ModCreativeModeTabs;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.screens.AnalyzerScreen;
+import net.dylanvhs.fossil_revive.screens.CultivatorScreen;
 import net.dylanvhs.fossil_revive.screens.ModMenuTypes;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -78,6 +79,7 @@ public class FossilRevive
 
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);
+            MenuScreens.register(ModMenuTypes.CULTIVATOR_MENU.get(), CultivatorScreen::new);
         }
     }
 }

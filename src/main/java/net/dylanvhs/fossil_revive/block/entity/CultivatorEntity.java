@@ -130,7 +130,7 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
     @Override
     protected void saveAdditional(CompoundTag pTag) {
         pTag.put("inventory", itemHandler.serializeNBT());
-        pTag.putInt("analyzer.progress", progress);
+        pTag.putInt("cultivator.progress", progress);
 
         super.saveAdditional(pTag);
     }
@@ -139,7 +139,7 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
     public void load(CompoundTag pTag) {
         super.load(pTag);
         itemHandler.deserializeNBT(pTag.getCompound("inventory"));
-        progress = pTag.getInt("analyzer.progress");
+        progress = pTag.getInt("cultivator.progress");
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
