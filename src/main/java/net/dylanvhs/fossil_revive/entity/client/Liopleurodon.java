@@ -84,6 +84,14 @@ public class Liopleurodon<T extends Entity> extends HierarchicalModel<T> {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
 		this.applyHeadRotation(netHeadYaw, headPitch, ageInTicks);
 
+		float f = 1.0F;
+
+		if (!entity.isInWater()) {
+			f = 1.5F;
+		}
+		this.Liopleurodon.xRot = headPitch * ((float)Math.PI / 220F);
+		this.Liopleurodon.yRot = netHeadYaw * ((float)Math.PI / 220F);
+
 
 		this.animateWalk(ModAnimationDefinitions.LIOPLEURODON_SWIM, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(((LiopleurodonEntity) entity).idleAnimationState, ModAnimationDefinitions.LIOPLEURODON_IDLE, ageInTicks, 1f);

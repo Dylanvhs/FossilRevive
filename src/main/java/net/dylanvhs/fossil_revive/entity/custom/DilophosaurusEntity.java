@@ -8,12 +8,16 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
-public class DilophosaurusEntity extends PathfinderMob {
+import java.util.UUID;
+
+public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
 
     public DilophosaurusEntity(EntityType<? extends DilophosaurusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -107,6 +111,32 @@ public class DilophosaurusEntity extends PathfinderMob {
         this.attackTick = pCompound.getInt("AttackTick");
     }
 
+    @Override
+    public int getRemainingPersistentAngerTime() {
+        return 0;
+    }
+
+    @Override
+    public void setRemainingPersistentAngerTime(int pRemainingPersistentAngerTime) {
+
+    }
+
+    @Nullable
+    @Override
+    public UUID getPersistentAngerTarget() {
+        return null;
+    }
+
+    @Override
+    public void setPersistentAngerTarget(@Nullable UUID pPersistentAngerTarget) {
+
+    }
+
+    @Override
+    public void startPersistentAngerTimer() {
+
+    }
+
 
     class DilophosaurusMeleeAttackGoal extends MeleeAttackGoal {
         public DilophosaurusMeleeAttackGoal() {
@@ -119,14 +149,5 @@ public class DilophosaurusEntity extends PathfinderMob {
         }
     }
 
-    public static ResourceLocation JP = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/dilophosaurus_jp.png");
-    public static ResourceLocation NORMAL = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/dilophosaurus.png");
-
-
-    public ResourceLocation getVariant() {
-        if (isJP()) {
-            return JP;
-        } else return NORMAL;
-    }
 
 }
