@@ -1,6 +1,9 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
+import net.dylanvhs.fossil_revive.FossilRevive;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -15,8 +18,6 @@ public class DilophosaurusEntity extends PathfinderMob {
     public DilophosaurusEntity(EntityType<? extends DilophosaurusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
-
-
 
     public final AnimationState idleAnimationState = new AnimationState();
     public static final AnimationState attackAnimationState = new AnimationState();
@@ -86,6 +87,12 @@ public class DilophosaurusEntity extends PathfinderMob {
         return this.attackTick;
     }
 
+
+    public boolean isJP() {
+        String n = ChatFormatting.stripFormatting(this.getName().getString());
+        return n != null && (n.toLowerCase().contains("nedry"));
+    }
+
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("AttackTick", this.attackTick);
@@ -111,4 +118,15 @@ public class DilophosaurusEntity extends PathfinderMob {
             return (double)(f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
         }
     }
+
+    public static ResourceLocation JP = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/dilophosaurus_jp.png");
+    public static ResourceLocation NORMAL = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/dilophosaurus.png");
+
+
+    public ResourceLocation getVariant() {
+        if (isJP()) {
+            return JP;
+        } else return NORMAL;
+    }
+
 }
