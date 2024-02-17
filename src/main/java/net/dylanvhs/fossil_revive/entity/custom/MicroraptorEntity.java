@@ -167,7 +167,8 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 2f)
-                .add(Attributes.ATTACK_SPEED, 0.4f);
+                .add(Attributes.ATTACK_SPEED, 0.4f)
+                .add(Attributes.ATTACK_KNOCKBACK, 0.1f);
     }
 
     public boolean isPushable() {
@@ -195,7 +196,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             float angle = (0.01745329251F * (((LivingEntity) player).yBodyRot - 180F));
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
-            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 1, false, false ));
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 0, false, false ));
             this.setPos(player.getX() + extraX, Math.max(player.getY() + player.getBbHeight() + 0.1, player.getY()), player.getZ() + extraZ);
             if (!player.isAlive() || rideCooldown == 0 || player.isShiftKeyDown() || !mount.isAlive()) {
                 this.stopRiding();
@@ -224,9 +225,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             if (!this.level().isClientSide) {
                 if (this.random.nextInt(10) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
                     this.tame(pPlayer);
-                    this.navigation.stop();
                     this.setTarget((LivingEntity)null);
-                    this.setOrderedToSit(true);
                     this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
                     this.level().broadcastEntityEvent(this, (byte) 6);
@@ -246,7 +245,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
             }
 
-         else if (this.isTame() && this.isOwnedBy(pPlayer)) {
+         else if (this.isTame() && this.isOwnedBy(pPlayer) && pPlayer.isShiftKeyDown()) {
             if (!this.level().isClientSide) {
                 this.setOrderedToSit(!this.isOrderedToSit());
             }
@@ -255,7 +254,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         }
 
         }
-        if (pPlayer.getPassengers().isEmpty() && isTame()) {
+        if (pPlayer.getPassengers().isEmpty() && isTame() && !pPlayer.isShiftKeyDown()) {
             this.startRiding(pPlayer);
             rideCooldown = 20;
             return InteractionResult.SUCCESS;
