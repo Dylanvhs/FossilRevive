@@ -4,10 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.dylanvhs.fossil_revive.block.ModBlocks;
 import net.dylanvhs.fossil_revive.block.entity.ModBlockEntities;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
-import net.dylanvhs.fossil_revive.entity.client.DilophosaurusRenderer;
-import net.dylanvhs.fossil_revive.entity.client.LiopleurodonRenderer;
-import net.dylanvhs.fossil_revive.entity.client.MicroraptorRenderer;
-import net.dylanvhs.fossil_revive.entity.client.QuetzalcoatlusRenderer;
+import net.dylanvhs.fossil_revive.entity.client.*;
 import net.dylanvhs.fossil_revive.item.ModCreativeModeTabs;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.screens.AnalyzerScreen;
@@ -76,6 +73,8 @@ public class FossilRevive
             EntityRenderers.register(ModEntities.MICRORAPTOR.get(), MicroraptorRenderer::new );
 
             EntityRenderers.register(ModEntities.DILOPHOSAURUS.get(), DilophosaurusRenderer::new );
+
+            EntityRenderers.register(ModEntities.XENACANTHUS.get(), XenacanthusRenderer::new );
 
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);

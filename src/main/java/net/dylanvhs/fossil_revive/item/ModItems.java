@@ -2,12 +2,15 @@ package net.dylanvhs.fossil_revive.item;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
+import net.dylanvhs.fossil_revive.item.custom.ItemModFishBucket;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -62,6 +65,14 @@ public static final RegistryObject<Item> MICRORAPTOR_DNA = ITEMS.register("micro
 
 public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_cloth",
         () -> new Item(new Item.Properties()));
+
+
+public static final RegistryObject<Item> RAW_XENACANTHUS = ITEMS.register("raw_xenacanthus",
+        () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4F).build())));
+public static final RegistryObject<Item> COOKED_XENACANTHUS = ITEMS.register("raw_xenacanthus",
+        () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.8F).build())));
+public static final RegistryObject<Item> XENACANTHUS_BUCKET = ITEMS.register("xenacanthus_bucket",
+        () -> new ItemModFishBucket(ModEntities.XENACANTHUS, Fluids.WATER, new Item.Properties()));
 
 
 public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bones_music_disc",

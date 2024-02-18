@@ -17,4 +17,7 @@ public class ModModelLayers {
     public static final ModelLayerLocation DILOPHOSAURUS_LAYER = new ModelLayerLocation(
             new ResourceLocation(FossilRevive.MOD_ID, "dilophosaurus_layer"), "main");
 
+    public static final ModelLayerLocation XENACANTHUS_LAYER = new ModelLayerLocation(
+            new ResourceLocation(FossilRevive.MOD_ID, "xenacanthus_layer"), "main");
+
 }

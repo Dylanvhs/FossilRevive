@@ -2,10 +2,7 @@ package net.dylanvhs.fossil_revive.entity;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.client.Microraptor;
-import net.dylanvhs.fossil_revive.entity.custom.DilophosaurusEntity;
-import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
-import net.dylanvhs.fossil_revive.entity.custom.MicroraptorEntity;
-import net.dylanvhs.fossil_revive.entity.custom.QuetzalcoatlusEntity;
+import net.dylanvhs.fossil_revive.entity.custom.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -32,6 +29,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<DilophosaurusEntity>> DILOPHOSAURUS =
             ENTITY_TYPES.register("dilophosaurus", () -> EntityType.Builder.of(DilophosaurusEntity::new, MobCategory.CREATURE)
                     .sized(1f, 1.8f).build("dilophosaurus"));
+
+    public static final RegistryObject<EntityType<XenacanthusEntity>> XENACANTHUS =
+            ENTITY_TYPES.register("xenacanthus", () -> EntityType.Builder.of(XenacanthusEntity::new, MobCategory.WATER_CREATURE)
+                    .sized(1f, 1.8f).build("xenacanthus"));
 
 
 

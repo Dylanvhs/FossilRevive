@@ -47,6 +47,10 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.BONES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.DIRTY_CLOTH.get());
 
+                        pOutput.accept(ModItems.XENACANTHUS_BUCKET.get());
+                        pOutput.accept(ModItems.RAW_XENACANTHUS.get());
+                        pOutput.accept(ModItems.COOKED_XENACANTHUS.get());
+
 
                         pOutput.accept(ModItems.DILOPHOSAURUS_SPAWN_EGG.get());
                         pOutput.accept(ModItems.LIOPLEURODON_SPAWN_EGG.get());
