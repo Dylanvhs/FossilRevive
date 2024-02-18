@@ -69,7 +69,7 @@ public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_clo
 
 public static final RegistryObject<Item> RAW_XENACANTHUS = ITEMS.register("raw_xenacanthus",
         () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4F).build())));
-public static final RegistryObject<Item> COOKED_XENACANTHUS = ITEMS.register("raw_xenacanthus",
+public static final RegistryObject<Item> COOKED_XENACANTHUS = ITEMS.register("cooked_xenacanthus",
         () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.8F).build())));
 public static final RegistryObject<Item> XENACANTHUS_BUCKET = ITEMS.register("xenacanthus_bucket",
         () -> new ItemModFishBucket(ModEntities.XENACANTHUS, Fluids.WATER, new Item.Properties()));
@@ -86,6 +86,9 @@ public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bone
             () -> new ForgeSpawnEggItem(ModEntities.MICRORAPTOR, 0x3e4580, 0xc391c5, new Item.Properties()));
     public static final RegistryObject<Item> DILOPHOSAURUS_SPAWN_EGG = ITEMS.register("dilophosaurus_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.DILOPHOSAURUS, 0x5e4730, 0x1c31c5, new Item.Properties()));
+
+    public static final RegistryObject<Item> XENACANTHUS_SPAWN_EGG = ITEMS.register("xenacanthus_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.XENACANTHUS, 0x5e4730, 0x1c31c5, new Item.Properties()));
 
 
 

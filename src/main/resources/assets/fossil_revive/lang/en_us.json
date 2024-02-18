@@ -21,6 +21,10 @@
   "item.fossil_revive.quetzalcoatlus_dna": "Quetzalcoatlus DNA",
   "item.fossil_revive.microraptor_dna": "Microraptor DNA",
 
+  "item.fossil_revive.xenacanthus_bucket": "Bucket Of Xenacanthus",
+  "item.fossil_revive.raw_xenacanthus": "Raw Xenacanthus",
+  "item.fossil_revive.cooked_xenacanthus": "Cooked Xenacanthus",
+
   "item.fossil_revive.bones_music_disc": "Music Disc",
   "item.fossil_revive.bones_music_disc.desc": "Dylanvhs - Bones",
 
@@ -28,6 +32,7 @@
   "item.fossil_revive.quetzalcoatlus_spawn_egg": "Quetzalcoatlus Spawn Egg",
   "item.fossil_revive.microraptor_spawn_egg": "Microraptor Spawn Egg",
   "item.fossil_revive.dilophosaurus_spawn_egg": "Dilophosaurus Spawn Egg",
+  "item.fossil_revive.xenacanthus_spawn_egg": "Xenacanthus Spawn Egg",
 
   "block.fossil_revive.analyzer": "DNA Analyzer",
   "block.fossil_revive.cultivator": "Cultivator",
@@ -36,6 +41,8 @@
   "entity.fossil_revive.quetzalcoatlus": "Quetzalcoatlus",
   "entity.fossil_revive.microraptor": "Microraptor",
   "entity.fossil_revive.dilophosaurus": "Dilophosaurus",
+  "entity.fossil_revive.xenacanthus": "Xenacanthus",
+
 
   "creativetab.fossil_revive_tab": "Fossil Revive"
 }

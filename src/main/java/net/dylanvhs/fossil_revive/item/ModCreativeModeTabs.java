@@ -56,6 +56,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.LIOPLEURODON_SPAWN_EGG.get());
                         pOutput.accept(ModItems.MICRORAPTOR_SPAWN_EGG.get());
                         pOutput.accept(ModItems.QUETZALCOATLUS_SPAWN_EGG.get());
+                        pOutput.accept(ModItems.XENACANTHUS_SPAWN_EGG.get());
 
 
 

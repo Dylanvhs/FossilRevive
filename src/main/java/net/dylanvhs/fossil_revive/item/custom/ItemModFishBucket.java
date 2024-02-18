@@ -32,7 +32,7 @@ public class ItemModFishBucket extends MobBucketItem {
             CompoundTag compoundnbt = stack.getTag();
             if (compoundnbt != null && compoundnbt.contains("BucketVariantTag", 3)) {
                 int i = compoundnbt.getInt("BucketVariantTag");
-                String s = "entity.fossil_revive.goby.variant_" + XenacanthusEntity.getVariantName(i);
+                String s = "entity.fossil_revive.xenacanthus.variant_" + XenacanthusEntity.getVariantName(i);
                 tooltip.add((Component.translatable(s)).withStyle(ChatFormatting.GRAY).withStyle(ChatFormatting.ITALIC));
             }
         }
