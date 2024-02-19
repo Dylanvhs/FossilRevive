@@ -95,7 +95,7 @@ public class Liopleurodon<T extends Entity> extends HierarchicalModel<T> {
 
 		this.animateWalk(ModAnimationDefinitions.LIOPLEURODON_SWIM, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(((LiopleurodonEntity) entity).idleAnimationState, ModAnimationDefinitions.LIOPLEURODON_IDLE, ageInTicks, 1f);
-		this.animate(LiopleurodonEntity.attackAnimationState, ModAnimationDefinitions.LIOPLEURODON_ATTACK, ageInTicks, 1f);
+		this.animate(((LiopleurodonEntity) entity).lioattackAnimationState, ModAnimationDefinitions.LIOPLEURODON_ATTACK, ageInTicks, 1f);
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {

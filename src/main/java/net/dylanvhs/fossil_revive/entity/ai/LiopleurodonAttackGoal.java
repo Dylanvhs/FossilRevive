@@ -1,26 +1,27 @@
 package net.dylanvhs.fossil_revive.entity.ai;
 
 import net.dylanvhs.fossil_revive.entity.custom.DilophosaurusEntity;
+import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
-public class DilophosaurusAttackGoal extends MeleeAttackGoal {
-    private final DilophosaurusEntity entity;
-    private int attackDelay = 10;
+public class LiopleurodonAttackGoal extends MeleeAttackGoal {
+    private final LiopleurodonEntity entity;
+    private int attackDelay = 14;
     private int ticksUntilNextAttack = 18;
     private boolean shouldCountTillNextAttack = false;
 
-    public DilophosaurusAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
+    public LiopleurodonAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
         super(pMob, pSpeedModifier, pFollowingTargetEvenIfNotSeen);
-        entity = ((DilophosaurusEntity) pMob);
+        entity = ((LiopleurodonEntity) pMob);
     }
 
     @Override
     public void start() {
         super.start();
-        attackDelay = 10;
+        attackDelay = 14;
         ticksUntilNextAttack = 18;
     }
 
@@ -41,7 +42,7 @@ public class DilophosaurusAttackGoal extends MeleeAttackGoal {
             resetAttackCooldown();
             shouldCountTillNextAttack = false;
             entity.setAttacking(false);
-            entity.diloattackAnimationTimeout = 0;
+            entity.lioattackAnimationTimeout = 0;
         }
     }
 

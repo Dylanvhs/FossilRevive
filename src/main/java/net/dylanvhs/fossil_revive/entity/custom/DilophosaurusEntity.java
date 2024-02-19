@@ -33,8 +33,8 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
 
-    public final AnimationState attackAnimationState = new AnimationState();
-    public int attackAnimationTimeout = 0;
+    public final AnimationState diloattackAnimationState = new AnimationState();
+    public int diloattackAnimationTimeout = 0;
 
 
     @Override
@@ -55,15 +55,15 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
             --this.idleAnimationTimeOut;
         }
 
-        if(this.isAttacking() && attackAnimationTimeout <= 0) {
-            attackAnimationTimeout = 80; // Length in ticks of your animation
-            attackAnimationState.start(this.tickCount);
+        if(this.isAttacking() && diloattackAnimationTimeout <= 0) {
+            diloattackAnimationTimeout = 18; // Length in ticks of your animation
+            diloattackAnimationState.start(this.tickCount);
         } else {
-            --this.attackAnimationTimeout;
+            --this.diloattackAnimationTimeout;
         }
 
         if(!this.isAttacking()) {
-            attackAnimationState.stop();
+            diloattackAnimationState.stop();
         }
     }
 
@@ -84,7 +84,7 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(1, new DilophosaurusAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(1, new DilophosaurusAttackGoal(this, 1.2D, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
     }
 

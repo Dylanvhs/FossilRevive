@@ -1,6 +1,8 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 
+import net.dylanvhs.fossil_revive.entity.ai.DilophosaurusAttackGoal;
+import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonAttackGoal;
 import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonJumpGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -33,7 +35,6 @@ public class LiopleurodonEntity extends WaterAnimal {
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(LiopleurodonEntity.class, EntityDataSerializers.INT);
     public static final int TOTAL_AIR_SUPPLY = 4800;
     private static final int TOTAL_MOISTNESS_LEVEL = 2400;
-    private int attackTick;
 
     public LiopleurodonEntity(EntityType<? extends LiopleurodonEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -43,7 +44,10 @@ public class LiopleurodonEntity extends WaterAnimal {
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
-    public static final AnimationState attackAnimationState = new AnimationState();
+
+    public final AnimationState lioattackAnimationState = new AnimationState();
+    public int lioattackAnimationTimeout = 0;
+
 
     private void setupAnimationState() {
         if (this.idleAnimationTimeOut <= 0) {
@@ -51,6 +55,16 @@ public class LiopleurodonEntity extends WaterAnimal {
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
+        }
+        if(this.isAttacking() && lioattackAnimationTimeout <= 0) {
+            lioattackAnimationTimeout = 18; // Length in ticks of your animation
+            lioattackAnimationState.start(this.tickCount);
+        } else {
+            --this.lioattackAnimationTimeout;
+        }
+
+        if(!this.isAttacking()) {
+            lioattackAnimationState.stop();
         }
     }
 
@@ -83,7 +97,7 @@ public class LiopleurodonEntity extends WaterAnimal {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BreathAirGoal(this));
         this.goalSelector.addGoal(6, new LiopleurodonJumpGoal(this, 1));
-        this.goalSelector.addGoal(4, new LiopleurodonEntity.LiopleurodonMeleeAttackGoal());
+        this.goalSelector.addGoal(1, new LiopleurodonAttackGoal(this, 1.2D, true));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
@@ -94,15 +108,12 @@ public class LiopleurodonEntity extends WaterAnimal {
 
     }
 
-    public void handleEntityEvent(byte pId) {
-        if (pId == 4) {
-            this.attackTick = 10;
-        }
-        super.handleEntityEvent(pId);
+    public void setAttacking(boolean attacking) {
+        this.entityData.set(ATTACKING, attacking);
     }
 
-    public int getAttackTick() {
-        return this.attackTick;
+    public boolean isAttacking() {
+        return this.entityData.get(ATTACKING);
     }
 
     protected PathNavigation createNavigation(Level p_27480_) {
@@ -153,13 +164,12 @@ public class LiopleurodonEntity extends WaterAnimal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(MOISTNESS_LEVEL, 2400);
+        this.entityData.define(ATTACKING, false);
     }
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("Moistness", this.getMoistnessLevel());
-        pCompound.putInt("AttackTick", this.attackTick);
-
     }
 
     /**
@@ -168,7 +178,6 @@ public class LiopleurodonEntity extends WaterAnimal {
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.setMoisntessLevel(pCompound.getInt("Moistness"));
-        this.attackTick = pCompound.getInt("AttackTick");
     }
 
     public void tick() {
@@ -212,11 +221,6 @@ public class LiopleurodonEntity extends WaterAnimal {
         }
     }
 
-    protected boolean closeToNextPos() {
-        BlockPos blockpos = this.getNavigation().getTargetPos();
-        return blockpos != null ? blockpos.closerToCenterThan(this.position(), 12.0D) : false;
-    }
-
     public void travel(Vec3 travelVector) {
         if (this.isEffectiveAi() && this.isInWater()) {
             this.moveRelative(this.getSpeed(), travelVector);
@@ -231,15 +235,6 @@ public class LiopleurodonEntity extends WaterAnimal {
 
     }
 
-    class LiopleurodonMeleeAttackGoal extends MeleeAttackGoal {
-        public LiopleurodonMeleeAttackGoal() {
-            super(LiopleurodonEntity.this, 1.0D, true);
-        }
-        protected double getAttackReachSqr(LivingEntity pAttackTarget) {
-            float f = LiopleurodonEntity.this.getBbWidth() - 0.1F;
-            return (double)(f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
-        }
-    }
 
     static class MoveHelperController extends MoveControl {
         private final LiopleurodonEntity dolphin;
