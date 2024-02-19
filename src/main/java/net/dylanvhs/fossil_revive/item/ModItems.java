@@ -78,17 +78,19 @@ public static final RegistryObject<Item> XENACANTHUS_BUCKET = ITEMS.register("xe
 public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bones_music_disc",
         () -> new RecordItem(6, ModSounds.BONES, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4900));
 
-    public static final RegistryObject<Item> LIOPLEURODON_SPAWN_EGG = ITEMS.register("liopleurodon_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.LIOPLEURODON, 0x7e9680, 0xc5d1c5, new Item.Properties()));
-    public static final RegistryObject<Item> QUETZALCOATLUS_SPAWN_EGG = ITEMS.register("quetzalcoatlus_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.QUETZALCOATLUS, 0x7e4680, 0xc951c5, new Item.Properties()));
-    public static final RegistryObject<Item> MICRORAPTOR_SPAWN_EGG = ITEMS.register("microraptor_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.MICRORAPTOR, 0x3e4580, 0xc391c5, new Item.Properties()));
-    public static final RegistryObject<Item> DILOPHOSAURUS_SPAWN_EGG = ITEMS.register("dilophosaurus_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.DILOPHOSAURUS, 0x5e4730, 0x1c31c5, new Item.Properties()));
 
-    public static final RegistryObject<Item> XENACANTHUS_SPAWN_EGG = ITEMS.register("xenacanthus_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.XENACANTHUS, 0x5e4730, 0x1c31c5, new Item.Properties()));
+public static final RegistryObject<Item> DODO_SPAWN_EGG = ITEMS.register("dodo_spawn_egg",
+        () -> new ForgeSpawnEggItem(ModEntities.DODO, 0x2e4730, 0x7c31c5, new Item.Properties()));
+public static final RegistryObject<Item> DILOPHOSAURUS_SPAWN_EGG = ITEMS.register("dilophosaurus_spawn_egg",
+        () -> new ForgeSpawnEggItem(ModEntities.DILOPHOSAURUS, 0x5e4730, 0x1c31c5, new Item.Properties()));
+public static final RegistryObject<Item> LIOPLEURODON_SPAWN_EGG = ITEMS.register("liopleurodon_spawn_egg",
+        () -> new ForgeSpawnEggItem(ModEntities.LIOPLEURODON, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+public static final RegistryObject<Item> QUETZALCOATLUS_SPAWN_EGG = ITEMS.register("quetzalcoatlus_spawn_egg",
+        () -> new ForgeSpawnEggItem(ModEntities.QUETZALCOATLUS, 0x7e4680, 0xc951c5, new Item.Properties()));
+public static final RegistryObject<Item> MICRORAPTOR_SPAWN_EGG = ITEMS.register("microraptor_spawn_egg",
+        () -> new ForgeSpawnEggItem(ModEntities.MICRORAPTOR, 0x3e4580, 0xc391c5, new Item.Properties()));
+public static final RegistryObject<Item> XENACANTHUS_SPAWN_EGG = ITEMS.register("xenacanthus_spawn_egg",
+        () -> new ForgeSpawnEggItem(ModEntities.XENACANTHUS, 0x8e4730, 0x5c31c5, new Item.Properties()));
 
 
 

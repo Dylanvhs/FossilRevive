@@ -16,5 +16,6 @@ public class ModEventBusEvents {
         event.put(ModEntities.MICRORAPTOR.get(), MicroraptorEntity.createAttributes().build());
         event.put(ModEntities.DILOPHOSAURUS.get(), DilophosaurusEntity.createAttributes().build());
         event.put(ModEntities.XENACANTHUS.get(), XenacanthusEntity.createAttributes().build());
+        event.put(ModEntities.DODO.get(), DodoEntity.createAttributes().build());
     }
 }

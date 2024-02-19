@@ -24,7 +24,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<MicroraptorEntity>> MICRORAPTOR =
             ENTITY_TYPES.register("microraptor", () -> EntityType.Builder.of(MicroraptorEntity::new, MobCategory.CREATURE)
-                    .sized(0.5f, 0.5f).build("microraptor"));
+                    .sized(0.4f, 0.7f).build("microraptor"));
 
     public static final RegistryObject<EntityType<DilophosaurusEntity>> DILOPHOSAURUS =
             ENTITY_TYPES.register("dilophosaurus", () -> EntityType.Builder.of(DilophosaurusEntity::new, MobCategory.CREATURE)
@@ -33,6 +33,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<XenacanthusEntity>> XENACANTHUS =
             ENTITY_TYPES.register("xenacanthus", () -> EntityType.Builder.of(XenacanthusEntity::new, MobCategory.WATER_CREATURE)
                     .sized(0.5f, 0.3f).build("xenacanthus"));
+
+    public static final RegistryObject<EntityType<DodoEntity>> DODO =
+            ENTITY_TYPES.register("dodo", () -> EntityType.Builder.of(DodoEntity::new, MobCategory.CREATURE)
+                    .sized(0.5f, 1f).build("dodo"));
 
 
 

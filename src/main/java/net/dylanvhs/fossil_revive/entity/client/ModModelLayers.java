@@ -20,4 +20,7 @@ public class ModModelLayers {
     public static final ModelLayerLocation XENACANTHUS_LAYER = new ModelLayerLocation(
             new ResourceLocation(FossilRevive.MOD_ID, "xenacanthus_layer"), "main");
 
+    public static final ModelLayerLocation DODO_LAYER = new ModelLayerLocation(
+            new ResourceLocation(FossilRevive.MOD_ID, "dodo_layer"), "main");
+
 }
