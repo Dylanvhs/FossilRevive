@@ -129,7 +129,7 @@ public class LiopleurodonEntity extends WaterAnimal {
     }
 
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return 0.3F;
+        return 0.8F;
     }
 
     /**

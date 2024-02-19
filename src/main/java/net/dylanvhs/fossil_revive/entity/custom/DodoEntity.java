@@ -50,17 +50,18 @@ public class DodoEntity extends Animal {
         } else {
             --this.idleAnimationTimeOut;
         }
-        if (this.isFlapping() && flapAnimationTimeOut <= 0) {
-            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
+        if (this.getPose() == Pose.FALL_FLYING && flapAnimationTimeOut <= 0) {
+            this.flapAnimationTimeOut = this.random.nextInt(40) + 80;
             this.flapAnimationState.start(this.tickCount);
         } else {
             --this.flapAnimationTimeOut;
         }
 
-        if (!this.isFlapping()) {
+        if (this.getPose() == Pose.STANDING) {
             flapAnimationState.stop();
         }
     }
+
 
 
     @Override
@@ -100,6 +101,9 @@ public class DodoEntity extends Animal {
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround() && this.flapping < 1.0F) {
             this.flapping = 1.0F;
+            setPose(Pose.FALL_FLYING);
+        } else {
+            setPose(Pose.STANDING);
         }
         this.flapping *= 0.9F;
         Vec3 vec3 = this.getDeltaMovement();
@@ -123,6 +127,10 @@ public class DodoEntity extends Animal {
     }
 
     protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    }
+
+    protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
+        return 1.2F;
     }
 
     @Nullable
