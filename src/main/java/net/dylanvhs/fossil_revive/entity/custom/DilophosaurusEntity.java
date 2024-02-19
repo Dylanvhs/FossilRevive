@@ -1,8 +1,12 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
+import net.dylanvhs.fossil_revive.entity.ai.DilophosaurusAttackGoal;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -19,14 +23,19 @@ import java.util.UUID;
 
 public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
 
+    private static final EntityDataAccessor<Boolean> ATTACKING =
+            SynchedEntityData.defineId(DilophosaurusEntity.class, EntityDataSerializers.BOOLEAN);
+
     public DilophosaurusEntity(EntityType<? extends DilophosaurusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
     public final AnimationState idleAnimationState = new AnimationState();
-    public static final AnimationState attackAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
-    private int attackTick;
+
+    public final AnimationState attackAnimationState = new AnimationState();
+    public int attackAnimationTimeout = 0;
+
 
     @Override
     public void tick() {
@@ -44,6 +53,17 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
+        }
+
+        if(this.isAttacking() && attackAnimationTimeout <= 0) {
+            attackAnimationTimeout = 80; // Length in ticks of your animation
+            attackAnimationState.start(this.tickCount);
+        } else {
+            --this.attackAnimationTimeout;
+        }
+
+        if(!this.isAttacking()) {
+            attackAnimationState.stop();
         }
     }
 
@@ -64,9 +84,8 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(4, new DilophosaurusEntity.DilophosaurusMeleeAttackGoal());
+        this.goalSelector.addGoal(1, new DilophosaurusAttackGoal(this, 1.0D, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
-
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -80,15 +99,18 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1f);
     }
 
-    public void handleEntityEvent(byte pId) {
-        if (pId == 4) {
-            this.attackTick = 10;
-        }
-        super.handleEntityEvent(pId);
+    public void setAttacking(boolean attacking) {
+        this.entityData.set(ATTACKING, attacking);
     }
 
-    public int getAttackTick() {
-        return this.attackTick;
+    public boolean isAttacking() {
+        return this.entityData.get(ATTACKING);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(ATTACKING, false);
     }
 
 
@@ -99,8 +121,6 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
 
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
-        pCompound.putInt("AttackTick", this.attackTick);
-
     }
 
     /**
@@ -108,7 +128,6 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
      */
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
-        this.attackTick = pCompound.getInt("AttackTick");
     }
 
     @Override
@@ -136,18 +155,4 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
     public void startPersistentAngerTimer() {
 
     }
-
-
-    class DilophosaurusMeleeAttackGoal extends MeleeAttackGoal {
-        public DilophosaurusMeleeAttackGoal() {
-            super(DilophosaurusEntity.this, 1.0D, true);
-        }
-
-        protected double getAttackReachSqr(LivingEntity pAttackTarget) {
-            float f = DilophosaurusEntity.this.getBbWidth() - 0.1F;
-            return (double)(f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
-        }
-    }
-
-
 }

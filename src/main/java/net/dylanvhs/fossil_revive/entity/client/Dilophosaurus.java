@@ -102,7 +102,7 @@ public class Dilophosaurus<T extends Entity> extends HierarchicalModel<T> {
 
 		this.animateWalk(ModAnimationDefinitions.DILOPHOSAURUS_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
 		this.animate(((DilophosaurusEntity) entity).idleAnimationState, ModAnimationDefinitions.DILOPHOSAURUS_IDLE, ageInTicks, 1f);
-		this.animate(DilophosaurusEntity.attackAnimationState, ModAnimationDefinitions.DILOPHOSAURUS_ATTACK, ageInTicks, 1f);
+		this.animate(((DilophosaurusEntity) entity).attackAnimationState, ModAnimationDefinitions.DILOPHOSAURUS_ATTACK, ageInTicks, 1f);
 	}
 
 	private void applyHeadRotation(float pNetHeadYaw, float pHeadPitch, float pAgeInTicks) {
