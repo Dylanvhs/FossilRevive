@@ -25,8 +25,10 @@ public class DodoEntity extends Animal {
     private float nextFlap = 1.0F;
 
     public final AnimationState idleAnimationState = new AnimationState();
-    public final AnimationState flapAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
+    public final AnimationState flapAnimationState = new AnimationState();
+    private int flapAnimationTimeOut = 0;
+
 
     public DodoEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -48,13 +50,18 @@ public class DodoEntity extends Animal {
         } else {
             --this.idleAnimationTimeOut;
         }
-        if (this.isFlapping()) {
-            this.idleAnimationState.stop();
+        if (this.isFlapping() && flapAnimationTimeOut <= 0) {
+            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
             this.flapAnimationState.start(this.tickCount);
         } else {
-            this.flapAnimationState.stop();
+            --this.flapAnimationTimeOut;
+        }
+
+        if (!this.isFlapping()) {
+            flapAnimationState.stop();
         }
     }
+
 
     @Override
     protected void updateWalkAnimation(float pPartialTick) {

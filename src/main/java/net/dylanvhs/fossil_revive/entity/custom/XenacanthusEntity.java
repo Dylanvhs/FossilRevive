@@ -13,6 +13,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -22,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
@@ -35,8 +38,17 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
 public class XenacanthusEntity extends AbstractFish implements Bucketable {
+    private static final Predicate<LivingEntity> SCARY_MOB = (p_289442_) -> {
+        if (p_289442_ instanceof Player && ((Player)p_289442_).isCreative()) {
+            return false;
+        } else {
+            return p_289442_.getType() == EntityType.AXOLOTL || p_289442_.getMobType() != MobType.WATER;
+        }
+    };
+    static final TargetingConditions targetingConditions = TargetingConditions.forNonCombat().ignoreInvisibilityTesting().ignoreLineOfSight().selector(SCARY_MOB);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(XenacanthusEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(XenacanthusEntity.class, EntityDataSerializers.INT);
 
@@ -50,6 +62,14 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
+    }
+
+    public void tick() {
+        super.tick();
+
+        if (this.level().isClientSide()) {
+            setupAnimationState();
+        }
     }
 
 
@@ -85,6 +105,20 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
             case 3 -> "azalea_cruiser";
             default -> "shell_crusher";
         };
+    }
+
+    public void aiStep() {
+        super.aiStep();
+        if (this.isAlive()) {
+            for(Mob mob : this.level().getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(0.3D), (p_149013_) -> {
+                return targetingConditions.test(this, p_149013_);
+            })) {
+                if (mob.isAlive()) {
+                    this.touch(mob);
+                }
+            }
+        }
+
     }
 
     @Override
@@ -126,6 +160,14 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         return Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
+    }
+
+    private void touch(Mob pMob) {
+        if (pMob.hurt(this.damageSources().mobAttack(this), (float)(1))) {
+            pMob.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), this);
+            this.playSound(SoundEvents.PUFFER_FISH_STING, 1.0F, 1.0F);
+        }
+
     }
 
     public int getVariant() {

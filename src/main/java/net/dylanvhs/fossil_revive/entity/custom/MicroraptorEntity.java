@@ -83,9 +83,11 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.FERMENTED_SPIDER_EYE);
 
     private int rideCooldown = 0;
+
     public final AnimationState idleAnimationState = new AnimationState();
-    public final AnimationState flapAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
+    public final AnimationState flapAnimationState = new AnimationState();
+    private int flapAnimationTimeOut = 0;
     private int ticksSinceEaten;
 
     @Override
@@ -127,6 +129,16 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
+        }
+        if (this.isFlapping() && flapAnimationTimeOut <= 0) {
+            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
+            this.flapAnimationState.start(this.tickCount);
+        } else {
+            --this.flapAnimationTimeOut;
+        }
+
+        if (!this.isFlapping()) {
+            flapAnimationState.stop();
         }
     }
 

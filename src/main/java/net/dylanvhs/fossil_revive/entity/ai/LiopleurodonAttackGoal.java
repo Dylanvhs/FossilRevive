@@ -10,7 +10,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 public class LiopleurodonAttackGoal extends MeleeAttackGoal {
     private final LiopleurodonEntity entity;
     private int attackDelay = 14;
-    private int ticksUntilNextAttack = 18;
+    private int ticksUntilNextAttack = 20;
     private boolean shouldCountTillNextAttack = false;
 
     public LiopleurodonAttackGoal(PathfinderMob pMob, double pSpeedModifier, boolean pFollowingTargetEvenIfNotSeen) {
@@ -22,7 +22,7 @@ public class LiopleurodonAttackGoal extends MeleeAttackGoal {
     public void start() {
         super.start();
         attackDelay = 14;
-        ticksUntilNextAttack = 18;
+        ticksUntilNextAttack = 20;
     }
 
     @Override
