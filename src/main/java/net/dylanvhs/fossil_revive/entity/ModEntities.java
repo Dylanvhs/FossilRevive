@@ -32,7 +32,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<XenacanthusEntity>> XENACANTHUS =
             ENTITY_TYPES.register("xenacanthus", () -> EntityType.Builder.of(XenacanthusEntity::new, MobCategory.WATER_CREATURE)
-                    .sized(1f, 1.8f).build("xenacanthus"));
+                    .sized(0.5f, 0.3f).build("xenacanthus"));
 
 
 

@@ -24,9 +24,9 @@ public class Xenacanthus<T extends Entity> extends HierarchicalModel<T> {
 			MeshDefinition meshdefinition = new MeshDefinition();
 			PartDefinition partdefinition = meshdefinition.getRoot();
 
-			PartDefinition xenacanthus = partdefinition.addOrReplaceChild("xenacanthus", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+			PartDefinition Xenacanthus = partdefinition.addOrReplaceChild("Xenacanthus", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-			PartDefinition body = xenacanthus.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+			PartDefinition body = Xenacanthus.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
 			PartDefinition bone = body.addOrReplaceChild("bone", CubeListBuilder.create().texOffs(0, 27).addBox(-2.0F, -2.5F, -6.0F, 4.0F, 5.0F, 12.0F, new CubeDeformation(0.0F))
 					.texOffs(0, 0).addBox(0.0F, -4.5F, -5.0F, 0.0F, 3.0F, 13.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -2.5F, 0.0F));
@@ -62,6 +62,9 @@ public class Xenacanthus<T extends Entity> extends HierarchicalModel<T> {
 			if (!entity.isInWater()) {
 				f = 1.5F;
 			}
+			this.Xenacanthus.xRot = headPitch * ((float)Math.PI / 220F);
+			this.Xenacanthus.yRot = netHeadYaw * ((float)Math.PI / 220F);
+
 
 			this.animateWalk(ModAnimationDefinitions.XENACANTHUS_SWIM, limbSwing, limbSwingAmount, 2f, 2.5f);
 			this.animate(((XenacanthusEntity) entity).idleAnimationState, ModAnimationDefinitions.XENACANTHUS_SWIM, ageInTicks, 1f);

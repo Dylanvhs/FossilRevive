@@ -43,6 +43,10 @@
   "entity.fossil_revive.dilophosaurus": "Dilophosaurus",
   "entity.fossil_revive.xenacanthus": "Xenacanthus",
 
+  "entity.fossil_revive.xenacanthus.variant_coral_stalker": "Coral Stalker",
+  "entity.fossil_revive.xenacanthus.variant_gilded_stealth": "Gilded Stealth",
+  "entity.fossil_revive.xenacanthus.variant_azalea_cruiser": "Azalea Cruiser",
+  "entity.fossil_revive.xenacanthus.variant_shell_crusher": "Shell Crusher",
 
   "creativetab.fossil_revive_tab": "Fossil Revive"
 }

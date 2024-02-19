@@ -26,6 +26,7 @@ import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bucketable;
 
+import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -79,10 +80,10 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
 
     public static String getVariantName(int variant) {
         return switch (variant) {
-            case 1 -> "coral stalker";
-            case 2 -> "gold shadow";
-            case 3 -> "azalea cruiser";
-            default -> "shell crusher";
+            case 1 -> "coral_stalker";
+            case 2 -> "gilded_stealth";
+            case 3 -> "azalea_cruiser";
+            default -> "shell_crusher";
         };
     }
 
@@ -184,11 +185,11 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
 
 
 
-    public static AttributeSupplier setAttributes() {
-        return Animal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 10D)
-                .add(Attributes.MOVEMENT_SPEED, 0.4D)
-                .build();
+    public static AttributeSupplier.Builder createAttributes() {
+        return AbstractFish.createLivingAttributes()
+                .add(Attributes.MAX_HEALTH, 12D)
+                .add(Attributes.FOLLOW_RANGE, 24D)
+                .add(Attributes.MOVEMENT_SPEED, 2D);
     }
 
     @Override
