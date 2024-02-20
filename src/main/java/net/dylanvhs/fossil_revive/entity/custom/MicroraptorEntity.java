@@ -1,26 +1,21 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 import com.google.common.collect.Sets;
-import com.mojang.serialization.Codec;
-import net.minecraft.Util;
-import net.minecraft.advancements.critereon.EntityVariantPredicate;
+
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -30,10 +25,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.OwnerHurtTargetGoal;
-import net.minecraft.world.entity.animal.Fox;
-import net.minecraft.world.entity.animal.Parrot;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,12 +33,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
@@ -61,14 +51,14 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             default -> "blue miracle";
         };
     }
+
     public MicroraptorEntity(EntityType<? extends MicroraptorEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
 
         this.setCanPickUpLoot(true);
     }
-    static final Predicate<ItemEntity> ALLOWED_ITEMS = (p_289438_) -> {
-        return !p_289438_.hasPickUpDelay() && p_289438_.isAlive();
-    };
+
+    static final Predicate<ItemEntity> ALLOWED_ITEMS = (p_289438_) -> !p_289438_.hasPickUpDelay() && p_289438_.isAlive();
 
     public float flap;
     public float flapSpeed;
@@ -88,6 +78,8 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     private int idleAnimationTimeOut = 0;
     public final AnimationState flapAnimationState = new AnimationState();
     private int flapAnimationTimeOut = 0;
+    public final AnimationState sitAnimationState = new AnimationState();
+    private int sitAnimationTimeOut = 0;
     private int ticksSinceEaten;
 
     @Override
@@ -97,7 +89,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         if (this.level().isClientSide()) {
             setupAnimationState();
         }
-
 
         this.interestedAngleO = this.interestedAngle;
         if (this.isInterested()) {
@@ -110,13 +101,13 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     @Nullable
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         float variantChange = this.getRandom().nextFloat();
-        if(variantChange <= 0.40F) {
+        if (variantChange <= 0.40F) {
             this.setVariant(3);
-        } else if(variantChange <= 0.60F){
+        } else if (variantChange <= 0.50F) {
             this.setVariant(2);
-        }else if(variantChange <= 0.80F){
+        } else if (variantChange <= 0.60F) {
             this.setVariant(1);
-        }else{
+        } else {
             this.setVariant(0);
         }
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
@@ -139,6 +130,17 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
         if (this.getPose() == Pose.STANDING) {
             flapAnimationState.stop();
+        }
+
+        if (this.isOrderedToSit() && sitAnimationTimeOut <= 0) {
+            this.sitAnimationTimeOut = this.random.nextInt(40) + 80;
+            this.sitAnimationState.start(this.tickCount);
+        } else {
+            --this.sitAnimationTimeOut;
+        }
+
+        if (!this.isOrderedToSit()) {
+            sitAnimationState.stop();
         }
     }
 
@@ -166,7 +168,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(2, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
-        this.goalSelector.addGoal(3, new FollowMobGoal(this, 1.0D, 3.0F, 7.0F));
         this.goalSelector.addGoal(0, new ClimbOnTopOfPowderSnowGoal(this, this.level()));
         this.goalSelector.addGoal(11, new MicroraptorEntity.MicroraptorSearchForItemsGoal());
         this.goalSelector.addGoal(2, new MicroraptorEntity.MicroraptorMeleeAttackGoal());
@@ -193,39 +194,13 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         }
     }
 
-    public void rideTick() {
-        Entity mount = this.getVehicle();
-
-        if (this.isPassenger() && !mount.isAlive()) {
-            this.stopRiding();
-        } else if (mount instanceof Player player && this.isPassenger()) {
-            this.setDeltaMovement(0, 0, 0);
-            //this.yBodyRot = ((LivingEntity) player).yBodyRot;
-            //this.setYRot(player.getYRot());
-            //this.yHeadRot = ((LivingEntity) player).yHeadRot;
-            //this.yRotO = ((LivingEntity) player).yHeadRot;
-            float radius = 0F;
-            float angle = (0.01745329251F * (((LivingEntity) player).yBodyRot - 180F));
-            double extraX = radius * Mth.sin((float) (Math.PI + angle));
-            double extraZ = radius * Mth.cos(angle);
-            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 0, false, false ));
-            this.setPos(player.getX() + extraX, Math.max(player.getY() + player.getBbHeight() + 0.1, player.getY()), player.getZ() + extraZ);
-            if (!player.isAlive() || rideCooldown == 0 || player.isShiftKeyDown() || !mount.isAlive()) {
-                this.stopRiding();
-                this.removeEffect(MobEffects.SLOW_FALLING);
-            }
-        } else {
-            super.rideTick();
-        }
-
-    }
-
     protected void playStepSound(BlockPos pPos, BlockState pBlock) {
         this.playSound(SoundEvents.PARROT_STEP, 0.15F, 1.0F);
     }
 
     public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pHand);
+        InteractionResult interactionresult = super.mobInteract(pPlayer, pHand);
         if (!this.isTame() && TAME_FOOD.contains(itemstack.getItem())) {
             if (!pPlayer.getAbilities().instabuild) {
                 itemstack.shrink(1);
@@ -235,9 +210,9 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             }
 
             if (!this.level().isClientSide) {
-                if (this.random.nextInt(10) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
+                if (this.random.nextInt(5) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, pPlayer)) {
                     this.tame(pPlayer);
-                    this.setTarget((LivingEntity)null);
+                    this.setTarget((LivingEntity) null);
                     this.level().broadcastEntityEvent(this, (byte) 7);
                 } else {
                     this.level().broadcastEntityEvent(this, (byte) 6);
@@ -256,27 +231,62 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
 
             }
-
-         else if (this.isTame() && this.isOwnedBy(pPlayer) && pPlayer.isShiftKeyDown()) {
-            if (!this.level().isClientSide) {
-                this.setOrderedToSit(!this.isOrderedToSit());
+        } else if ((!interactionresult.consumesAction() || this.isBaby()) && this.isOwnedBy(pPlayer) && pPlayer.isShiftKeyDown()) {
+            this.setOrderedToSit(!this.isOrderedToSit());
+            this.jumping = false;
+            this.navigation.stop();
+            this.setTarget((LivingEntity) null);
+            return InteractionResult.sidedSuccess(this.level().isClientSide);
+        } else {
+            if (pPlayer.getPassengers().isEmpty() && isTame() && !pPlayer.isShiftKeyDown() && !isOrderedToSit()) {
+                this.startRiding(pPlayer);
+                rideCooldown = 20;
+                return InteractionResult.sidedSuccess(this.level().isClientSide);
+            } else {
+                return super.mobInteract(pPlayer, pHand);
             }
 
-            return InteractionResult.sidedSuccess(this.level().isClientSide);
         }
+        return interactionresult;
+    }
 
-        }
-        if (pPlayer.getPassengers().isEmpty() && isTame() && !pPlayer.isShiftKeyDown()) {
-            this.startRiding(pPlayer);
-            rideCooldown = 20;
-            return InteractionResult.SUCCESS;
-        }
 
-        else {
-            return super.mobInteract(pPlayer, pHand);
+    public void rideTick() {
+        Entity mount = this.getVehicle();
+
+        if (this.isPassenger() && !mount.isAlive()) {
+            this.stopRiding();
+        } else if (mount instanceof Player player && this.isPassenger()) {
+            this.setDeltaMovement(0, 0, 0);
+            //this.yBodyRot = ((LivingEntity) player).yBodyRot;
+            //this.setYRot(player.getYRot());
+            //this.yHeadRot = ((LivingEntity) player).yHeadRot;
+            //this.yRotO = ((LivingEntity) player).yHeadRot;
+            float radius = 0F;
+            float angle = (0.01745329251F * (((LivingEntity) player).yBodyRot - 180F));
+            double extraX = radius * Mth.sin((float) (Math.PI + angle));
+            double extraZ = radius * Mth.cos(angle);
+            player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 0, false, false));
+            this.setPos(player.getX() + extraX, Math.max(player.getY() + player.getBbHeight() + 0.1, player.getY()), player.getZ() + extraZ);
+            if (!mount.onGround()) {
+                setPose(Pose.FALL_FLYING);
+            } else {
+                setPose(Pose.STANDING);
+            }
+            if (!player.isAlive() || rideCooldown == 0 || player.isShiftKeyDown() || !mount.isAlive()) {
+                this.stopRiding();
+                this.removeEffect(MobEffects.SLOW_FALLING);
+            }
+            if (mount.isInWater()) {
+                this.stopRiding();
+                this.removeEffect(MobEffects.SLOW_FALLING);
+            }
+        } else {
+            super.rideTick();
         }
 
     }
+
 
     public void aiStep() {
         super.aiStep();
@@ -507,6 +517,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         } else {
             if (!this.level().isClientSide) {
                 this.setOrderedToSit(false);
+                this.setPose(Pose.STANDING);
             }
 
             return super.hurt(pSource, pAmount);
@@ -515,7 +526,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
 
     class MicroraptorMeleeAttackGoal extends MeleeAttackGoal {
         public MicroraptorMeleeAttackGoal() {
-            super(MicroraptorEntity.this, 1.0D, true);
+            super(MicroraptorEntity.this, 1.2D, true);
         }
 
         protected double getAttackReachSqr(LivingEntity pAttackTarget) {

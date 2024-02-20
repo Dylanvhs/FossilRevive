@@ -10,6 +10,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -89,7 +91,7 @@ public class LiopleurodonEntity extends WaterAnimal {
                 .add(Attributes.MOVEMENT_SPEED, 2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.2f)
                 .add(Attributes.ATTACK_DAMAGE, 8f)
-                .add(Attributes.ATTACK_SPEED, 0.3f)
+                .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.6f);
     }
 
@@ -105,6 +107,9 @@ public class LiopleurodonEntity extends WaterAnimal {
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, DilophosaurusEntity.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, XenacanthusEntity.class, true));
 
     }
 
@@ -233,6 +238,14 @@ public class LiopleurodonEntity extends WaterAnimal {
             super.travel(travelVector);
         }
 
+    }
+
+    protected SoundEvent getSwimSplashSound() {
+        return SoundEvents.DOLPHIN_SPLASH;
+    }
+
+    protected SoundEvent getSwimSound() {
+        return SoundEvents.DOLPHIN_SWIM;
     }
 
 

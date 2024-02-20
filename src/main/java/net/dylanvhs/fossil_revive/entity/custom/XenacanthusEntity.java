@@ -20,16 +20,12 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
-import net.minecraft.world.entity.ai.goal.TryFindWaterGoal;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Bucketable;
+import net.minecraft.world.entity.animal.*;
 
-import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -38,9 +34,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.UUID;
 import java.util.function.Predicate;
 
-public class XenacanthusEntity extends AbstractFish implements Bucketable {
+public class XenacanthusEntity extends AbstractFish implements Bucketable, NeutralMob {
     private static final Predicate<LivingEntity> SCARY_MOB = (p_289442_) -> {
         if (p_289442_ instanceof Player && ((Player)p_289442_).isCreative()) {
             return false;
@@ -48,6 +45,7 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
             return p_289442_.getType() == EntityType.AXOLOTL || p_289442_.getMobType() != MobType.WATER;
         }
     };
+
     static final TargetingConditions targetingConditions = TargetingConditions.forNonCombat().ignoreInvisibilityTesting().ignoreLineOfSight().selector(SCARY_MOB);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(XenacanthusEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(XenacanthusEntity.class, EntityDataSerializers.INT);
@@ -55,10 +53,9 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
 
     public final AnimationState idleAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
-    public static final AnimationState attackAnimationState = new AnimationState();
 
 
-    public XenacanthusEntity(EntityType<? extends AbstractFish> entityType, Level level) {
+    public XenacanthusEntity(EntityType<? extends XenacanthusEntity> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
@@ -105,6 +102,29 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
             case 3 -> "azalea_cruiser";
             default -> "shell_crusher";
         };
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return AbstractFish.createLivingAttributes()
+                .add(Attributes.MAX_HEALTH, 10D)
+                .add(Attributes.FOLLOW_RANGE, 24D)
+                .add(Attributes.MOVEMENT_SPEED, 2D)
+                .add(Attributes.ARMOR_TOUGHNESS, 0f)
+                .add(Attributes.ATTACK_DAMAGE, 3f)
+                .add(Attributes.ATTACK_SPEED, 0.5f)
+                .add(Attributes.ATTACK_KNOCKBACK, 0f);
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
+        this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.8D, 1));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Cod.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Salmon.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Axolotl.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, TropicalFish.class, true));
+        this.goalSelector.addGoal(2, new XenacanthusEntity.XenacanthusMeleeAttackGoal());
     }
 
     public void aiStep() {
@@ -224,25 +244,6 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
         return MobType.WATER;
     }
 
-
-
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return AbstractFish.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 12D)
-                .add(Attributes.FOLLOW_RANGE, 24D)
-                .add(Attributes.MOVEMENT_SPEED, 2D);
-    }
-
-    @Override
-    protected void registerGoals() {
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6.0F));
-        this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.8D, 1));
-    }
-
-
     protected SoundEvent getAmbientSound() {
         return SoundEvents.TROPICAL_FISH_AMBIENT;
     }
@@ -261,4 +262,40 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable {
         return SoundEvents.TROPICAL_FISH_FLOP;
     }
 
+    @Override
+    public int getRemainingPersistentAngerTime() {
+        return 0;
+    }
+
+    @Override
+    public void setRemainingPersistentAngerTime(int pRemainingPersistentAngerTime) {
+
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public UUID getPersistentAngerTarget() {
+        return null;
+    }
+
+    @Override
+    public void setPersistentAngerTarget(@org.jetbrains.annotations.Nullable UUID pPersistentAngerTarget) {
+
+    }
+
+    @Override
+    public void startPersistentAngerTimer() {
+
+    }
+
+    class XenacanthusMeleeAttackGoal extends MeleeAttackGoal {
+        public XenacanthusMeleeAttackGoal() {
+            super(XenacanthusEntity.this, 1.2D, true);
+        }
+
+        protected double getAttackReachSqr(LivingEntity pAttackTarget) {
+            float f = XenacanthusEntity.this.getBbWidth() - 0.1F;
+            return (double)(f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
+        }
+    }
 }
