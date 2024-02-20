@@ -26,6 +26,8 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.monster.Ravager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -107,7 +109,8 @@ public class LiopleurodonEntity extends WaterAnimal {
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Ravager.class, true));
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Villager.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, DilophosaurusEntity.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, XenacanthusEntity.class, true));
 
