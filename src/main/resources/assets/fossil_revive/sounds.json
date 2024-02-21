@@ -6,5 +6,20 @@
         "stream": true
       }
     ]
+  },
+  "dilophosaurus_ambient": {
+    "sounds": [
+      {
+        "name": "fossil_revive:dilophosaurus_ambient"
+      }
+    ]
+  },
+
+  "dilophosaurus_hurt": {
+    "sounds": [
+      {
+        "name": "fossil_revive:dilophosaurus_hurt"
+      }
+    ]
   }
 }

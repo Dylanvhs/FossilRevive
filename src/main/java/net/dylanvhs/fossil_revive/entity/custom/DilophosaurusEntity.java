@@ -2,12 +2,16 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.ai.DilophosaurusAttackGoal;
+import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -97,6 +101,10 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
                 .add(Attributes.ATTACK_DAMAGE, 4f)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1f);
+    }
+
+    protected SoundEvent getAmbientSound(DamageSource pDamageSource) {
+        return ModSounds.DILOPHOSAURUS_AMBIENT;
     }
 
     public void setAttacking(boolean attacking) {

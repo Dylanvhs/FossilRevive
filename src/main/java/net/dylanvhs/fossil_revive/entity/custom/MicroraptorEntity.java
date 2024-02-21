@@ -142,6 +142,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         if (!this.isOrderedToSit()) {
             sitAnimationState.stop();
         }
+
     }
 
     @Override
@@ -517,10 +518,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         if (this.isInvulnerableTo(pSource)) {
             return false;
         } else {
-            if (!this.level().isClientSide) {
-                this.setOrderedToSit(false);
-            }
-
+            this.setOrderedToSit(false);
             return super.hurt(pSource, pAmount);
         }
     }
