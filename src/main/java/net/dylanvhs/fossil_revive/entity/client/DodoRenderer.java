@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class DodoRenderer extends MobRenderer<DodoEntity, Dodo<DodoEntity>> {
     public DodoRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new Dodo<>(pContext.bakeLayer(ModModelLayers.DODO_LAYER)), 1f);
+        super(pContext, new Dodo<>(pContext.bakeLayer(ModModelLayers.DODO_LAYER)), 0.5f);
     }
 
     @Override

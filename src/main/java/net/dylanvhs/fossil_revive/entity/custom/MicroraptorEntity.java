@@ -268,11 +268,7 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             double extraZ = radius * Mth.cos(angle);
             player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 20, 0, false, false));
             this.setPos(player.getX() + extraX, Math.max(player.getY() + player.getBbHeight() + 0.1, player.getY()), player.getZ() + extraZ);
-            if (!mount.onGround()) {
-                setPose(Pose.FALL_FLYING);
-            } else {
-                setPose(Pose.STANDING);
-            }
+
             if (!player.isAlive() || rideCooldown == 0 || player.isShiftKeyDown() || !mount.isAlive()) {
                 this.stopRiding();
                 this.removeEffect(MobEffects.SLOW_FALLING);
@@ -280,6 +276,12 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             if (mount.isInWater()) {
                 this.stopRiding();
                 this.removeEffect(MobEffects.SLOW_FALLING);
+            }
+
+            if (!mount.onGround()) {
+                setPose(Pose.FALL_FLYING);
+            } else {
+                setPose(Pose.STANDING);
             }
         } else {
             super.rideTick();
@@ -517,7 +519,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         } else {
             if (!this.level().isClientSide) {
                 this.setOrderedToSit(false);
-                this.setPose(Pose.STANDING);
             }
 
             return super.hurt(pSource, pAmount);

@@ -15,7 +15,7 @@ public class XenacanthusRenderer extends MobRenderer<XenacanthusEntity, Xenacant
     private static final ResourceLocation GREEN = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/xenacanthus_green.png");
     private static final ResourceLocation ORANGE = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/xenacanthus_orange.png");
     public XenacanthusRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new Xenacanthus<>(pContext.bakeLayer(ModModelLayers.XENACANTHUS_LAYER)), 0.2f);
+        super(pContext, new Xenacanthus<>(pContext.bakeLayer(ModModelLayers.XENACANTHUS_LAYER)), 0.4f);
     }
 
     @Override
