@@ -23,5 +23,14 @@
         "name": "fossil_revive:dilophosaurus_hurt"
       }
     ]
+  },
+
+  "lio_ambient": {
+    "subtitles": "sounds.fossil_revive.lio_ambient",
+    "sounds": [
+      {
+        "name": "fossil_revive:liopleurodon_ambient"
+      }
+    ]
   }
 }

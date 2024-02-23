@@ -17,6 +17,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> BONES = registerSoundEvents("bones");
     public static final RegistryObject<SoundEvent> DILO_AMBIENT = registerSoundEvents("dilo_ambient");
     public static final RegistryObject<SoundEvent> DILO_HURT = registerSoundEvents("dilo_hurt");
+    public static final RegistryObject<SoundEvent> LIO_AMBIENT = registerSoundEvents("lio_ambient");
 
 
     private static RegistryObject<SoundEvent> registerSoundEvents(String name) {

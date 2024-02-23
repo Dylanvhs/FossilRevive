@@ -4,6 +4,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 import net.dylanvhs.fossil_revive.entity.ai.DilophosaurusAttackGoal;
 import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonAttackGoal;
 import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonJumpGoal;
+import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -114,6 +115,10 @@ public class LiopleurodonEntity extends WaterAnimal {
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, DilophosaurusEntity.class, true));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, XenacanthusEntity.class, true));
 
+    }
+
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.LIO_AMBIENT.get();
     }
 
     public void setAttacking(boolean attacking) {
