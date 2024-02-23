@@ -103,8 +103,16 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
                 .add(Attributes.ATTACK_KNOCKBACK, 0.1f);
     }
 
-    protected SoundEvent getAmbientSound(DamageSource pDamageSource) {
-        return ModSounds.DILOPHOSAURUS_AMBIENT;
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.DILO_AMBIENT.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.DILO_HURT.get();
+    }
+
+    protected float getSoundVolume() {
+        return 0.4F;
     }
 
     public void setAttacking(boolean attacking) {

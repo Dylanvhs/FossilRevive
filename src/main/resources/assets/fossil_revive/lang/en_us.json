@@ -50,5 +50,8 @@
   "entity.fossil_revive.xenacanthus.variant_azalea_cruiser": "Azalea Cruiser",
   "entity.fossil_revive.xenacanthus.variant_shell_crusher": "Shell Crusher",
 
+  "sounds.fossil_revive.dilo_ambient": "Dilophosaurus Hoots",
+  "sounds.fossil_revive.dilo_hurt": "Dilophosaurus Hurts",
+
   "creativetab.fossil_revive_tab": "Fossil Revive"
 }

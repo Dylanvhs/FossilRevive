@@ -7,7 +7,8 @@
       }
     ]
   },
-  "dilophosaurus_ambient": {
+  "dilo_ambient": {
+    "subtitles": "sounds.fossil_revive.dilo_ambient",
     "sounds": [
       {
         "name": "fossil_revive:dilophosaurus_ambient"
@@ -15,7 +16,8 @@
     ]
   },
 
-  "dilophosaurus_hurt": {
+  "dilo_hurt": {
+    "subtitles": "sounds.fossil_revive.dilo_hurt",
     "sounds": [
       {
         "name": "fossil_revive:dilophosaurus_hurt"
