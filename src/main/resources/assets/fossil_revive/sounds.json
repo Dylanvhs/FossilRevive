@@ -8,7 +8,7 @@
     ]
   },
   "dilo_ambient": {
-    "subtitles": "sounds.fossil_revive.dilo_ambient",
+    "subtitle": "sounds.fossil_revive.dilo_ambient",
     "sounds": [
       {
         "name": "fossil_revive:dilophosaurus_ambient"
@@ -17,7 +17,7 @@
   },
 
   "dilo_hurt": {
-    "subtitles": "sounds.fossil_revive.dilo_hurt",
+    "subtitle": "sounds.fossil_revive.dilo_hurt",
     "sounds": [
       {
         "name": "fossil_revive:dilophosaurus_hurt"
@@ -26,10 +26,19 @@
   },
 
   "lio_ambient": {
-    "subtitles": "sounds.fossil_revive.lio_ambient",
+    "subtitle": "sounds.fossil_revive.lio_ambient",
     "sounds": [
       {
         "name": "fossil_revive:liopleurodon_ambient"
+      }
+    ]
+  },
+
+  "lio_hurt": {
+    "subtitle": "sounds.fossil_revive.lio_hurt",
+    "sounds": [
+      {
+        "name": "fossil_revive:liopleurodon_hurt"
       }
     ]
   }

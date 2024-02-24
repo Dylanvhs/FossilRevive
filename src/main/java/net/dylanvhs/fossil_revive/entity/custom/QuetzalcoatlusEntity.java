@@ -58,21 +58,30 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     private int timeFlying;
 
     public final AnimationState idleAnimationState = new AnimationState();
-    public final AnimationState flyAnimationState = new AnimationState();
     private int idleAnimationTimeOut = 0;
+    public final AnimationState flyAnimationState = new AnimationState();
+    private int flyAnimationTimeOut = 0;
+
 
 
     private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0 && this.onGround()) {
+        if (this.idleAnimationTimeOut <= 0) {
             this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
             this.idleAnimationState.start(this.tickCount);
         } else {
             --this.idleAnimationTimeOut;
         }
 
-        if (!this.onGround()) {
+        if (this.flyAnimationTimeOut <= 0 && this.isFlying()) {
+            idleAnimationState.stop();
+            this.flyAnimationTimeOut = this.random.nextInt(40) + 80;
             this.flyAnimationState.start(this.tickCount);
-            this.idleAnimationState.stop();
+        } else {
+            --this.flyAnimationTimeOut;
+        }
+
+        if (!this.isFlying()) {
+            flyAnimationState.stop();
         }
     }
 
@@ -81,7 +90,7 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     @Override
     protected void updateWalkAnimation(float pPartialTick) {
         float f;
-        if (this.getPose() == net.minecraft.world.entity.Pose.STANDING) {
+        if (this.getPose() == net.minecraft.world.entity.Pose.STANDING && !this.flyAnimationState.isStarted()) {
             f = Math.min(pPartialTick * 6F, 1f);
         } else {
             f = 0f;

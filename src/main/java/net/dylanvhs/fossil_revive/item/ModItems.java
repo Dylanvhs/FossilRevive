@@ -91,6 +91,8 @@ public static final RegistryObject<Item> MICRORAPTOR_SPAWN_EGG = ITEMS.register(
         () -> new ForgeSpawnEggItem(ModEntities.MICRORAPTOR, 0x3e4580, 0xc391c5, new Item.Properties()));
 public static final RegistryObject<Item> XENACANTHUS_SPAWN_EGG = ITEMS.register("xenacanthus_spawn_egg",
         () -> new ForgeSpawnEggItem(ModEntities.XENACANTHUS, 0x8e4730, 0x5c31c5, new Item.Properties()));
+public static final RegistryObject<Item> RANALOPHOSAURUS_SPAWN_EGG = ITEMS.register("ranalophosaurus_spawn_egg",
+        () -> new ForgeSpawnEggItem(ModEntities.RANALOPHOSAURUS, 0x8e4730, 0x5c31c5, new Item.Properties()));
 
 
 

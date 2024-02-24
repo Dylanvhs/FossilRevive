@@ -78,6 +78,9 @@ public class FossilRevive
 
             EntityRenderers.register(ModEntities.DODO.get(), DodoRenderer::new );
 
+            EntityRenderers.register(ModEntities.RANALOPHOSAURUS.get(), RanalophosaurusRenderer::new );
+
+
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);
             MenuScreens.register(ModMenuTypes.CULTIVATOR_MENU.get(), CultivatorScreen::new);

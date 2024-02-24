@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-19T16:33:49.4928617	Item Models: fossil_revive
+// 1.20.1	2024-02-24T14:07:23.7285711	Item Models: fossil_revive
 d459a90a9e42f7832d0cf35b6f72debadb6a9755 assets/fossil_revive/models/item/amargasaurus_dna.json
 1b18c1c8e32ccddec1a248ced8b964c2c64b380d assets/fossil_revive/models/item/bones_music_disc.json
 df1875a0c0f53fcc24faa6716c40c109bca360ce assets/fossil_revive/models/item/carnotaurus_dna.json
@@ -21,6 +21,7 @@ a0017a88aa3059a65c20150c30341db0373a2128 assets/fossil_revive/models/item/fossil
 3b713791a7ba89f43e350c3cca04b682893ec10d assets/fossil_revive/models/item/plant_fossil.json
 66c4a3a419f5bb4ceb4e144e124f8685349af9ed assets/fossil_revive/models/item/quetzalcoatlus_dna.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/quetzalcoatlus_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/ranalophosaurus_spawn_egg.json
 9ae90871a760aa08d8f94a71c8ac80f81c10f14f assets/fossil_revive/models/item/raw_xenacanthus.json
 341fe915a2d069e027acbe53873212c38b281689 assets/fossil_revive/models/item/rough_fossil.json
 77a270895ce76a8eccd5412aa93b2a56ef77dc33 assets/fossil_revive/models/item/smilodon_dna.json

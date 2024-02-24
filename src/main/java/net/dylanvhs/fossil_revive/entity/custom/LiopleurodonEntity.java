@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -119,6 +120,10 @@ public class LiopleurodonEntity extends WaterAnimal {
 
     protected SoundEvent getAmbientSound() {
         return ModSounds.LIO_AMBIENT.get();
+    }
+
+    protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.LIO_HURT.get();
     }
 
     public void setAttacking(boolean attacking) {

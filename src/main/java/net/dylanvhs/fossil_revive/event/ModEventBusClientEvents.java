@@ -18,6 +18,7 @@ public class ModEventBusClientEvents {
         event.registerLayerDefinition(ModModelLayers.DILOPHOSAURUS_LAYER, Dilophosaurus::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.XENACANTHUS_LAYER, Xenacanthus::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.DODO_LAYER, Dodo::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.RANA_LAYER, Ranalophosaurus::createBodyLayer);
     }
 
 }
