@@ -40,7 +40,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<RanalophosaurusEntity>> RANALOPHOSAURUS =
             ENTITY_TYPES.register("ranalophosaurus", () -> EntityType.Builder.of(RanalophosaurusEntity::new, MobCategory.CREATURE)
-                    .sized(0.5f, 1f).build("ranalophosaurus"));
+                    .sized(1f, 2f).build("ranalophosaurus"));
 
 
 
