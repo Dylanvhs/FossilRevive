@@ -30,6 +30,9 @@
     "sounds": [
       {
         "name": "fossil_revive:liopleurodon_ambient"
+      },
+      {
+        "name": "fossil_revive:liopleurodon_ambient2"
       }
     ]
   },
