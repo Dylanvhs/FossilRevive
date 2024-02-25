@@ -7,6 +7,16 @@
       }
     ]
   },
+
+  "when_youre_the_last": {
+    "sounds": [
+      {
+        "name": "fossil_revive:when_youre_the_last",
+        "stream": true
+      }
+    ]
+  },
+
   "dilo_ambient": {
     "subtitle": "sounds.fossil_revive.dilo_ambient",
     "sounds": [

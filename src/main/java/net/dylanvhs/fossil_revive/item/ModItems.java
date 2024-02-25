@@ -77,6 +77,8 @@ public static final RegistryObject<Item> XENACANTHUS_BUCKET = ITEMS.register("xe
 
 public static final RegistryObject<Item> BONES_MUSIC_DISC = ITEMS.register("bones_music_disc",
         () -> new RecordItem(6, ModSounds.BONES, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4900));
+public static final RegistryObject<Item> WHEN_YOURE_THE_LAST_MUSIC_DISC = ITEMS.register("when_youre_the_last_music_disc",
+        () -> new RecordItem(7, ModSounds.WHEN_YOURE_THE_LAST, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 4900));
 
 
 public static final RegistryObject<Item> DODO_SPAWN_EGG = ITEMS.register("dodo_spawn_egg",

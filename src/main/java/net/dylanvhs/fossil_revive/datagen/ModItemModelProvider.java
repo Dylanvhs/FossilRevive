@@ -42,6 +42,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.QUETZALCOATLUS_DNA);
         simpleItem(ModItems.MICRORAPTOR_DNA);
         simpleItem(ModItems.BONES_MUSIC_DISC);
+        simpleItem(ModItems.WHEN_YOURE_THE_LAST_MUSIC_DISC);
         simpleItem(ModItems.DIRTY_CLOTH);
         simpleItem(ModItems.RAW_XENACANTHUS);
         simpleItem(ModItems.COOKED_XENACANTHUS);

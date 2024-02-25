@@ -22,6 +22,7 @@ public class ModItemTagGenerator extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider pProvider) {
         this.tag(ItemTags.MUSIC_DISCS)
-                .add(ModItems.BONES_MUSIC_DISC.get());
+                .add(ModItems.BONES_MUSIC_DISC.get()).add(ModItems.WHEN_YOURE_THE_LAST_MUSIC_DISC.get());
+
     }
 }

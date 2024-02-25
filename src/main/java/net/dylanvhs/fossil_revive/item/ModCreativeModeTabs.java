@@ -45,6 +45,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.TROODON_DNA.get());
 
                         pOutput.accept(ModItems.BONES_MUSIC_DISC.get());
+                        pOutput.accept(ModItems.WHEN_YOURE_THE_LAST_MUSIC_DISC.get());
                         pOutput.accept(ModItems.DIRTY_CLOTH.get());
 
                         pOutput.accept(ModItems.XENACANTHUS_BUCKET.get());

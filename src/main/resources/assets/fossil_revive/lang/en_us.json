@@ -31,6 +31,9 @@
   "item.fossil_revive.bones_music_disc": "Music Disc",
   "item.fossil_revive.bones_music_disc.desc": "Dylanvhs - Bones",
 
+  "item.fossil_revive.when_youre_the_last_music_disc": "Music Disc",
+  "item.fossil_revive.when_youre_the_last_music_disc.desc": "Dylanvhs - When You're The Last",
+
   "item.fossil_revive.liopleurodon_spawn_egg": "Liopleurodon Spawn Egg",
   "item.fossil_revive.quetzalcoatlus_spawn_egg": "Quetzalcoatlus Spawn Egg",
   "item.fossil_revive.microraptor_spawn_egg": "Microraptor Spawn Egg",
