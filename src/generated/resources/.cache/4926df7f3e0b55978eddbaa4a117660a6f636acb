@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-24T14:07:23.7285711	Item Models: fossil_revive
+// 1.20.1	2024-02-25T15:36:24.3234424	Item Models: fossil_revive
 d459a90a9e42f7832d0cf35b6f72debadb6a9755 assets/fossil_revive/models/item/amargasaurus_dna.json
 1b18c1c8e32ccddec1a248ced8b964c2c64b380d assets/fossil_revive/models/item/bones_music_disc.json
 df1875a0c0f53fcc24faa6716c40c109bca360ce assets/fossil_revive/models/item/carnotaurus_dna.json
@@ -28,5 +28,6 @@ a0017a88aa3059a65c20150c30341db0373a2128 assets/fossil_revive/models/item/fossil
 58757c37e7e46c1809e002e19c6d1ce548c851fb assets/fossil_revive/models/item/tapejara_dna.json
 1c2be912a0c4b3edbb2523ce652bb76f683480d1 assets/fossil_revive/models/item/tasmanian_tiger_dna.json
 48fca32ef4e7e130e29a305c92b6e94e11c95f04 assets/fossil_revive/models/item/troodon_dna.json
+7941660b78aec2c52c2ea9461577e5b8f0d855be assets/fossil_revive/models/item/when_youre_the_last_music_disc.json
 ce6c2bb2e7eb586ee974af231dc08d3b76ddecd2 assets/fossil_revive/models/item/xenacanthus_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/xenacanthus_spawn_egg.json
