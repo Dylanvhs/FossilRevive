@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.event;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
+import net.dylanvhs.fossil_revive.entity.custom.DilophosaurusEntity;
 import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
@@ -25,6 +26,7 @@ public final class ModEvents {
     @SubscribeEvent
     public static void entityAttributeEvent(EntityAttributeCreationEvent event) {
         event.put(ModEntities.LIOPLEURODON.get(), LiopleurodonEntity.setAttributes());
+        event.put(ModEntities.DILOPHOSAURUS.get(), DilophosaurusEntity.setAttributes());
     }
 
 

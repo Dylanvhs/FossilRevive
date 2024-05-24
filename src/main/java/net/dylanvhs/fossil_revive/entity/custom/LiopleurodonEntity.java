@@ -26,7 +26,6 @@ import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -41,6 +40,8 @@ import software.bernie.geckolib.core.animation.Animation;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
+
+import javax.annotation.Nullable;
 
 public class LiopleurodonEntity extends WaterAnimal implements GeoEntity {
 
@@ -97,6 +98,11 @@ public class LiopleurodonEntity extends WaterAnimal implements GeoEntity {
     }
 
     protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+        return ModSounds.LIO_HURT.get();
+    }
+
+    @Nullable
+    protected SoundEvent getDeathSound() {
         return ModSounds.LIO_HURT.get();
     }
 
@@ -282,7 +288,7 @@ public class LiopleurodonEntity extends WaterAnimal implements GeoEntity {
         if (this.swinging && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
             geoAnimatableAnimationState.getController().forceAnimationReset();
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.liopleurodon.attack", Animation.LoopType.PLAY_ONCE));
-            geoAnimatableAnimationState.getController().setAnimationSpeed(2.5F);
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.5F);
             this.swinging = false;
         }  return PlayState.CONTINUE;
     }
@@ -295,7 +301,5 @@ public class LiopleurodonEntity extends WaterAnimal implements GeoEntity {
     public double getTick(Object object) {
         return tickCount;
     }
-
-
 
 }

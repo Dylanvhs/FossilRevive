@@ -1,14 +1,9 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
-import net.dylanvhs.fossil_revive.FossilRevive;
-import net.dylanvhs.fossil_revive.entity.ai.DilophosaurusAttackGoal;
+
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -23,85 +18,51 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.UUID;
 
-public class DilophosaurusEntity extends Animal implements NeutralMob {
+public class DilophosaurusEntity extends Animal implements NeutralMob, GeoEntity {
 
-    private static final EntityDataAccessor<Boolean> ATTACKING =
-            SynchedEntityData.defineId(DilophosaurusEntity.class, EntityDataSerializers.BOOLEAN);
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public DilophosaurusEntity(EntityType<? extends DilophosaurusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeOut = 0;
-
-    public final AnimationState diloattackAnimationState = new AnimationState();
-    public int diloattackAnimationTimeout = 0;
-
-
     @Override
-    public void tick() {
-        super.tick();
-
-        if (this.level().isClientSide()) {
-            setupAnimationState();
-        }
-    }
-
-
-    private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0) {
-            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeOut;
-        }
-
-        if(this.isAttacking() && diloattackAnimationTimeout <= 0) {
-            diloattackAnimationTimeout = 18; // Length in ticks of your animation
-            diloattackAnimationState.start(this.tickCount);
-        } else {
-            --this.diloattackAnimationTimeout;
-        }
-
-        if(!this.isAttacking()) {
-            diloattackAnimationState.stop();
-        }
-    }
-
-    @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            f = 0f;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
     }
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1));
-        this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
-        this.goalSelector.addGoal(1, new DilophosaurusAttackGoal(this, 1.2D, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
+        this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.6F, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Animal.class, true));
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return PathfinderMob.createLivingAttributes()
+    public static AttributeSupplier setAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 45D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 4f)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
-                .add(Attributes.ATTACK_KNOCKBACK, 0.1f);
+                .add(Attributes.ATTACK_KNOCKBACK, 0.1f)
+                .build();
     }
 
     protected SoundEvent getAmbientSound() {
@@ -112,16 +73,13 @@ public class DilophosaurusEntity extends Animal implements NeutralMob {
         return ModSounds.DILO_HURT.get();
     }
 
+    @javax.annotation.Nullable
+    protected SoundEvent getDeathSound() {
+        return ModSounds.DILO_HURT.get();
+    }
+
     protected float getSoundVolume() {
-        return 0.4F;
-    }
-
-    public void setAttacking(boolean attacking) {
-        this.entityData.set(ATTACKING, attacking);
-    }
-
-    public boolean isAttacking() {
-        return this.entityData.get(ATTACKING);
+        return 0.5F;
     }
 
     @Nullable
@@ -129,13 +87,6 @@ public class DilophosaurusEntity extends Animal implements NeutralMob {
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return null;
     }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(ATTACKING, false);
-    }
-
 
     public boolean isJP() {
         String n = ChatFormatting.stripFormatting(this.getName().getString());
@@ -146,9 +97,7 @@ public class DilophosaurusEntity extends Animal implements NeutralMob {
         super.addAdditionalSaveData(pCompound);
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
+
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
     }
@@ -178,4 +127,40 @@ public class DilophosaurusEntity extends Animal implements NeutralMob {
     public void startPersistentAngerTimer() {
 
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+
+        if (geoAnimatableAnimationState.isMoving()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.walk", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+
+    private <T extends GeoAnimatable> PlayState attackPredicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (this.swinging && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            geoAnimatableAnimationState.getController().forceAnimationReset();
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.attack", Animation.LoopType.PLAY_ONCE));
+            this.swinging = false;
+        }  return PlayState.CONTINUE;
+    }
+
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public double getTick(Object object) {
+        return tickCount;
+    }
+
+
+
 }

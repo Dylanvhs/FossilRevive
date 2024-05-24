@@ -70,6 +70,9 @@ public class FossilRevive
             EntityRenderers.register
                     (ModEntities.LIOPLEURODON.get(), LiopleurodonRenderer:: new);
 
+            EntityRenderers.register
+                    (ModEntities.DILOPHOSAURUS.get(), DilophosaurusRenderer:: new);
+
 
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);
