@@ -1,11 +1,8 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 
-import net.dylanvhs.fossil_revive.entity.ai.DilophosaurusAttackGoal;
-import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonAttackGoal;
 import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonJumpGoal;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -28,93 +25,70 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
-public class LiopleurodonEntity extends WaterAnimal {
-    private static final EntityDataAccessor<Boolean> ATTACKING =
-            SynchedEntityData.defineId(LiopleurodonEntity.class, EntityDataSerializers.BOOLEAN);
+public class LiopleurodonEntity extends WaterAnimal implements GeoEntity {
 
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(LiopleurodonEntity.class, EntityDataSerializers.INT);
-    public static final int TOTAL_AIR_SUPPLY = 4800;
-    private static final int TOTAL_MOISTNESS_LEVEL = 2400;
+
 
     public LiopleurodonEntity(EntityType<? extends LiopleurodonEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
-        this.lookControl = new SmoothSwimmingLookControl(this, 15);
+        this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 45, 10, 0.02F, 0.1F, true);
+        this.lookControl = new SmoothSwimmingLookControl(this, 10);
+        this.moveControl = new MoveHelperController(this);
     }
 
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeOut = 0;
-
-    public final AnimationState lioattackAnimationState = new AnimationState();
-    public int lioattackAnimationTimeout = 0;
-
-
-    private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0) {
-            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeOut;
-        }
-        if(this.isAttacking() && lioattackAnimationTimeout <= 0) {
-            lioattackAnimationTimeout = 18; // Length in ticks of your animation
-            lioattackAnimationState.start(this.tickCount);
-        } else {
-            --this.lioattackAnimationTimeout;
-        }
-
-        if(!this.isAttacking()) {
-            lioattackAnimationState.stop();
-        }
-    }
-
-    @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            f = 0f;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
-    }
-
-
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return WaterAnimal.createLivingAttributes()
+    public static AttributeSupplier setAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 100D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.MOVEMENT_SPEED, 2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.2f)
                 .add(Attributes.ATTACK_DAMAGE, 8f)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
-                .add(Attributes.ATTACK_KNOCKBACK, 0.6f);
+                .add(Attributes.ATTACK_KNOCKBACK, 0.6f)
+                .build();
+    }
+
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(MOISTNESS_LEVEL, 2400);
     }
 
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new BreathAirGoal(this));
         this.goalSelector.addGoal(6, new LiopleurodonJumpGoal(this, 1));
-        this.goalSelector.addGoal(1, new LiopleurodonAttackGoal(this, 1.2D, true));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2F, true));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Ravager.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Villager.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, DilophosaurusEntity.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, XenacanthusEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Animal.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Villager.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, DilophosaurusEntity.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, XenacanthusEntity.class, true));
 
     }
 
@@ -126,20 +100,12 @@ public class LiopleurodonEntity extends WaterAnimal {
         return ModSounds.LIO_HURT.get();
     }
 
-    public void setAttacking(boolean attacking) {
-        this.entityData.set(ATTACKING, attacking);
-    }
-
-    public boolean isAttacking() {
-        return this.entityData.get(ATTACKING);
-    }
-
     protected PathNavigation createNavigation(Level p_27480_) {
         return new WaterBoundPathNavigation(this, p_27480_);
     }
 
     public int getMaxAirSupply() {
-        return 4800;
+        return 6800;
     }
 
     protected int increaseAirSupply(int pCurrentAir) {
@@ -150,9 +116,6 @@ public class LiopleurodonEntity extends WaterAnimal {
         return 0.8F;
     }
 
-    /**
-     * The speed it takes to move the entity's head rotation through the faceEntity method.
-     */
     public int getMaxHeadXRot() {
         return 1;
     }
@@ -179,20 +142,12 @@ public class LiopleurodonEntity extends WaterAnimal {
         this.entityData.set(MOISTNESS_LEVEL, pMoistnessLevel);
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(MOISTNESS_LEVEL, 2400);
-        this.entityData.define(ATTACKING, false);
-    }
-
     public void addAdditionalSaveData(CompoundTag pCompound) {
         super.addAdditionalSaveData(pCompound);
         pCompound.putInt("Moistness", this.getMoistnessLevel());
     }
 
-    /**
-     * (abstract) Protected helper method to read subclass entity data from NBT.
-     */
+
     public void readAdditionalSaveData(CompoundTag pCompound) {
         super.readAdditionalSaveData(pCompound);
         this.setMoisntessLevel(pCompound.getInt("Moistness"));
@@ -200,10 +155,6 @@ public class LiopleurodonEntity extends WaterAnimal {
 
     public void tick() {
         super.tick();
-
-        if (this.level().isClientSide()) {
-            setupAnimationState();
-        }
 
         if (this.isNoAi()) {
             this.setAirSupply(this.getMaxAirSupply());
@@ -263,52 +214,86 @@ public class LiopleurodonEntity extends WaterAnimal {
 
 
     static class MoveHelperController extends MoveControl {
-        private final LiopleurodonEntity dolphin;
+        private final LiopleurodonEntity liopleurodon;
 
         public MoveHelperController(LiopleurodonEntity dolphinIn) {
             super(dolphinIn);
-            this.dolphin = dolphinIn;
+            this.liopleurodon = dolphinIn;
         }
 
         public void tick() {
-            if (this.dolphin.isInWater()) {
-                this.dolphin.setDeltaMovement(this.dolphin.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
+            if (this.liopleurodon.isInWater()) {
+                this.liopleurodon.setDeltaMovement(this.liopleurodon.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
             }
 
-            if (this.operation == MoveControl.Operation.MOVE_TO && !this.dolphin.getNavigation().isDone()) {
-                double d0 = this.wantedX - this.dolphin.getX();
-                double d1 = this.wantedY - this.dolphin.getY();
-                double d2 = this.wantedZ - this.dolphin.getZ();
+            if (this.operation == MoveControl.Operation.MOVE_TO && !this.liopleurodon.getNavigation().isDone()) {
+                double d0 = this.wantedX - this.liopleurodon.getX();
+                double d1 = this.wantedY - this.liopleurodon.getY();
+                double d2 = this.wantedZ - this.liopleurodon.getZ();
                 double d3 = d0 * d0 + d1 * d1 + d2 * d2;
                 if (d3 < (double) 2.5000003E-7F) {
                     this.mob.setZza(0.0F);
                 } else {
                     float f = (float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
-                    this.dolphin.setYRot(this.rotlerp(this.dolphin.getYRot(), f, 10.0F));
-                    this.dolphin.yBodyRot = this.dolphin.getYRot();
-                    this.dolphin.yHeadRot = this.dolphin.getYRot();
-                    float f1 = (float) (this.speedModifier * this.dolphin.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                    if (this.dolphin.isInWater()) {
-                        this.dolphin.setSpeed(f1 * 0.02F);
+                    this.liopleurodon.setYRot(this.rotlerp(this.liopleurodon.getYRot(), f, 10.0F));
+                    this.liopleurodon.yBodyRot = this.liopleurodon.getYRot();
+                    this.liopleurodon.yHeadRot = this.liopleurodon.getYRot();
+                    float f1 = (float) (this.speedModifier * this.liopleurodon.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    if (this.liopleurodon.isInWater()) {
+                        this.liopleurodon.setSpeed(f1 * 0.02F);
                         float f2 = -((float) (Mth.atan2(d1, Mth.sqrt((float) (d0 * d0 + d2 * d2))) * (double) (180F / (float) Math.PI)));
                         f2 = Mth.clamp(Mth.wrapDegrees(f2), -85.0F, 85.0F);
-                        this.dolphin.setXRot(this.rotlerp(this.dolphin.getXRot(), f2, 5.0F));
-                        float f3 = Mth.cos(this.dolphin.getXRot() * ((float) Math.PI / 180F));
-                        float f4 = Mth.sin(this.dolphin.getXRot() * ((float) Math.PI / 180F));
-                        this.dolphin.zza = f3 * f1;
-                        this.dolphin.yya = -f4 * f1;
+                        this.liopleurodon.setXRot(this.rotlerp(this.liopleurodon.getXRot(), f2, 5.0F));
+                        float f3 = Mth.cos(this.liopleurodon.getXRot() * ((float) Math.PI / 180F));
+                        float f4 = Mth.sin(this.liopleurodon.getXRot() * ((float) Math.PI / 180F));
+                        this.liopleurodon.zza = f3 * f1;
+                        this.liopleurodon.yya = -f4 * f1;
                     } else {
-                        this.dolphin.setSpeed(f1 * 0.1F);
+                        this.liopleurodon.setSpeed(f1 * 0.1F);
                     }
 
                 }
             } else {
-                this.dolphin.setSpeed(0.0F);
-                this.dolphin.setXxa(0.0F);
-                this.dolphin.setYya(0.0F);
-                this.dolphin.setZza(0.0F);
+                this.liopleurodon.setSpeed(0.0F);
+                this.liopleurodon.setXxa(0.0F);
+                this.liopleurodon.setYya(0.0F);
+                this.liopleurodon.setZza(0.0F);
             }
         }
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+
+        if (geoAnimatableAnimationState.isMoving()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.liopleurodon.walk", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.liopleurodon.idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+
+    private <T extends GeoAnimatable> PlayState attackPredicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (this.swinging && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            geoAnimatableAnimationState.getController().forceAnimationReset();
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.liopleurodon.attack", Animation.LoopType.PLAY_ONCE));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2.5F);
+            this.swinging = false;
+        }  return PlayState.CONTINUE;
+    }
+
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public double getTick(Object object) {
+        return tickCount;
     }
 
 

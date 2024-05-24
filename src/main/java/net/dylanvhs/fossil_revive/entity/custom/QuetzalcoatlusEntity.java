@@ -7,7 +7,6 @@ import net.dylanvhs.fossil_revive.entity.ai.FlyingMoveController;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
@@ -31,24 +30,18 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 
 import java.util.EnumSet;
 import java.util.UUID;
 
-import static net.minecraft.network.syncher.EntityDataSerializers.registerSerializer;
-
-public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
+public class QuetzalcoatlusEntity extends Animal implements NeutralMob {
     public QuetzalcoatlusEntity(EntityType<? extends QuetzalcoatlusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         switchNavigator(true);
     }
 
-    @org.jetbrains.annotations.Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
-        return null;
-    }
     private static final EntityDataAccessor<Boolean> ATTACKING =
             SynchedEntityData.defineId(QuetzalcoatlusEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> FLYING = SynchedEntityData.defineId(QuetzalcoatlusEntity.class, EntityDataSerializers.BOOLEAN);
@@ -121,6 +114,11 @@ public class QuetzalcoatlusEntity extends AgeableMob implements NeutralMob {
     }
 
 
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+        return null;
+    }
 
     protected void defineSynchedData() {
         super.defineSynchedData();

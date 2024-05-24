@@ -1,4 +1,7 @@
 {
+  "creativetab.fossil_revive_tab": "Fossil Revive",
+
+
   "item.fossil_revive.fossil": "Fossil",
   "item.fossil_revive.rough_fossil": "Rough Fossil",
   "item.fossil_revive.plant_fossil": "Plant Fossil",
@@ -21,18 +24,23 @@
   "item.fossil_revive.quetzalcoatlus_dna": "Quetzalcoatlus DNA",
   "item.fossil_revive.microraptor_dna": "Microraptor DNA",
 
+
   "item.fossil_revive.xenacanthus_bucket": "Bucket Of Xenacanthus",
   "item.fossil_revive.raw_xenacanthus": "Raw Xenacanthus",
   "item.fossil_revive.cooked_xenacanthus": "Cooked Xenacanthus",
 
-  "block.fossil_revive.analyzer": "DNA Analyzer",
-  "block.fossil_revive.cultivator": "Cultivator",
 
   "item.fossil_revive.bones_music_disc": "Music Disc",
   "item.fossil_revive.bones_music_disc.desc": "Dylanvhs - Bones",
 
+
   "item.fossil_revive.when_youre_the_last_music_disc": "Music Disc",
   "item.fossil_revive.when_youre_the_last_music_disc.desc": "Dylanvhs - When You're The Last",
+
+
+  "block.fossil_revive.analyzer": "DNA Analyzer",
+  "block.fossil_revive.cultivator": "Cultivator",
+
 
   "item.fossil_revive.liopleurodon_spawn_egg": "Liopleurodon Spawn Egg",
   "item.fossil_revive.quetzalcoatlus_spawn_egg": "Quetzalcoatlus Spawn Egg",
@@ -42,6 +50,7 @@
   "item.fossil_revive.dodo_spawn_egg": "Dodo Spawn Egg",
   "item.fossil_revive.ranalophosaurus_spawn_egg": "Ranalophosaurus Spawn Egg",
 
+
   "entity.fossil_revive.liopleurodon": "Liopleurodon",
   "entity.fossil_revive.quetzalcoatlus": "Quetzalcoatlus",
   "entity.fossil_revive.microraptor": "Microraptor",
@@ -50,15 +59,19 @@
   "entity.fossil_revive.dodo": "Dodo",
   "entity.fossil_revive.ranalophosaurus": "Ranalophosaurus",
 
+
   "entity.fossil_revive.xenacanthus.variant_coral_stalker": "Coral Stalker",
   "entity.fossil_revive.xenacanthus.variant_gilded_stealth": "Gilded Stealth",
   "entity.fossil_revive.xenacanthus.variant_azalea_cruiser": "Azalea Cruiser",
   "entity.fossil_revive.xenacanthus.variant_shell_crusher": "Shell Crusher",
 
+
   "sounds.fossil_revive.dilo_ambient": "Dilophosaurus Hoots",
   "sounds.fossil_revive.dilo_hurt": "Dilophosaurus Hurts",
-  "sounds.fossil_revive.lio_ambient": "Liopleurodon Growls",
-  "sounds.fossil_revive.lio_hurt": "Liopleurodon Hurts",
 
-  "creativetab.fossil_revive_tab": "Fossil Revive"
+
+  "sounds.fossil_revive.lio_ambient": "Liopleurodon Growls",
+  "sounds.fossil_revive.lio_hurt": "Liopleurodon Hurts"
+
+
 }

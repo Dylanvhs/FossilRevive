@@ -5,23 +5,22 @@ import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-public class LiopleurodonRenderer extends MobRenderer<LiopleurodonEntity, Liopleurodon<LiopleurodonEntity>> {
-    public LiopleurodonRenderer(EntityRendererProvider.Context pContext) {
-        super(pContext, new Liopleurodon<>(pContext.bakeLayer(ModModelLayers.LIOPLEURODON_LAYER)), 1f);
+public class LiopleurodonRenderer extends GeoEntityRenderer<LiopleurodonEntity> {
+    public LiopleurodonRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new LiopleurodonModel());
     }
 
     @Override
-    public ResourceLocation getTextureLocation(LiopleurodonEntity pEntity) {
+    public ResourceLocation getTextureLocation(LiopleurodonEntity animatable) {
         return new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/liopleurodon.png");
     }
 
     @Override
-    public void render(LiopleurodonEntity pEntity, float pEntityYaw, float pPartialTicks, PoseStack pPoseStack,
-                       MultiBufferSource pBuffer, int pPackedLight) {
-
-        super.render(pEntity, pEntityYaw, pPartialTicks, pPoseStack, pBuffer, pPackedLight);
+    public void render(LiopleurodonEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
+                       MultiBufferSource bufferSource, int packedLight) {
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

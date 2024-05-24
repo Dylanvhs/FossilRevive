@@ -1,4 +1,4 @@
-package net.dylanvhs.fossil_revive.entity.client;
+package net.dylanvhs.fossil_revive.entity.ai;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;

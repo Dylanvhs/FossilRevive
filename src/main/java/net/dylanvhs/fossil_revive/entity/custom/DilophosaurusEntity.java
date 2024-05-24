@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
+public class DilophosaurusEntity extends Animal implements NeutralMob {
 
     private static final EntityDataAccessor<Boolean> ATTACKING =
             SynchedEntityData.defineId(DilophosaurusEntity.class, EntityDataSerializers.BOOLEAN);
@@ -121,6 +122,12 @@ public class DilophosaurusEntity extends PathfinderMob implements NeutralMob {
 
     public boolean isAttacking() {
         return this.entityData.get(ATTACKING);
+    }
+
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+        return null;
     }
 
     @Override

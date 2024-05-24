@@ -1,4 +1,4 @@
-package net.dylanvhs.fossil_revive.item.util;
+package net.dylanvhs.fossil_revive.util;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.minecraft.resources.ResourceLocation;

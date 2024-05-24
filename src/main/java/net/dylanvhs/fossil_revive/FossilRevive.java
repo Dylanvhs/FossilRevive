@@ -52,7 +52,7 @@ public class FossilRevive
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        event.enqueueWork(ModItems::initDispenser);
     }
 
     @SubscribeEvent
@@ -60,25 +60,15 @@ public class FossilRevive
 
     }
 
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            EntityRenderers.register(ModEntities.LIOPLEURODON.get(), LiopleurodonRenderer::new);
 
-            EntityRenderers.register(ModEntities.QUETZALCOATLUS.get(), QuetzalcoatlusRenderer::new );
-
-            EntityRenderers.register(ModEntities.MICRORAPTOR.get(), MicroraptorRenderer::new );
-
-            EntityRenderers.register(ModEntities.DILOPHOSAURUS.get(), DilophosaurusRenderer::new );
-
-            EntityRenderers.register(ModEntities.XENACANTHUS.get(), XenacanthusRenderer::new );
-
-            EntityRenderers.register(ModEntities.DODO.get(), DodoRenderer::new );
-
-            EntityRenderers.register(ModEntities.RANALOPHOSAURUS.get(), RanalophosaurusRenderer::new );
+            EntityRenderers.register
+                    (ModEntities.LIOPLEURODON.get(), LiopleurodonRenderer:: new);
 
 
 
