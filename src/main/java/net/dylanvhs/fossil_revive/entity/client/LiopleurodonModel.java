@@ -12,10 +12,15 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
 public class LiopleurodonModel extends GeoModel<LiopleurodonEntity> {
+    private static final ResourceLocation ADULT_MODEL = new ResourceLocation(FossilRevive.MOD_ID, "geo/liopleurodon.geo.json");
+    private static final ResourceLocation BABY_MODEL = new ResourceLocation(FossilRevive.MOD_ID, "geo/liopleurodon_baby.geo.json");
+
 
     @Override
     public ResourceLocation getModelResource(LiopleurodonEntity animatable) {
-        return new ResourceLocation(FossilRevive.MOD_ID, "geo/liopleurodon.geo.json");
+       if (animatable.isBaby()) {
+           return BABY_MODEL;
+       } else return ADULT_MODEL;
     }
 
     @Override
@@ -33,21 +38,16 @@ public class LiopleurodonModel extends GeoModel<LiopleurodonEntity> {
         super.setCustomAnimations(animatable, instanceId, animationState);
         if (animationState == null) return;
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
-        CoreGeoBone head = this.getAnimationProcessor().getBone("head");
         CoreGeoBone root = this.getAnimationProcessor().getBone("Liopleurodon");
-        if (animatable.isBaby()) {
-            root.setScaleX(0.5F);
-            root.setScaleY(0.5F);
-            root.setScaleZ(0.5F);
-        } else {
-            root.setScaleX(1.5F);
-            root.setScaleY(1.5F);
-            root.setScaleZ(1.5F);
-        }
-        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
+        CoreGeoBone root_baby = this.getAnimationProcessor().getBone("BabyLiopleurodon");
+        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && !animatable.isBaby()) {
             root.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
             root.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
-            root.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
+            root.setRotZ(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
+        } else if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && animatable.isBaby()) {
+            root_baby.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
+            root_baby.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
+            root_baby.setRotZ(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
         }
 
     }

@@ -9,13 +9,19 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class LiopleurodonRenderer extends GeoEntityRenderer<LiopleurodonEntity> {
+
+    private static final ResourceLocation ADULT_TEXTURE = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/liopleurodon.png");
+    private static final ResourceLocation BABY_TEXTURE = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/liopleurodon_baby.png");
+
     public LiopleurodonRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new LiopleurodonModel());
     }
 
     @Override
     public ResourceLocation getTextureLocation(LiopleurodonEntity animatable) {
-        return new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/liopleurodon.png");
+        if (animatable.isBaby()) {
+            return BABY_TEXTURE;
+        } else return ADULT_TEXTURE;
     }
 
     @Override

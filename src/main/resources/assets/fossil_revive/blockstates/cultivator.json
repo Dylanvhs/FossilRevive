@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fossil_revive:block/cultivator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fossil_revive:block/cultivator"
+    },
+    "facing=south": {
+      "model": "fossil_revive:block/cultivator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil_revive:block/cultivator",
+      "y": 270
+    }
+  }
+}

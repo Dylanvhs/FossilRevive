@@ -162,6 +162,11 @@
 					"rotation": {
 						"vector": ["4+Math.cos(80+query.anim_time*360)*2", 0, 0]
 					}
+				},
+				"Dilophosaurus": {
+					"position": {
+						"vector": [0, 0.5, 0]
+					}
 				}
 			}
 		},

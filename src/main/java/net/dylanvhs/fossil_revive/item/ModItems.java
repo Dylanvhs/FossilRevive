@@ -88,9 +88,9 @@ public class ModItems {
     public static final RegistryObject<Item> DODO_SPAWN_EGG = ITEMS.register("dodo_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.DODO, 0x2e4730, 0x7c31c5, new Item.Properties()));
     public static final RegistryObject<Item> DILOPHOSAURUS_SPAWN_EGG = ITEMS.register("dilophosaurus_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.DILOPHOSAURUS, 0x5e4730, 0x1c31c5, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.DILOPHOSAURUS, 0x2f992b, 0x1f3a78, new Item.Properties()));
     public static final RegistryObject<Item> LIOPLEURODON_SPAWN_EGG = ITEMS.register("liopleurodon_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.LIOPLEURODON, 0x7e9680, 0xc5d1c5, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.LIOPLEURODON, 0x3257b2, 0x151057, new Item.Properties()));
     public static final RegistryObject<Item> QUETZALCOATLUS_SPAWN_EGG = ITEMS.register("quetzalcoatlus_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.QUETZALCOATLUS, 0x7e4680, 0xc951c5, new Item.Properties()));
     public static final RegistryObject<Item> MICRORAPTOR_SPAWN_EGG = ITEMS.register("microraptor_spawn_egg",

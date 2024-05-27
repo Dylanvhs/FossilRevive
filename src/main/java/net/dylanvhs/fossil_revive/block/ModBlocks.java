@@ -21,7 +21,7 @@ public class ModBlocks {
             DeferredRegister.create(ForgeRegistries.BLOCKS, FossilRevive.MOD_ID);
 
     public static final RegistryObject<Block> ANALYZER = registerBlock("analyzer",
-            () -> new Analyzer(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
+            () -> new Analyzer(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     public static final RegistryObject<Block> CULTIVATOR = registerBlock("cultivator",
             () -> new Cultivator(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).noOcclusion()));
