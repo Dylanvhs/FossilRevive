@@ -23,7 +23,6 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -31,76 +30,45 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
 
 
 import java.util.EnumSet;
 import java.util.UUID;
 
-public class QuetzalcoatlusEntity extends Animal implements NeutralMob {
+public class QuetzalcoatlusEntity extends Animal implements NeutralMob, GeoEntity {
+
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
     public QuetzalcoatlusEntity(EntityType<? extends QuetzalcoatlusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         switchNavigator(true);
     }
 
-    private static final EntityDataAccessor<Boolean> ATTACKING =
-            SynchedEntityData.defineId(QuetzalcoatlusEntity.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> FLYING = SynchedEntityData.defineId(QuetzalcoatlusEntity.class, EntityDataSerializers.BOOLEAN);
     public float prevFlyProgress;
     public float flyProgress;
     private boolean isLandNavigator;
     private int timeFlying;
 
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeOut = 0;
-    public final AnimationState flyAnimationState = new AnimationState();
-    private int flyAnimationTimeOut = 0;
 
 
-
-    private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0) {
-            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeOut;
-        }
-
-        if (this.flyAnimationTimeOut <= 0 && this.isFlying()) {
-            idleAnimationState.stop();
-            this.flyAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.flyAnimationState.start(this.tickCount);
-        } else {
-            --this.flyAnimationTimeOut;
-        }
-
-        if (!this.isFlying()) {
-            flyAnimationState.stop();
-        }
-    }
-
-
-
-    @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == net.minecraft.world.entity.Pose.STANDING && !this.flyAnimationState.isStarted()) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            f = 0f;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return WaterAnimal.createLivingAttributes()
+    public static AttributeSupplier setAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 85D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.ATTACK_DAMAGE, 8f)
                 .add(Attributes.ATTACK_SPEED, 0.1f)
-                .add(Attributes.ATTACK_KNOCKBACK, 0.6f);
+                .add(Attributes.ATTACK_KNOCKBACK, 0.6f)
+                .build();
     }
 
     @Override
@@ -156,10 +124,6 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob {
 
     public void tick() {
         super.tick();
-
-        if (this.level().isClientSide()) {
-            setupAnimationState();
-        }
 
         this.prevFlyProgress = flyProgress;
         if (this.isFlying() && flyProgress < 5F) {
@@ -392,6 +356,30 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob {
         HitResult result = this.level().clip(new ClipContext(new Vec3(this.getX(), this.getY() + (double) this.getEyeHeight(), this.getZ()), new Vec3(x, y, z), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
         double dist = result.getLocation().distanceToSqr(x, y, z);
         return dist <= 1.0D || result.getType() == HitResult.Type.MISS;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (geoAnimatableAnimationState.isMoving() && !this.isFlying()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.quetzalcoatlus.walk", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if (this.isFlying()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.quetzalcoatlus.fly", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (!this.isFlying())
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.quetzalcoatlus.idle", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 
 

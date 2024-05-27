@@ -73,6 +73,9 @@ public class FossilRevive
             EntityRenderers.register
                     (ModEntities.DILOPHOSAURUS.get(), DilophosaurusRenderer:: new);
 
+            EntityRenderers.register
+                    (ModEntities.QUETZALCOATLUS.get(), QuetzalcoatlusRenderer:: new);
+
 
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);

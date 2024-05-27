@@ -1,0 +1,180 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.quetzalcoatlus",
+				"texture_width": 256,
+				"texture_height": 256,
+				"visible_bounds_width": 14,
+				"visible_bounds_height": 5.5,
+				"visible_bounds_offset": [0, 2.25, 0]
+			},
+			"bones": [
+				{
+					"name": "Quetzalcoatlus",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "Quetzalcoatlus",
+					"pivot": [0, 25, 9]
+				},
+				{
+					"name": "bone",
+					"parent": "body",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-8, 17, -15], "size": [16, 17, 30], "uv": [0, 60]}
+					]
+				},
+				{
+					"name": "tail",
+					"parent": "body",
+					"pivot": [0, 20, 15],
+					"cubes": [
+						{"origin": [-2, 18, 15], "size": [4, 4, 10], "uv": [62, 60]}
+					]
+				},
+				{
+					"name": "rwing",
+					"parent": "body",
+					"pivot": [-8, 26, -3],
+					"cubes": [
+						{"origin": [-28, 22, -7], "size": [20, 8, 8], "uv": [112, 75], "mirror": true},
+						{"origin": [-28, 24, -27], "size": [6, 6, 20], "uv": [52, 111], "mirror": true},
+						{"origin": [-56, 26.5, -23], "size": [48, 0, 24], "uv": [48, 20], "mirror": true},
+						{"origin": [-56, 24, -27], "size": [28, 6, 5], "uv": [84, 111], "mirror": true}
+					]
+				},
+				{
+					"name": "rwing2",
+					"parent": "rwing",
+					"pivot": [-56, 26, -23],
+					"cubes": [
+						{"origin": [-88, 25, -24], "size": [32, 4, 4], "uv": [0, 111], "mirror": true},
+						{"origin": [-106, 26.5, -23], "size": [50, 0, 20], "uv": [52, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "lwing",
+					"parent": "body",
+					"pivot": [8, 26, -3],
+					"cubes": [
+						{"origin": [8, 22, -7], "size": [20, 8, 8], "uv": [112, 75]},
+						{"origin": [22, 24, -27], "size": [6, 6, 20], "uv": [52, 111]},
+						{"origin": [8, 26.5, -23], "size": [48, 0, 24], "uv": [48, 20]},
+						{"origin": [28, 24, -27], "size": [28, 6, 5], "uv": [84, 111]}
+					]
+				},
+				{
+					"name": "lwing2",
+					"parent": "lwing",
+					"pivot": [56, 26, -23],
+					"cubes": [
+						{"origin": [56, 25, -24], "size": [32, 4, 4], "uv": [0, 111]},
+						{"origin": [56, 26.5, -23], "size": [50, 0, 20], "uv": [52, 0]}
+					]
+				},
+				{
+					"name": "neck",
+					"parent": "body",
+					"pivot": [0, 29, -17],
+					"cubes": [
+						{"origin": [-6, 23, -24], "size": [12, 22, 14], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "neck2",
+					"parent": "neck",
+					"pivot": [0, 44, -12],
+					"cubes": [
+						{"origin": [-4.5, 42, -16], "size": [9, 23, 8], "uv": [0, 119]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "neck2",
+					"pivot": [0, 64, -14],
+					"cubes": [
+						{"origin": [-4.5, 58.01, -20], "size": [9, 7, 4], "uv": [66, 154]}
+					]
+				},
+				{
+					"name": "upperjaw",
+					"parent": "head",
+					"pivot": [0, 65, -13],
+					"cubes": [
+						{"origin": [-5, 63, -65], "size": [10, 8, 52], "uv": [0, 0]},
+						{"origin": [-5, 65, -65], "size": [10, 0, 52], "uv": [77, 138]},
+						{"origin": [5, 67, -20], "size": [1, 4, 8], "uv": [175, 22]},
+						{"origin": [-6, 67, -20], "size": [1, 4, 8], "uv": [175, 22], "mirror": true},
+						{"origin": [0, 71, -37], "size": [0, 13, 19], "uv": [0, 17]}
+					]
+				},
+				{
+					"name": "lowerjaw",
+					"parent": "head",
+					"pivot": [0, 65, -13],
+					"cubes": [
+						{"origin": [-5, 58, -37], "size": [10, 7, 24], "uv": [100, 44]},
+						{"origin": [-5, 62, -37], "size": [10, 0, 24], "uv": [191, 94]},
+						{"origin": [-5, 62, -64], "size": [10, 0, 27], "uv": [173, 157]},
+						{"origin": [-5, 61, -65], "size": [10, 4, 28], "uv": [64, 79]},
+						{"origin": [0, 52, -31], "size": [0, 6, 14], "uv": [194, 47]}
+					]
+				},
+				{
+					"name": "rleg",
+					"parent": "Quetzalcoatlus",
+					"pivot": [-6.5, 24, 8.5],
+					"cubes": [
+						{"origin": [-10, 10, 5], "size": [7, 16, 7], "uv": [0, 60], "mirror": true}
+					]
+				},
+				{
+					"name": "rleg2",
+					"parent": "rleg",
+					"pivot": [-6.5, 10, 10.5],
+					"cubes": [
+						{"origin": [-8, 2, 9], "size": [3, 8, 3], "uv": [0, 0], "mirror": true}
+					]
+				},
+				{
+					"name": "rfoot",
+					"parent": "rleg2",
+					"pivot": [-6.5, 2, 11],
+					"cubes": [
+						{"origin": [-9, 0, 6], "size": [5, 2, 6], "uv": [64, 74], "mirror": true},
+						{"origin": [-12, 0, -2], "size": [11, 0, 12], "uv": [163, 115], "mirror": true}
+					]
+				},
+				{
+					"name": "lleg",
+					"parent": "Quetzalcoatlus",
+					"pivot": [6.5, 24, 8.5],
+					"cubes": [
+						{"origin": [3, 10, 5], "size": [7, 16, 7], "uv": [0, 60]}
+					]
+				},
+				{
+					"name": "lleg2",
+					"parent": "lleg",
+					"pivot": [6.5, 10, 10.5],
+					"cubes": [
+						{"origin": [5, 2, 9], "size": [3, 8, 3], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "lfoot",
+					"parent": "lleg2",
+					"pivot": [6.5, 2, 11],
+					"cubes": [
+						{"origin": [4, 0, 6], "size": [5, 2, 6], "uv": [64, 74]},
+						{"origin": [1, 0, -2], "size": [11, 0, 12], "uv": [163, 115]}
+					]
+				}
+			]
+		}
+	]
+}
