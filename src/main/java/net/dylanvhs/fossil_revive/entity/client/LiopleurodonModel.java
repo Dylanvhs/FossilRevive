@@ -2,9 +2,7 @@ package net.dylanvhs.fossil_revive.entity.client;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
-import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;

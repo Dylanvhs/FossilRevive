@@ -149,8 +149,13 @@ public class DilophosaurusEntity extends Animal implements NeutralMob, GeoEntity
 
     private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
 
-        if (geoAnimatableAnimationState.isMoving()) {
+        if (geoAnimatableAnimationState.isMoving() && !this.isBaby()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.walk", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+        if (geoAnimatableAnimationState.isMoving() && this.isBaby()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.walk", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2F);
             return PlayState.CONTINUE;
         }
         else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.idle", Animation.LoopType.LOOP));

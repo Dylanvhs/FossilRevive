@@ -2,13 +2,8 @@ package net.dylanvhs.fossil_revive.entity.client;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.custom.DilophosaurusEntity;
-import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.model.data.EntityModelData;
 
 public class DilophosaurusModel extends GeoModel<DilophosaurusEntity> {
     private static final ResourceLocation ADULT_MODEL = new ResourceLocation(FossilRevive.MOD_ID, "geo/dilophosaurus.geo.json");
