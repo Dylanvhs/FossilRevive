@@ -23,6 +23,7 @@ import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -76,9 +77,22 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob, GeoEntit
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new AIFlyIdle());
-        this.goalSelector.addGoal(6, new MeleeAttackGoal(this, (double)1.2F, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MicroraptorEntity.class, true));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, (double)1.2F, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MicroraptorEntity.class, true));
+
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F) {
+            @Override
+            public boolean canUse() {
+                return !isFlying() && super.canUse();
+            }
+        });
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this) {
+            @Override
+            public boolean canUse() {
+                return !isFlying() && super.canUse();
+            }
+        });
     }
 
 
@@ -361,6 +375,7 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob, GeoEntit
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
         controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
     }
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
@@ -375,6 +390,15 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob, GeoEntit
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.quetzalcoatlus.idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
+
+    private <T extends GeoAnimatable> PlayState attackPredicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (this.swinging && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            geoAnimatableAnimationState.getController().forceAnimationReset();
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.quetzalcoatlus.attack", Animation.LoopType.PLAY_ONCE));
+            this.swinging = false;
+        }  return PlayState.CONTINUE;
+    }
+
 
 
     @Override

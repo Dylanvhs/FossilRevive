@@ -17,12 +17,15 @@ public class DilophosaurusRenderer extends GeoEntityRenderer<DilophosaurusEntity
     private static final ResourceLocation ADULT_TEXTURE = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/dilophosaurus.png");
     private static final ResourceLocation BABY_TEXTURE = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/dilophosaurus_baby.png");
     private static final ResourceLocation JP = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/dilophosaurus_jp.png");
+    private static final ResourceLocation JP_BABY = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/dilophosaurus_baby_jp.png");
 
-    public ResourceLocation getTextureLocation(DilophosaurusEntity entity) {
+    public ResourceLocation getTextureLocation(DilophosaurusEntity animatable) {
 
-        if (animatable.isBaby()) {
+        if (animatable.isBaby() && !animatable.isJP()) {
             return BABY_TEXTURE;
-        } else if(entity.isJP()){
+        } else if(animatable.isJP() && animatable.isBaby()){
+            return JP_BABY;
+        } else if(animatable.isJP() && !animatable.isBaby()){
             return JP;
         } else return ADULT_TEXTURE;
     }

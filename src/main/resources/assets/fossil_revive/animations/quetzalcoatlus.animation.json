@@ -254,6 +254,99 @@
 					}
 				}
 			}
+		},
+		"animation.quetzalcoatlus.attack": {
+			"animation_length": 0.25,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"rwing": {
+					"rotation": {
+						"vector": [0, 0, -35]
+					},
+					"position": {
+						"vector": [0, 4, 0]
+					}
+				},
+				"rwing2": {
+					"rotation": {
+						"vector": [0, 0, 90]
+					}
+				},
+				"lwing": {
+					"rotation": {
+						"vector": [0, 0, 35]
+					},
+					"position": {
+						"vector": [0, 4, 0]
+					}
+				},
+				"lwing2": {
+					"rotation": {
+						"vector": [0, 0, -90]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"0.0": {
+							"vector": [-20, 0, 0]
+						},
+						"0.125": {
+							"vector": [70, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"0.25": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"neck2": {
+					"rotation": {
+						"0.0": {
+							"vector": [-10, 0, 0]
+						},
+						"0.125": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				},
+				"head": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.125": {
+							"vector": [-10, 0, 0]
+						},
+						"0.25": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"lowerjaw": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.125": {
+							"vector": [25, 0, 0],
+							"easing": "easeInOutQuad"
+						},
+						"0.25": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutQuad"
+						}
+					}
+				}
+			}
 		}
 	}
 }
