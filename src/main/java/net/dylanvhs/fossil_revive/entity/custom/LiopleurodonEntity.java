@@ -91,25 +91,96 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
         this.goalSelector.addGoal(0, new BreathAirGoal(this));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(6, new LiopleurodonJumpGoal(this, 1));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2F, true));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2F, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D) {
+            @Override
+            public boolean canUse() {
+                return isBaby() && super.canUse();
+            }
+        });
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Sheep.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Cow.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Pig.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Chicken.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, DodoEntity.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Villager.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, DilophosaurusEntity.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractFish.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractSchoolingFish.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, WaterAnimal.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Sheep.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Cow.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Pig.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Chicken.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, DodoEntity.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Villager.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, DilophosaurusEntity.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractFish.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractSchoolingFish.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, WaterAnimal.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
 
     }
 

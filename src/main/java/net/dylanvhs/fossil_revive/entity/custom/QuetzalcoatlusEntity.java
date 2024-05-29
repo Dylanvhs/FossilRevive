@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 
 
+import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.entity.ai.FlyingMoveController;
 
 import net.minecraft.core.BlockPos;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -76,11 +78,39 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob, GeoEntit
     protected void registerGoals() {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new AIFlyIdle());
+        this.goalSelector.addGoal(1, new AIFlyIdle() {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.55D) {
+            @Override
+            public boolean canUse() {
+                return isBaby() && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, (double)1.2F, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Rabbit.class, true));
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MicroraptorEntity.class, true));
-
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Rabbit.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MicroraptorEntity.class, true) {
+            @Override
+            public boolean canUse() {
+                return !isBaby() && super.canUse();
+            }
+        });
+        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1) {
+            @Override
+            public boolean canUse() {
+                return !isFlying() && super.canUse();
+            }
+        });
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F) {
             @Override
             public boolean canUse() {
@@ -99,7 +129,7 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob, GeoEntit
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return null;
+        return ModEntities.QUETZALCOATLUS.get().create(pLevel);
     }
 
     protected void defineSynchedData() {

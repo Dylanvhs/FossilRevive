@@ -178,13 +178,13 @@ public class AnalyzerEntity extends BlockEntity implements MenuProvider {
 
     private boolean hasRecipe() {
         Optional<AnalyzerRecipe> recipe = getCurrentRecipe();
-
+        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == ModItems.FOSSIL.get() && this.itemHandler.getStackInSlot(OTHER_INPUT_SLOT).getItem() == ModItems.DNA_BOTTLE.get();
         if(recipe.isEmpty()) {
             return false;
         }
         ItemStack result = recipe.get().getResultItem(getLevel().registryAccess());
 
-        return canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
+        return hasCraftingItem && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
     }
 
     private Optional<AnalyzerRecipe> getCurrentRecipe() {

@@ -16,7 +16,9 @@ public class ModTags {
 
     public static class Items {
 
-        private static TagKey<Item> tag(String name) {
+        public static final TagKey<Item> DNA = registerItemTag( "dna");
+
+        private static TagKey<Item> registerItemTag(String name) {
             return ItemTags.create(new ResourceLocation(FossilRevive.MOD_ID, name));
         }
     }

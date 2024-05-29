@@ -122,9 +122,7 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider {
         if (slot == 1 && stack.is(ModItems.DNA_BOTTLE.get())) {
             return itemHandler.insertItem(slot, stack, simulate);
         }
-        //if(slot == 1 && !AnalyzerRecipeJsonManager.getRecipes().isEmpty() && AnalyzerRecipeJsonManager.getRecipes().containsKey(stack.getItem())) {
-        //    return itemHandler.insertItem(slot, stack, simulate);
-        //}
+
         return stack;
     }
     @Override

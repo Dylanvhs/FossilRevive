@@ -13,9 +13,14 @@ public class QuetzalcoatlusRenderer extends GeoEntityRenderer<QuetzalcoatlusEnti
         super(renderManager, new QuetzalcoatlusModel());
     }
 
+    private static final ResourceLocation ADULT_TEXTURE = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/quetzalcoatlus.png");
+    private static final ResourceLocation BABY_TEXTURE = new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/quetzalcoatlus_baby.png");
+
     @Override
     public ResourceLocation getTextureLocation(QuetzalcoatlusEntity animatable) {
-        return new ResourceLocation(FossilRevive.MOD_ID, "textures/entity/quetzalcoatlus.png");
+        if (animatable.isBaby()) {
+            return BABY_TEXTURE;
+        } else return ADULT_TEXTURE;
     }
 
     @Override
