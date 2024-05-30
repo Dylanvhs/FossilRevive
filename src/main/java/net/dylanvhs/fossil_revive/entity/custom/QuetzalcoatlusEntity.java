@@ -5,6 +5,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.entity.ai.FlyingMoveController;
 
+import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -26,6 +27,7 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -72,6 +74,11 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob, GeoEntit
                 .add(Attributes.ATTACK_SPEED, 0.1f)
                 .add(Attributes.ATTACK_KNOCKBACK, 0.6f)
                 .build();
+    }
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.QUETZALCOATLUS_SPAWN_EGG.get());
     }
 
     @Override

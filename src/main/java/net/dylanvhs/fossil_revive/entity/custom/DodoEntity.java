@@ -1,7 +1,10 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
+import net.dylanvhs.fossil_revive.entity.ModEntities;
+import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -10,12 +13,29 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
-public class DodoEntity extends Animal {
+import javax.annotation.Nullable;
+
+public class DodoEntity extends Animal implements GeoEntity {
+
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.BEETROOT_SEEDS, Items.MELON_SEEDS, Items.PUMPKIN_SEEDS, Items.WHEAT_SEEDS, Items.TORCHFLOWER_SEEDS);
 
     public float flap;
     public float flapSpeed;
@@ -24,73 +44,43 @@ public class DodoEntity extends Animal {
     public float flapping = 1.0F;
     private float nextFlap = 1.0F;
 
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeOut = 0;
-    public final AnimationState flapAnimationState = new AnimationState();
-    private int flapAnimationTimeOut = 0;
-
-
     public DodoEntity(EntityType<? extends Animal> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        if (this.level().isClientSide()) {
-            setupAnimationState();
-        }
-    }
-
-    private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0) {
-            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeOut;
-        }
-        if (this.getPose() == Pose.FALL_FLYING && flapAnimationTimeOut <= 0) {
-            this.flapAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.flapAnimationState.start(this.tickCount);
-        } else {
-            --this.flapAnimationTimeOut;
-        }
-
-        if (this.getPose() == Pose.STANDING) {
-            flapAnimationState.stop();
-        }
-    }
-
-
-
-    @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            f = 0f;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
     }
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
+
+        this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(10, new RandomLookAroundGoal(this));
 
     }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return Animal.createLivingAttributes()
+    public static AttributeSupplier setAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
-                .add(Attributes.MOVEMENT_SPEED, 0.25D);
+                .add(Attributes.MOVEMENT_SPEED, 0.25D)
+                .build();
+    }
+
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+        return ModEntities.DODO.get().create(pLevel);
+    }
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.DODO_SPAWN_EGG.get());
+    }
+
+    public boolean isFood(ItemStack pStack) {
+        return TEMPTATION_ITEM.test(pStack);
     }
 
     public void aiStep() {
@@ -101,9 +91,6 @@ public class DodoEntity extends Animal {
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround() && this.flapping < 1.0F) {
             this.flapping = 1.0F;
-            setPose(Pose.FALL_FLYING);
-        } else {
-            setPose(Pose.STANDING);
         }
         this.flapping *= 0.9F;
         Vec3 vec3 = this.getDeltaMovement();
@@ -130,12 +117,36 @@ public class DodoEntity extends Animal {
     }
 
     protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-        return 1.2F;
+        return this.isBaby() ? pSize.height * 0.95F : 1.2F;
     }
 
-    @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return null;
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (!this.onGround()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dodo.fall", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2.5F);
+            return PlayState.CONTINUE;
+        }
+        else if (geoAnimatableAnimationState.isMoving() && this.onGround()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dodo.walk", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
+            return PlayState.CONTINUE;
+        }
+        else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dodo.idle", Animation.LoopType.LOOP));
+        geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
+        return PlayState.CONTINUE;
+    }
+
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public double getTick(Object object) {
+        return tickCount;
     }
 }

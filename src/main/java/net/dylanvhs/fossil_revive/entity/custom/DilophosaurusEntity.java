@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 
 import net.dylanvhs.fossil_revive.entity.ModEntities;
+import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -19,7 +20,9 @@ import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -39,6 +42,11 @@ public class DilophosaurusEntity extends Animal implements NeutralMob, GeoEntity
 
     public DilophosaurusEntity(EntityType<? extends DilophosaurusEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
+    }
+
+    @Override
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.DILOPHOSAURUS_SPAWN_EGG.get());
     }
 
     @Override
@@ -212,6 +220,7 @@ public class DilophosaurusEntity extends Animal implements NeutralMob, GeoEntity
 
         if (geoAnimatableAnimationState.isMoving() && !this.isBaby()) {
             geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.walk", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
             return PlayState.CONTINUE;
         }
         if (geoAnimatableAnimationState.isMoving() && this.isBaby()) {
@@ -220,6 +229,7 @@ public class DilophosaurusEntity extends Animal implements NeutralMob, GeoEntity
             return PlayState.CONTINUE;
         }
         else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.idle", Animation.LoopType.LOOP));
+        geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
         return PlayState.CONTINUE;
     }
 
