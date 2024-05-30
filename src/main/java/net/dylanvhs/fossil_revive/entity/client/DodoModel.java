@@ -1,7 +1,6 @@
 package net.dylanvhs.fossil_revive.entity.client;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
-import net.dylanvhs.fossil_revive.entity.custom.DilophosaurusEntity;
 import net.dylanvhs.fossil_revive.entity.custom.DodoEntity;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.constant.DataTickets;
