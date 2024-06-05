@@ -76,6 +76,15 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
                 .build();
     }
 
+    protected void ageBoundaryReached() {
+        if (this.isBaby()) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(50.0D);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(100.0D);
+        }
+
+    }
+
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(MOISTNESS_LEVEL, 2400);

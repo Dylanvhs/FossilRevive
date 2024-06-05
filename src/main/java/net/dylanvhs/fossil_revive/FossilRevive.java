@@ -79,6 +79,9 @@ public class FossilRevive
             EntityRenderers.register
                     (ModEntities.DODO.get(), DodoRenderer:: new);
 
+            EntityRenderers.register
+                    (ModEntities.XENACANTHUS.get(), XenacanthusRenderer:: new);
+
 
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);

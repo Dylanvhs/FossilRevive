@@ -3,9 +3,11 @@ package net.dylanvhs.fossil_revive.entity.custom;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -32,13 +34,26 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.HitResult;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 import java.util.function.Predicate;
 
-public class XenacanthusEntity extends AbstractFish implements Bucketable, NeutralMob {
+public class XenacanthusEntity extends AbstractFish implements Bucketable, NeutralMob, GeoEntity {
+
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
     private static final Predicate<LivingEntity> SCARY_MOB = (p_289442_) -> {
         if (p_289442_ instanceof Player && ((Player)p_289442_).isCreative()) {
             return false;
@@ -46,15 +61,9 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
             return p_289442_.getType() == EntityType.AXOLOTL || p_289442_.getMobType() != MobType.WATER;
         }
     };
-
     static final TargetingConditions targetingConditions = TargetingConditions.forNonCombat().ignoreInvisibilityTesting().ignoreLineOfSight().selector(SCARY_MOB);
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(XenacanthusEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(XenacanthusEntity.class, EntityDataSerializers.INT);
-
-
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeOut = 0;
-
 
     public XenacanthusEntity(EntityType<? extends XenacanthusEntity> entityType, Level level) {
         super(entityType, level);
@@ -62,38 +71,10 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
-    public void tick() {
-        super.tick();
-
-        if (this.level().isClientSide()) {
-            setupAnimationState();
-        }
-    }
-
-
-
-    private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0) {
-            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeOut;
-        }
-    }
-
     @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            f = 0f;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
+    public ItemStack getPickedResult(HitResult target) {
+        return new ItemStack(ModItems.XENACANTHUS_SPAWN_EGG.get());
     }
-
-
 
 
     public static String getVariantName(int variant) {
@@ -105,20 +86,20 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
         };
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return AbstractFish.createLivingAttributes()
+    public static AttributeSupplier setAttributes() {
+        return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.MOVEMENT_SPEED, 2D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0f)
                 .add(Attributes.ATTACK_DAMAGE, 3f)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
-                .add(Attributes.ATTACK_KNOCKBACK, 0f);
+                .add(Attributes.ATTACK_KNOCKBACK, 0f)
+                .build();
     }
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.8D, 1));
         this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
@@ -139,6 +120,24 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
                     this.touch(mob);
                 }
             }
+        }
+    }
+
+    public void playerTouch(Player pEntity) {
+        if (pEntity instanceof ServerPlayer && pEntity.hurt(this.damageSources().mobAttack(this), (float)(1 ))) {
+            if (!this.isSilent()) {
+                ((ServerPlayer)pEntity).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
+            }
+
+            pEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), this);
+        }
+
+    }
+
+    private void touch(Mob pMob) {
+        if (pMob.hurt(this.damageSources().mobAttack(this), (float)(1))) {
+            pMob.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), this);
+            this.playSound(SoundEvents.PUFFER_FISH_STING, 1.0F, 1.0F);
         }
 
     }
@@ -182,14 +181,6 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
     @Nonnull
     protected InteractionResult mobInteract(@Nonnull Player player, @Nonnull InteractionHand hand) {
         return Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
-    }
-
-    private void touch(Mob pMob) {
-        if (pMob.hurt(this.damageSources().mobAttack(this), (float)(1))) {
-            pMob.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0), this);
-            this.playSound(SoundEvents.PUFFER_FISH_STING, 1.0F, 1.0F);
-        }
-
     }
 
     public int getVariant() {
@@ -300,4 +291,31 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
             return (double)(f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
         }
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+
+        if (geoAnimatableAnimationState.isMoving()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.xenacanthus.swim", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.75F);
+            return PlayState.CONTINUE;
+        }
+        else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.xenacanthus.swim", Animation.LoopType.LOOP));
+        geoAnimatableAnimationState.getController().setAnimationSpeed(1.75F);
+        return PlayState.CONTINUE;
+    }
+
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public double getTick(Object object) {
+        return tickCount;
+    }
+
 }

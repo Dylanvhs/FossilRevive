@@ -147,6 +147,15 @@ public class DilophosaurusEntity extends Animal implements NeutralMob, GeoEntity
                 .build();
     }
 
+    protected void ageBoundaryReached() {
+        if (this.isBaby()) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(22.5D);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(45.0D);
+        }
+
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {

@@ -2,10 +2,7 @@ package net.dylanvhs.fossil_revive.event;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
-import net.dylanvhs.fossil_revive.entity.custom.DilophosaurusEntity;
-import net.dylanvhs.fossil_revive.entity.custom.DodoEntity;
-import net.dylanvhs.fossil_revive.entity.custom.LiopleurodonEntity;
-import net.dylanvhs.fossil_revive.entity.custom.QuetzalcoatlusEntity;
+import net.dylanvhs.fossil_revive.entity.custom.*;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,6 +28,7 @@ public final class ModEvents {
         event.put(ModEntities.DILOPHOSAURUS.get(), DilophosaurusEntity.setAttributes());
         event.put(ModEntities.QUETZALCOATLUS.get(), QuetzalcoatlusEntity.setAttributes());
         event.put(ModEntities.DODO.get(), DodoEntity.setAttributes());
+        event.put(ModEntities.XENACANTHUS.get(), XenacanthusEntity.setAttributes());
     }
 
 

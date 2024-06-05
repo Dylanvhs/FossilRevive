@@ -68,6 +68,15 @@ public class DodoEntity extends Animal implements GeoEntity {
                 .build();
     }
 
+    protected void ageBoundaryReached() {
+        if (this.isBaby()) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(5.0D);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(10.0D);
+        }
+
+    }
+
     @Nullable
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
