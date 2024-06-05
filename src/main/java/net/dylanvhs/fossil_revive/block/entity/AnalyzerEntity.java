@@ -1,7 +1,6 @@
 package net.dylanvhs.fossil_revive.block.entity;
 
 import net.dylanvhs.fossil_revive.item.ModItems;
-import net.dylanvhs.fossil_revive.recipe.AnalyzerRecipe;
 import net.dylanvhs.fossil_revive.screens.AnalyzerMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,9 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -26,8 +23,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 public class AnalyzerEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler itemHandler = new ItemStackHandler(11);
@@ -128,9 +123,7 @@ public class AnalyzerEntity extends BlockEntity implements MenuProvider {
         if (slot == 1 && stack.is(ModItems.DNA_BOTTLE.get())) {
             return itemHandler.insertItem(slot, stack, simulate);
         }
-        //if(slot == 1 && !AnalyzerRecipeJsonManager.getRecipes().isEmpty() && AnalyzerRecipeJsonManager.getRecipes().containsKey(stack.getItem())) {
-        //    return itemHandler.insertItem(slot, stack, simulate);
-        //}
+
         return stack;
     }
     @Override
@@ -146,69 +139,5 @@ public class AnalyzerEntity extends BlockEntity implements MenuProvider {
         super.load(pTag);
         itemHandler.deserializeNBT(pTag.getCompound("inventory"));
         progress = pTag.getInt("analyzer.progress");
-    }
-
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        if(hasRecipe()) {
-            increaseCraftingProgress();
-            setChanged(pLevel, pPos, pState);
-
-            if(hasProgressFinished()) {
-                craftItem();
-                resetProgress();
-            }
-        } else {
-            resetProgress();
-        }
-    }
-
-    private void resetProgress() {
-        progress = 0;
-    }
-
-    private void craftItem() {
-        Optional<AnalyzerRecipe> recipe = getCurrentRecipe();
-        ItemStack result = recipe.get().getResultItem(null);
-
-        this.itemHandler.extractItem(INPUT_SLOT, 1, false);
-
-        this.itemHandler.setStackInSlot(OUTPUT_SLOT, new ItemStack(result.getItem(),
-                this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + result.getCount()));
-    }
-
-    private boolean hasRecipe() {
-        Optional<AnalyzerRecipe> recipe = getCurrentRecipe();
-        boolean hasCraftingItem = this.itemHandler.getStackInSlot(INPUT_SLOT).getItem() == ModItems.FOSSIL.get() && this.itemHandler.getStackInSlot(OTHER_INPUT_SLOT).getItem() == ModItems.DNA_BOTTLE.get();
-        if(recipe.isEmpty()) {
-            return false;
-        }
-        ItemStack result = recipe.get().getResultItem(getLevel().registryAccess());
-
-        return hasCraftingItem && canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
-    }
-
-    private Optional<AnalyzerRecipe> getCurrentRecipe() {
-        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
-        for(int i = 0; i < itemHandler.getSlots(); i++) {
-            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
-        }
-
-        return this.level.getRecipeManager().getRecipeFor(AnalyzerRecipe.Type.INSTANCE, inventory, level);
-    }
-
-    private boolean canInsertItemIntoOutputSlot(Item item) {
-        return this.itemHandler.getStackInSlot(OUTPUT_SLOT).isEmpty() || this.itemHandler.getStackInSlot(OUTPUT_SLOT).is(item);
-    }
-
-    private boolean canInsertAmountIntoOutputSlot(int count) {
-        return this.itemHandler.getStackInSlot(OUTPUT_SLOT).getCount() + count <= this.itemHandler.getStackInSlot(OUTPUT_SLOT).getMaxStackSize();
-    }
-
-    private boolean hasProgressFinished() {
-        return progress >= maxProgress;
-    }
-
-    private void increaseCraftingProgress() {
-        progress++;
     }
 }

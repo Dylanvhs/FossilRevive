@@ -19,7 +19,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<QuetzalcoatlusEntity>> QUETZALCOATLUS =
             ENTITY_TYPES.register("quetzalcoatlus", () -> EntityType.Builder.of(QuetzalcoatlusEntity::new, MobCategory.CREATURE)
-                    .sized(1.5f, 3f).build("quetzalcoatlus"));
+                    .sized(4.5f, 4.5f).build("quetzalcoatlus"));
 
     public static final RegistryObject<EntityType<MicroraptorEntity>> MICRORAPTOR =
             ENTITY_TYPES.register("microraptor", () -> EntityType.Builder.of(MicroraptorEntity::new, MobCategory.CREATURE)
