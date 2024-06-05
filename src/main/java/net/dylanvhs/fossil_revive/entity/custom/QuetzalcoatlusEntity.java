@@ -76,6 +76,15 @@ public class QuetzalcoatlusEntity extends Animal implements NeutralMob, GeoEntit
                 .build();
     }
 
+    protected void ageBoundaryReached() {
+        if (this.isBaby()) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(42.5D);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(85.0D);
+        }
+
+    }
+
     @Override
     public ItemStack getPickedResult(HitResult target) {
         return new ItemStack(ModItems.QUETZALCOATLUS_SPAWN_EGG.get());

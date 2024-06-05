@@ -1,7 +1,6 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
 import net.dylanvhs.fossil_revive.item.ModItems;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -10,7 +9,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,12 +25,10 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.*;
-
 import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.HitResult;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -67,7 +63,7 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
 
     public XenacanthusEntity(EntityType<? extends XenacanthusEntity> entityType, Level level) {
         super(entityType, level);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.1F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
@@ -102,12 +98,12 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
         this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.8D, 1));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Cod.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Salmon.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Axolotl.class, true));
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, TropicalFish.class, true));
-        this.goalSelector.addGoal(2, new XenacanthusEntity.XenacanthusMeleeAttackGoal());
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Cod.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Salmon.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Axolotl.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, TropicalFish.class, true));
+        this.goalSelector.addGoal(1, new XenacanthusEntity.XenacanthusMeleeAttackGoal());
     }
 
     public void aiStep() {
@@ -265,14 +261,14 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
 
     }
 
-    @org.jetbrains.annotations.Nullable
+    @Nullable
     @Override
     public UUID getPersistentAngerTarget() {
         return null;
     }
 
     @Override
-    public void setPersistentAngerTarget(@org.jetbrains.annotations.Nullable UUID pPersistentAngerTarget) {
+    public void setPersistentAngerTarget(@Nullable UUID pPersistentAngerTarget) {
 
     }
 
@@ -283,12 +279,11 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
 
     class XenacanthusMeleeAttackGoal extends MeleeAttackGoal {
         public XenacanthusMeleeAttackGoal() {
-            super(XenacanthusEntity.this, 1.2D, true);
+            super(XenacanthusEntity.this, 2D, true);
         }
-
         protected double getAttackReachSqr(LivingEntity pAttackTarget) {
             float f = XenacanthusEntity.this.getBbWidth() - 0.1F;
-            return (double)(f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
+            return (f * 2.0F * f * 2.0F + pAttackTarget.getBbWidth());
         }
     }
 

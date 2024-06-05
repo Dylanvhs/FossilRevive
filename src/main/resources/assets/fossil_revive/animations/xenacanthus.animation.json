@@ -52,6 +52,11 @@
 					"rotation": {
 						"vector": [0, 0, "Math.cos(120+query.anim_time*360)*-8"]
 					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["Math.cos(80+query.anim_time*360)*-1", "Math.cos(40+query.anim_time*360)*-5", "Math.cos(query.anim_time*360)*2"]
+					}
 				}
 			}
 		}
