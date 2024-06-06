@@ -38,10 +38,10 @@ public class LiopleurodonModel extends GeoModel<LiopleurodonEntity> {
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone root = this.getAnimationProcessor().getBone("Liopleurodon");
         CoreGeoBone root_baby = this.getAnimationProcessor().getBone("BabyLiopleurodon");
-        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && !animatable.isBaby()) {
+        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && !animatable.isBaby() && animatable.isInWater()) {
             root.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
             root.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
-        } else if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && animatable.isBaby()) {
+        } else if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && animatable.isBaby() && animatable.isInWater()) {
             root_baby.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
             root_baby.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
         }
