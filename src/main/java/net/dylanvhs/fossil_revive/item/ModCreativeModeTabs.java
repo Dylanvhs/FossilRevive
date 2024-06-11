@@ -22,9 +22,15 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.ANALYZER.get());
                         pOutput.accept(ModBlocks.CULTIVATOR.get());
 
+                        pOutput.accept(ModBlocks.CRUMBLED_SILTSTONE.get());
+                        pOutput.accept(ModBlocks.SUSPICIOUS_CRUMBLED_SILTSTONE.get());
+
                         pOutput.accept(ModItems.FOSSIL.get());
-                        pOutput.accept(ModItems.ROUGH_FOSSIL.get());
+                        pOutput.accept(ModItems.CRUMBlED_FOSSIL.get());
                         pOutput.accept(ModItems.PLANT_FOSSIL.get());
+
+                        pOutput.accept(ModItems.CHISEL.get());
+
 
                         pOutput.accept(ModItems.DNA_BOTTLE.get());
                         pOutput.accept(ModItems.HYBRID_DNA_BOTTLE.get());

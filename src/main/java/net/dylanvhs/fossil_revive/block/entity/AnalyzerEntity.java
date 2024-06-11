@@ -1,5 +1,6 @@
 package net.dylanvhs.fossil_revive.block.entity;
 
+import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.screens.AnalyzerMenu;
 import net.minecraft.core.BlockPos;

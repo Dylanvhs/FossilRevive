@@ -1,8 +1,9 @@
-// 1.20.1	2024-02-25T15:36:24.3234424	Item Models: fossil_revive
+// 1.20.1	2024-06-11T12:23:27.7439309	Item Models: fossil_revive
 d459a90a9e42f7832d0cf35b6f72debadb6a9755 assets/fossil_revive/models/item/amargasaurus_dna.json
 1b18c1c8e32ccddec1a248ced8b964c2c64b380d assets/fossil_revive/models/item/bones_music_disc.json
 df1875a0c0f53fcc24faa6716c40c109bca360ce assets/fossil_revive/models/item/carnotaurus_dna.json
 272880eefb30f6aa3cf252f341d5ea1b7b46d663 assets/fossil_revive/models/item/cooked_xenacanthus.json
+7cc8d3f97bc13f526d9226ba60f30a047039cefd assets/fossil_revive/models/item/crumbled_fossil.json
 f03d9fed16e79e4d4e875beb953dd9ed08e2b124 assets/fossil_revive/models/item/dilophosaurus_dna.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/dilophosaurus_spawn_egg.json
 d87eabd4aecba1f58415e5119a1ce957023b1f5a assets/fossil_revive/models/item/dirty_cloth.json
@@ -23,7 +24,6 @@ a0017a88aa3059a65c20150c30341db0373a2128 assets/fossil_revive/models/item/fossil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/quetzalcoatlus_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/ranalophosaurus_spawn_egg.json
 9ae90871a760aa08d8f94a71c8ac80f81c10f14f assets/fossil_revive/models/item/raw_xenacanthus.json
-341fe915a2d069e027acbe53873212c38b281689 assets/fossil_revive/models/item/rough_fossil.json
 77a270895ce76a8eccd5412aa93b2a56ef77dc33 assets/fossil_revive/models/item/smilodon_dna.json
 58757c37e7e46c1809e002e19c6d1ce548c851fb assets/fossil_revive/models/item/tapejara_dna.json
 1c2be912a0c4b3edbb2523ce652bb76f683480d1 assets/fossil_revive/models/item/tasmanian_tiger_dna.json

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fossil_revive:item/rough_fossil"
+    "layer0": "fossil_revive:item/crumbled_fossil"
   }
 }

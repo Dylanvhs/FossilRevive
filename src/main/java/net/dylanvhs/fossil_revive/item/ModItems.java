@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.item;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
+import net.dylanvhs.fossil_revive.item.custom.ChiselItem;
 import net.dylanvhs.fossil_revive.item.custom.ItemModFishBucket;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
@@ -29,7 +30,7 @@ public class ModItems {
         () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> PLANT_FOSSIL = ITEMS.register("plant_fossil",
         () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> ROUGH_FOSSIL = ITEMS.register("rough_fossil",
+    public static final RegistryObject<Item> CRUMBlED_FOSSIL = ITEMS.register("crumbled_fossil",
         () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> DNA_BOTTLE = ITEMS.register("dna_bottle",
         () -> new Item(new Item.Properties()));
@@ -69,6 +70,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_cloth",
             () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> CHISEL = ITEMS.register("chisel",
+            () -> new ChiselItem(new Item.Properties().durability(64)));
 
 
     public static final RegistryObject<Item> RAW_XENACANTHUS = ITEMS.register("raw_xenacanthus",

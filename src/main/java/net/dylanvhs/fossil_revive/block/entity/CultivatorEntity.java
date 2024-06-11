@@ -1,6 +1,7 @@
 package net.dylanvhs.fossil_revive.block.entity;
 
 
+import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.screens.CultivatorMenu;
 import net.dylanvhs.fossil_revive.util.ModTags;
 import net.minecraft.core.BlockPos;

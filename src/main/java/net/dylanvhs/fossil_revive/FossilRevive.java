@@ -2,7 +2,7 @@ package net.dylanvhs.fossil_revive;
 
 import com.mojang.logging.LogUtils;
 import net.dylanvhs.fossil_revive.block.ModBlocks;
-import net.dylanvhs.fossil_revive.block.entity.ModBlockEntities;
+import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.entity.client.*;
 import net.dylanvhs.fossil_revive.item.ModCreativeModeTabs;

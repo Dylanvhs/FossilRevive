@@ -3,8 +3,10 @@
 
 
   "item.fossil_revive.fossil": "Fossil",
-  "item.fossil_revive.rough_fossil": "Rough Fossil",
+  "item.fossil_revive.crumbled_fossil": "Crumbled Fossil",
   "item.fossil_revive.plant_fossil": "Plant Fossil",
+
+  "item.fossil_revive.chisel": "Chisel",
 
   "item.fossil_revive.dna_bottle": "DNA Bottle",
   "item.fossil_revive.hybrid_dna_bottle": "Hybrid DNA Bottle",
@@ -24,6 +26,8 @@
   "item.fossil_revive.quetzalcoatlus_dna": "Quetzalcoatlus DNA",
   "item.fossil_revive.microraptor_dna": "Microraptor DNA",
 
+  "item.fossil_revive.dirty_cloth": "Dirty Cloth",
+
 
   "item.fossil_revive.xenacanthus_bucket": "Bucket Of Xenacanthus",
   "item.fossil_revive.raw_xenacanthus": "Raw Xenacanthus",
@@ -40,6 +44,8 @@
 
   "block.fossil_revive.analyzer": "DNA Analyzer",
   "block.fossil_revive.cultivator": "Cultivator",
+  "block.fossil_revive.crumbled_siltstone": "Crumbled Siltstone",
+  "block.fossil_revive.suspicious_crumbled_siltstone": "Suspicious Crumbled Siltstone",
 
 
   "item.fossil_revive.liopleurodon_spawn_egg": "Liopleurodon Spawn Egg",

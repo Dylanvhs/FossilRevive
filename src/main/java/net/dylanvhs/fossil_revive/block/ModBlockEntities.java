@@ -1,8 +1,10 @@
-package net.dylanvhs.fossil_revive.block.entity;
+package net.dylanvhs.fossil_revive.block;
 
 
 import net.dylanvhs.fossil_revive.FossilRevive;
-import net.dylanvhs.fossil_revive.block.ModBlocks;
+import net.dylanvhs.fossil_revive.block.entity.AnalyzerEntity;
+import net.dylanvhs.fossil_revive.block.entity.CultivatorEntity;
+import net.dylanvhs.fossil_revive.block.entity.SuspiciousCrumbledSiltstoneEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -22,6 +24,11 @@ public class ModBlockEntities {
             BLOCK_ENTITIES.register("cultivator_be", () ->
                     BlockEntityType.Builder.of(CultivatorEntity::new,
                             ModBlocks.CULTIVATOR.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<SuspiciousCrumbledSiltstoneEntity>> SUSPICIOUS_CRUMBLED_SILTSTONE_BE =
+            BLOCK_ENTITIES.register("suspicious_crumbled_siltstone_be", () ->
+                    BlockEntityType.Builder.of(SuspiciousCrumbledSiltstoneEntity::new,
+                            ModBlocks.SUSPICIOUS_CRUMBLED_SILTSTONE.get()).build(null));
 
 
     public static void register(IEventBus eventBus) {

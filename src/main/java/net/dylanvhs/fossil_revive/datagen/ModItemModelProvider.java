@@ -24,7 +24,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         simpleItem(ModItems.FOSSIL);
         simpleItem(ModItems.PLANT_FOSSIL);
-        simpleItem(ModItems.ROUGH_FOSSIL);
+        simpleItem(ModItems.CRUMBlED_FOSSIL);
         simpleItem(ModItems.DNA_BOTTLE);
         simpleItem(ModItems.HYBRID_DNA_BOTTLE);
         simpleItem(ModItems.AMARGASAURUS_DNA);
@@ -62,6 +62,11 @@ public class ModItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 new ResourceLocation("item/generated")).texture("layer0",
+                new ResourceLocation(FossilRevive.MOD_ID, "item/" + item.getId().getPath()));
+    }
+    private ItemModelBuilder simpleToolItem(RegistryObject<Item> item) {
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/handheld")).texture("layer0",
                 new ResourceLocation(FossilRevive.MOD_ID, "item/" + item.getId().getPath()));
     }
     private ItemModelBuilder simpleBlockItemBlockTexture(RegistryObject<Block> item) {
