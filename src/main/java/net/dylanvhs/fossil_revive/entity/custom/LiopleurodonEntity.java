@@ -27,6 +27,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -118,78 +120,10 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
             }
         });
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Sheep.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Cow.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Pig.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Chicken.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, DodoEntity.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Villager.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, DilophosaurusEntity.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractFish.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, AbstractSchoolingFish.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, WaterAnimal.class, true) {
-            @Override
-            public boolean canUse() {
-                return !isBaby() && super.canUse();
-            }
-        });
+
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (p_28879_) -> {
+            return !(p_28879_ instanceof LiopleurodonEntity || p_28879_ instanceof Creeper);
+        }));
 
     }
 

@@ -31,7 +31,7 @@ public class XenacanthusModel extends GeoModel<XenacanthusEntity> {
         if (animationState == null) return;
         EntityModelData extraDataOfType = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
         CoreGeoBone root = this.getAnimationProcessor().getBone("xenacanthus");
-        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D && animatable.isInWater()) {
+        if (animatable.getDeltaMovement().horizontalDistanceSqr() > 1.0E-7D) {
             root.setRotY(extraDataOfType.netHeadYaw() * ((float)Math.PI / 180F));
             root.setRotX(extraDataOfType.headPitch() * ((float)Math.PI / 180F));
         }

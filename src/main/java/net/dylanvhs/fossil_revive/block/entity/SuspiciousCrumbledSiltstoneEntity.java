@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.block.entity;
 
 import com.mojang.logging.LogUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.block.custom.SuspiciousCrumbledSiltstoneBlock;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -178,7 +179,7 @@ public class SuspiciousCrumbledSiltstoneEntity extends BlockEntity {
 
     private boolean tryLoadLootTable(CompoundTag pTag) {
         if (pTag.contains("LootTable", 8)) {
-            this.lootTable = new ResourceLocation(pTag.getString("LootTable"));
+            this.lootTable = new ResourceLocation(FossilRevive.MOD_ID, pTag.getString("LootTable"));
             this.lootTableSeed = pTag.getLong("LootTableSeed");
             return true;
         } else {

@@ -1,0 +1,52 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fossil_revive:crumbled_fossil"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil_revive:plant_fossil"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stick"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bone_meal"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:emerald",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil_revive:crumbled_fossil",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:charcoal",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:coal",
+          "weight": 2
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "fossil_revive:paleontology/fossil_loot"
+}

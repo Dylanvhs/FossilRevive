@@ -1,12 +1,14 @@
 package net.dylanvhs.fossil_revive;
 
 import com.mojang.logging.LogUtils;
+import net.dylanvhs.fossil_revive.block.ModBlockEntityRenderers;
 import net.dylanvhs.fossil_revive.block.ModBlocks;
 import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.entity.client.*;
 import net.dylanvhs.fossil_revive.item.ModCreativeModeTabs;
 import net.dylanvhs.fossil_revive.item.ModItems;
+import net.dylanvhs.fossil_revive.loot.ModBuiltInLootTables;
 import net.dylanvhs.fossil_revive.screens.AnalyzerScreen;
 import net.dylanvhs.fossil_revive.screens.CultivatorScreen;
 import net.dylanvhs.fossil_revive.screens.ModMenuTypes;
