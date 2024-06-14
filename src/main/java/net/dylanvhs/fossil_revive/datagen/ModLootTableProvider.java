@@ -1,5 +1,6 @@
 package net.dylanvhs.fossil_revive.datagen;
 
+import net.dylanvhs.fossil_revive.datagen.loot.FossilLoot;
 import net.dylanvhs.fossil_revive.datagen.loot.ModBlockLootTables;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
@@ -11,7 +12,8 @@ import java.util.Set;
 public class ModLootTableProvider {
     public static LootTableProvider create(PackOutput output) {
         return new LootTableProvider(output, Set.of(), List.of(
-                new LootTableProvider.SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK)
+                new LootTableProvider.SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK),
+                new LootTableProvider.SubProviderEntry(FossilLoot::new, LootContextParamSets.ARCHAEOLOGY)
         ));
     }
 }
