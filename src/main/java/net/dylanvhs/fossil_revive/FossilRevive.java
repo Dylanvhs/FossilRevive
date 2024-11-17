@@ -1,17 +1,16 @@
 package net.dylanvhs.fossil_revive;
 
 import com.mojang.logging.LogUtils;
-import net.dylanvhs.fossil_revive.block.ModBlockEntityRenderers;
 import net.dylanvhs.fossil_revive.block.ModBlocks;
 import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.entity.client.*;
 import net.dylanvhs.fossil_revive.item.ModCreativeModeTabs;
 import net.dylanvhs.fossil_revive.item.ModItems;
-import net.dylanvhs.fossil_revive.loot.ModBuiltInLootTables;
 import net.dylanvhs.fossil_revive.screens.AnalyzerScreen;
 import net.dylanvhs.fossil_revive.screens.CultivatorScreen;
 import net.dylanvhs.fossil_revive.screens.ModMenuTypes;
+import net.dylanvhs.fossil_revive.screens.ModRecipeTypes;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -45,6 +44,7 @@ public class FossilRevive
 
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        ModRecipeTypes.register(modEventBus);
 
         ModSounds.register(modEventBus);
 

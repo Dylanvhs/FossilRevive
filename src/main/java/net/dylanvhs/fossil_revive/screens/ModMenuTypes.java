@@ -11,13 +11,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModMenuTypes {
-    public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(ForgeRegistries.MENU_TYPES, FossilRevive.MOD_ID);
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, FossilRevive.MOD_ID);
 
-    public static final RegistryObject<MenuType<AnalyzerMenu>> ANALYZER_MENU =
-            registerMenuType("analyzer_menu", AnalyzerMenu::new);
-    public static final RegistryObject<MenuType<CultivatorMenu>> CULTIVATOR_MENU =
-            registerMenuType("cultivator_menu", CultivatorMenu::new);
+    public static final RegistryObject<MenuType<AnalyzerMenu>> ANALYZER_MENU = registerMenuType("analyzer_menu", AnalyzerMenu::new);
+    public static final RegistryObject<MenuType<CultivatorMenu>> CULTIVATOR_MENU = registerMenuType("cultivator_menu", CultivatorMenu::new);
 
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
