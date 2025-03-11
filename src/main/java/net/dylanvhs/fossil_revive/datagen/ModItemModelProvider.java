@@ -27,6 +27,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.CRUMBlED_FOSSIL);
         simpleItem(ModItems.DNA_BOTTLE);
         simpleItem(ModItems.HYBRID_DNA_BOTTLE);
+        simpleItem(ModItems.SYRINGE);
         simpleItem(ModItems.AMARGASAURUS_DNA);
         simpleItem(ModItems.CARNOTAURUS_DNA);
         simpleItem(ModItems.DILOPHOSAURUS_DNA);
@@ -41,6 +42,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.TROODON_DNA);
         simpleItem(ModItems.QUETZALCOATLUS_DNA);
         simpleItem(ModItems.MICRORAPTOR_DNA);
+        simpleItem(ModItems.SMILODON_EMBRYO);
+        simpleItem(ModItems.LIOPLEURODON_EMBRYO);
+        simpleItem(ModItems.TASMANIAN_TIGER_EMBRYO);
         simpleItem(ModItems.BONES_MUSIC_DISC);
         simpleItem(ModItems.WHEN_YOURE_THE_LAST_MUSIC_DISC);
         simpleItem(ModItems.DIRTY_CLOTH);

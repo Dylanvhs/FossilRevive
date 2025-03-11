@@ -36,6 +36,8 @@ public class ModItems {
         () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> HYBRID_DNA_BOTTLE = ITEMS.register("hybrid_dna_bottle",
         () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SYRINGE = ITEMS.register("syringe",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> AMARGASAURUS_DNA = ITEMS.register("amargasaurus_dna",
         () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> CARNOTAURUS_DNA = ITEMS.register("carnotaurus_dna",
@@ -60,11 +62,27 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> TROODON_DNA = ITEMS.register("troodon_dna",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> QUETZALCOATLUS_DNA = ITEMS.register("quetzalcoatlus_dna",
             () -> new Item(new Item.Properties()));
-
     public static final RegistryObject<Item> MICRORAPTOR_DNA = ITEMS.register("microraptor_dna",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> SMILODON_EMBRYO = ITEMS.register("smilodon_embryo",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> LIOPLEURODON_EMBRYO = ITEMS.register("liopleurodon_embryo",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> TASMANIAN_TIGER_EMBRYO = ITEMS.register("tasmanian_tiger_embryo",
+            () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> HORSETAIL_SEEDS = ITEMS.register("horsetail_seeds",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> MONTSECHIA_SEEDS = ITEMS.register("montsechia_seeds",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> OSMUNDA_SEEDS = ITEMS.register("osmunda_seeds",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> PINKSPARK_SEEDS = ITEMS.register("pinkspark_seeds",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SPIRALFLOWER_SEEDS = ITEMS.register("spiralflower_seeds",
             () -> new Item(new Item.Properties()));
 
 
