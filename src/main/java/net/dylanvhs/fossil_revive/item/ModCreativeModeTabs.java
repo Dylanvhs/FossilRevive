@@ -54,20 +54,24 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.SMILODON_EMBRYO.get());
                         pOutput.accept(ModItems.TASMANIAN_TIGER_EMBRYO.get());
 
+                        pOutput.accept(ModItems.DILOPHOSAURUS_EGG.get());
+
+                        pOutput.accept(ModBlocks.FERTILE_MOSS.get());
+
                         pOutput.accept(ModItems.HORSETAIL_SEEDS.get());
                         pOutput.accept(ModItems.MONTSECHIA_SEEDS.get());
                         pOutput.accept(ModItems.OSMUNDA_SEEDS.get());
                         pOutput.accept(ModItems.PINKSPARK_SEEDS.get());
                         pOutput.accept(ModItems.SPIRALFLOWER_SEEDS.get());
 
-                        pOutput.accept(ModItems.BONES_MUSIC_DISC.get());
-                        pOutput.accept(ModItems.WHEN_YOURE_THE_LAST_MUSIC_DISC.get());
                         pOutput.accept(ModItems.DIRTY_CLOTH.get());
 
                         pOutput.accept(ModItems.XENACANTHUS_BUCKET.get());
                         pOutput.accept(ModItems.RAW_XENACANTHUS.get());
                         pOutput.accept(ModItems.COOKED_XENACANTHUS.get());
 
+                        pOutput.accept(ModItems.BONES_MUSIC_DISC.get());
+                        pOutput.accept(ModItems.WHEN_YOURE_THE_LAST_MUSIC_DISC.get());
 
                         pOutput.accept(ModItems.DILOPHOSAURUS_SPAWN_EGG.get());
                         pOutput.accept(ModItems.DODO_SPAWN_EGG.get());

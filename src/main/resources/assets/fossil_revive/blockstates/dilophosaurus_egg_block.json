@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "hatch=0": {
+      "model": "fossil_revive:block/dilophosaurus_egg"
+    },
+    "hatch=1": {
+      "model": "fossil_revive:block/dilophosaurus_egg_slightly_cracked"
+    },
+    "hatch=2": {
+      "model": "fossil_revive:block/dilophosaurus_egg_heavily_cracked"
+    }
+  }
+}

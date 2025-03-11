@@ -1,6 +1,7 @@
 package net.dylanvhs.fossil_revive.item;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
+import net.dylanvhs.fossil_revive.block.ModBlocks;
 import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.dylanvhs.fossil_revive.item.custom.ChiselItem;
 import net.dylanvhs.fossil_revive.item.custom.ItemModFishBucket;
@@ -91,6 +92,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> CHISEL = ITEMS.register("chisel",
             () -> new ChiselItem(new Item.Properties().durability(64)));
+
+    public static final RegistryObject<Item> DILOPHOSAURUS_EGG =
+            ITEMS.register("dilophosaurus_egg", () -> new BlockItem(ModBlocks.DILOPHOSAURUS_EGG.get(), (new Item.Properties()).stacksTo(1)));
 
 
     public static final RegistryObject<Item> RAW_XENACANTHUS = ITEMS.register("raw_xenacanthus",

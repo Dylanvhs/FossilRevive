@@ -51,6 +51,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.RAW_XENACANTHUS);
         simpleItem(ModItems.COOKED_XENACANTHUS);
         simpleItem(ModItems.XENACANTHUS_BUCKET);
+        simpleItem(ModItems.DILOPHOSAURUS_EGG);
 
         withExistingParent(ModItems.LIOPLEURODON_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.QUETZALCOATLUS_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));

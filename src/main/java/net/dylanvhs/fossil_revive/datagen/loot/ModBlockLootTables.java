@@ -19,6 +19,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.ANALYZER.get());
         this.dropSelf(ModBlocks.CULTIVATOR.get());
         this.dropSelf(ModBlocks.CRUMBLED_SILTSTONE.get());
+        this.dropSelf(ModBlocks.FERTILE_MOSS.get());
+        this.dropWhenSilkTouch(ModBlocks.DILOPHOSAURUS_EGG.get());
         this.dropOther(ModBlocks.SUSPICIOUS_CRUMBLED_SILTSTONE.get(), Items.AIR);
 
     }
