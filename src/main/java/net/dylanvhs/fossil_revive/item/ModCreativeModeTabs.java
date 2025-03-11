@@ -34,6 +34,7 @@ public class ModCreativeModeTabs {
 
                         pOutput.accept(ModItems.DNA_BOTTLE.get());
                         pOutput.accept(ModItems.HYBRID_DNA_BOTTLE.get());
+                        pOutput.accept(ModItems.SYRINGE.get());
 
                         pOutput.accept(ModItems.AMARGASAURUS_DNA.get());
                         pOutput.accept(ModItems.CARNOTAURUS_DNA.get());
@@ -49,6 +50,15 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.TAPEJARA_DNA.get());
                         pOutput.accept(ModItems.TASMANIAN_TIGER_DNA.get());
                         pOutput.accept(ModItems.TROODON_DNA.get());
+                        pOutput.accept(ModItems.LIOPLEURODON_EMBRYO.get());
+                        pOutput.accept(ModItems.SMILODON_EMBRYO.get());
+                        pOutput.accept(ModItems.TASMANIAN_TIGER_EMBRYO.get());
+
+                        pOutput.accept(ModItems.HORSETAIL_SEEDS.get());
+                        pOutput.accept(ModItems.MONTSECHIA_SEEDS.get());
+                        pOutput.accept(ModItems.OSMUNDA_SEEDS.get());
+                        pOutput.accept(ModItems.PINKSPARK_SEEDS.get());
+                        pOutput.accept(ModItems.SPIRALFLOWER_SEEDS.get());
 
                         pOutput.accept(ModItems.BONES_MUSIC_DISC.get());
                         pOutput.accept(ModItems.WHEN_YOURE_THE_LAST_MUSIC_DISC.get());
