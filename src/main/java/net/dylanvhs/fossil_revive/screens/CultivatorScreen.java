@@ -40,7 +40,7 @@ public class CultivatorScreen extends AbstractContainerScreen<CultivatorMenu> {
 
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x + 68, y + 38, 176, 0, menu.getScaledProgress(), 12 );
+            guiGraphics.blit(TEXTURE, x + 67, y + 37, 176, 0, menu.getScaledProgress(), 12 );
         }
     }
 

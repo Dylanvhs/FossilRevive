@@ -1,33 +1,20 @@
 package net.dylanvhs.fossil_revive.block.entity;
 
 
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.screens.CultivatorMenu;
-import net.dylanvhs.fossil_revive.screens.CultivatorRecipe;
+import net.dylanvhs.fossil_revive.recipe.CultivatorRecipe;
 import net.dylanvhs.fossil_revive.screens.ModRecipeTypes;
-import net.dylanvhs.fossil_revive.util.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
-import net.minecraft.world.Containers;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.RecipeHolder;
-import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -37,19 +24,32 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class CultivatorEntity extends BlockEntity implements MenuProvider, StackedContentsCompatible {
-    private final ItemStackHandler itemHandler = new ItemStackHandler(3);
-    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.empty();
+import java.util.Optional;
+
+public class CultivatorEntity extends BlockEntity implements MenuProvider, WorldlyContainer {
+
+
+    private static final int[] SLOTS_FOR_UP = new int[]{0};
+    private static final int[] SLOTS_FOR_SIDES = new int[]{1};
+    private static final int[] SLOTS_FOR_DOWN = new int[]{2};
+
+    private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    };
+    private LazyOptional<IItemHandler> lazyItemHandler = LazyOptional.of(() -> itemHandler);
     protected final ContainerData data;
 
     private final RecipeType<CultivatorRecipe> recipeType;
     private int progress;
     private int maxProgress;
 
-    int tickCount;
 
     public CultivatorEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CULTIVATOR_BE.get(), pPos, pBlockState);
@@ -79,66 +79,74 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider, Stack
         };
     }
 
-    public void serverTick(Level pLevel, BlockPos pPos, BlockState pState) {
-        ++tickCount;
+    public static void tick(Level pLevel, BlockPos pPos, BlockState pState, CultivatorEntity entity) {
+        if (!entity.hasRecipe(pLevel)) {
+            entity.progress = 0;
+        } else {
+            final Container input = entity.getContainer(pLevel);
+            CultivatorRecipe recipe = entity.getRecipeFor(pLevel, input).get();
+            int processTime = recipe.getProcessTime();
+            entity.maxProgress = processTime;
+            if (entity.itemHandler.getStackInSlot(2).isEmpty()) {
+                entity.progress++;
+            }
+            if (entity.progress >= processTime) {
+                entity.progress = 0;
+                entity.assembleRecipe(pLevel, input, recipe);
+            }
+        }
+    }
 
-        if (recipe == null) {
-            this.progress = 0;
+    protected Optional<CultivatorRecipe> getRecipeFor(Level level, Container input) {
+        return level.getRecipeManager().getRecipeFor(ModRecipeTypes.CULTIVATOR_TYPE.get(), input, level);
+    }
+
+    private void assembleRecipe(final Level level, final Container input, CultivatorRecipe recipe) {
+        final ItemStack output = recipe.assemble(input, level.registryAccess());
+        if (output.isEmpty()) {
             return;
         }
 
-        if (this.isRecipeAvailableToForge(pLevel.registryAccess(), recipe)) {
-
-        }
+        final IItemHandler itemHandler = this.itemHandler;
+        itemHandler.insertItem(2, output, false);
+        itemHandler.extractItem(0, 1, false);
+        itemHandler.extractItem(1, 1, false);
     }
 
-    public boolean isRecipeAvailableToForge(RegistryAccess access, StarlitFactoryRecipe recipe) {
-
-        if (recipe != null) {
-            ItemStack recipeStack = recipe.assemble(this, access);
-            if (recipeStack.isEmpty()) {
-                return false;
-            } else {
-                ItemStack result = containedItems.get(StarlitFactoryMenu.RESULT_SLOT);
-                this.maxFactoryForgeTime = recipe.getForgeTime();
-                if (result.isEmpty()) {
-                    return true;
-                } else if (!ItemStack.isSameItem(result, recipeStack)) {
-                    return false;
-                } else if (result.getCount() + recipeStack.getCount() <= this.getMaxStackSize() && result.getCount() + recipeStack.getCount() <= result.getMaxStackSize()) {
-                    return true;
-                } else {
-                    return result.getCount() + recipeStack.getCount() <= recipeStack.getMaxStackSize();
-                }
-            }
-        }
-        return false;
+    protected boolean hasRecipe(Level level) {
+        // create container with input items only
+        final Container input = getContainer(level);
+        // locate matching recipe
+        Optional<CultivatorRecipe> oRecipe = getRecipeFor(level, input);
+        return oRecipe.isPresent();
     }
 
-    public boolean finishForging(RegistryAccess access, StarlitFactoryRecipe recipe) {
-        if (recipe != null && this.isRecipeAvailableToForge(access, recipe)) {
-            ItemStack resultStack = containedItems.get(StarlitFactoryMenu.RESULT_SLOT);
-            ItemStack formedResultItem = recipe.assemble(this, access);
-            if (resultStack.isEmpty()) {
-                this.setItem(StarlitFactoryMenu.RESULT_SLOT, formedResultItem.copy());
-            } else if (resultStack.is(formedResultItem.getItem())) {
-                resultStack.grow(formedResultItem.getCount());
-            }
-
-            for (ItemStack ingredientStack : containedItems) {
-                if (ingredientStack != containedItems.get(StarlitFactoryMenu.RESULT_SLOT) && ingredientStack != containedItems.get(StarlitFactoryMenu.FUEL_SLOT)) {
-                    ingredientStack.shrink(1);
-                }
-            }
-            return true;
+    private Container getContainer(Level level) {
+        SimpleContainer inventory = new SimpleContainer(this.itemHandler.getSlots());
+        for (int i = 0; i < this.itemHandler.getSlots(); i++) {
+            inventory.setItem(i, this.itemHandler.getStackInSlot(i));
         }
-        return false;
+        return inventory;
     }
 
     @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.handlers = SidedInvWrapper.create(this, Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST);
+    }
+
+    private LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.DOWN, Direction.UP, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST);
+
+
+    @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if(cap == ForgeCapabilities.ITEM_HANDLER) {
-            return lazyItemHandler.cast();
+        if (cap == ForgeCapabilities.ITEM_HANDLER) {
+            if (side == null) {
+                return lazyItemHandler.cast();
+            } else {
+                return handlers[side.ordinal()].cast();
+            }
+
         }
         return super.getCapability(cap, side);
     }
@@ -157,11 +165,17 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider, Stack
 
     public void drops() {
         SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots());
-        for (int i = 0; i < itemHandler.getSlots(); i ++) {
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
             inventory.setItem(i, itemHandler.getStackInSlot(i));
         }
         Containers.dropContents(this.level, this.worldPosition, inventory);
     }
+
+
+    public boolean canRemoveItem(int slot) {
+        return slot == 2;
+    }
+
 
     @Override
     public Component getDisplayName() {
@@ -188,10 +202,81 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider, Stack
         progress = pTag.getInt("cultivator.progress");
     }
 
+
     @Override
-    public void fillStackedContents(StackedContents stackedContents) {
-        for(int i = 0; i < this.itemHandler.getSlots(); i++) {
-            stackedContents.accountStack(this.itemHandler.getStackInSlot(i));
+    public int[] getSlotsForFace(Direction direction) {
+        if (direction == Direction.UP) {
+            return SLOTS_FOR_UP;
+        } else {
+            return direction == Direction.DOWN ? SLOTS_FOR_DOWN : SLOTS_FOR_SIDES;
         }
+    }
+
+    @Override
+    public boolean canPlaceItemThroughFace(int pIndex, ItemStack pItemStack, @Nullable Direction pDirection) {
+        return true;
+    }
+
+    @Override
+    public boolean canTakeItemThroughFace(int i, ItemStack itemStack, Direction direction) {
+        return true;
+    }
+
+    @Override
+    public int getContainerSize() {
+        return this.itemHandler.getSlots();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (int i = 0; i < this.itemHandler.getSlots(); i++) {
+            if (!this.itemHandler.getStackInSlot(i).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public ItemStack getItem(int pSlot) {
+        return this.itemHandler.getStackInSlot(pSlot);
+    }
+
+    @Override
+    public ItemStack removeItem(int pSlot, int pAmount) {
+        if (canRemoveItem(pSlot)) {
+            return this.itemHandler.extractItem(pSlot, pAmount, false);
+        }
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int pSlot) {
+        if (canRemoveItem(pSlot)) {
+            return this.itemHandler.extractItem(pSlot, 0, false);
+        }
+        return ItemStack.EMPTY;
+    }
+
+    @Override
+    public void setItem(int pSlot, ItemStack pStack) {
+        if (canTakeItem(pSlot, pStack)) {
+            this.itemHandler.setStackInSlot(pSlot, pStack);
+        }
+    }
+
+
+    public boolean canTakeItem(int slot, ItemStack stack) {
+        return (slot == 0 || slot == 1) && this.itemHandler.isItemValid(slot, stack);
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return Container.stillValidBlockEntity(this, player);
+    }
+
+    @Override
+    public void clearContent() {
+        this.itemHandler.setSize(3);
     }
 }

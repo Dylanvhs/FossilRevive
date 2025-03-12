@@ -1,0 +1,13 @@
+{
+  "type": "fossil_revive:cultivator",
+  "dna": {
+    "item": "fossil_revive:amargasaurus_dna"
+  },
+  "egg": {
+    "item": "minecraft:egg"
+  },
+  "output": {
+    "item": "fossil_revive:dilophosaurus_egg"
+  },
+  "process_time": 1000
+}

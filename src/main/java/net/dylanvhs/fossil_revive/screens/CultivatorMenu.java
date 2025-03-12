@@ -12,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class CultivatorMenu extends AbstractContainerMenu {
     public final CultivatorEntity blockEntity;
@@ -35,7 +36,12 @@ public class CultivatorMenu extends AbstractContainerMenu {
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
             this.addSlot(new SlotItemHandler(iItemHandler, 0, 26, 17));
             this.addSlot(new SlotItemHandler(iItemHandler, 1, 26, 53));
-            this.addSlot(new SlotItemHandler(iItemHandler, 2, 116, 35));
+            this.addSlot(new SlotItemHandler(iItemHandler, 2, 116, 35) {
+                @Override
+                public boolean mayPlace(@NotNull ItemStack stack) {
+                    return false;
+                }
+            });
         });
 
         addDataSlots(data);

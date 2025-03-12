@@ -1,8 +1,9 @@
-package net.dylanvhs.fossil_revive.screens;
+package net.dylanvhs.fossil_revive.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.dylanvhs.fossil_revive.screens.ModRecipeTypes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,6 +22,7 @@ public class CultivatorRecipe implements Recipe<Container> {
     protected final Ingredient egg;
     protected final ItemStack result;
     protected final int processTime;
+    private final NonNullList<Ingredient> recipeItems = NonNullList.create();
 
     public CultivatorRecipe(ResourceLocation id, Ingredient dna, Ingredient egg, ItemStack result, int processTime) {
         this.id = id;
@@ -28,6 +30,9 @@ public class CultivatorRecipe implements Recipe<Container> {
         this.egg = egg;
         this.result = result;
         this.processTime = processTime;
+
+        recipeItems.add(dna);
+        recipeItems.add(egg);
     }
 
     @Override
@@ -49,10 +54,14 @@ public class CultivatorRecipe implements Recipe<Container> {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> nonnulllist = NonNullList.create();
-        nonnulllist.add(this.dna);
-        nonnulllist.add(this.egg);
-        return nonnulllist;
+        return recipeItems;
+    }
+    public boolean hasFuel(ItemStack stack) {
+        return egg.test(stack);
+    }
+
+    public int getProcessTime() {
+        return processTime;
     }
 
     @Override
@@ -76,32 +85,17 @@ public class CultivatorRecipe implements Recipe<Container> {
     }
 
     public static class Serializer implements RecipeSerializer<CultivatorRecipe> {
-        private final int defaultProcessTime;
 
-        public Serializer() {
-            this.defaultProcessTime = 100;
-        }
+
 
         @Override
         public CultivatorRecipe fromJson(ResourceLocation resourceLocation, JsonObject pJson) {
-            Ingredient dna = Ingredient.fromJson(this.extractJsonElement(pJson, "dna"), true);
-            Ingredient egg = Ingredient.fromJson(this.extractJsonElement(pJson, "egg"), true);
+            Ingredient dna = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson,"dna"));
+            Ingredient egg = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "egg"));
+            ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "output"));
+            int processTime = GsonHelper.getAsInt(pJson, "process_time", 1000);
 
-            if (!pJson.has("result")) {
-                throw new JsonSyntaxException("Recipe result does not exist.");
-            }
-            ItemStack result;
-            if (pJson.get("result").isJsonObject()) {
-                result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "result"));
-            } else {
-                String resultFromJson = GsonHelper.getAsString(pJson, "result");
-                ResourceLocation resourcelocation = new ResourceLocation(resultFromJson);
-                result = new ItemStack(BuiltInRegistries.ITEM.getOptional(resourcelocation).orElseThrow(() -> new IllegalStateException(resultFromJson + " is an invalid or non-existent item.")));
-            }
-
-            int processTime = GsonHelper.getAsInt(pJson, "forging_time", this.defaultProcessTime);
-
-            return new CultivatorRecipe(resourceLocation, dna, egg, result, processTime);
+            return new CultivatorRecipe(resourceLocation, dna, egg, output, processTime);
         }
 
         @Override
@@ -119,10 +113,6 @@ public class CultivatorRecipe implements Recipe<Container> {
             recipe.egg.toNetwork(friendlyByteBuf);
             friendlyByteBuf.writeItem(recipe.result);
             friendlyByteBuf.writeVarInt(recipe.processTime);
-        }
-
-        public JsonElement extractJsonElement(JsonObject pJson, String memberName) {
-            return GsonHelper.isArrayNode(pJson, memberName) ? GsonHelper.getAsJsonArray(pJson, memberName) : GsonHelper.getAsJsonObject(pJson, memberName);
         }
     }
 }

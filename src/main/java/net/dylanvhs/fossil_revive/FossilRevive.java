@@ -14,6 +14,7 @@ import net.dylanvhs.fossil_revive.screens.ModRecipeTypes;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -23,6 +24,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
+
+import java.util.Locale;
 
 @Mod(FossilRevive.MOD_ID)
 public class FossilRevive
@@ -52,7 +55,9 @@ public class FossilRevive
         modEventBus.addListener(this::commonSetup);
 
     }
-
+    public static ResourceLocation prefix(String name) {
+        return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT));
+    }
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(ModItems::initDispenser);
     }

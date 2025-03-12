@@ -1,6 +1,7 @@
 package net.dylanvhs.fossil_revive.screens;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
+import net.dylanvhs.fossil_revive.recipe.CultivatorRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
