@@ -4,7 +4,7 @@ package net.dylanvhs.fossil_revive.block.entity;
 import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.screens.CultivatorMenu;
 import net.dylanvhs.fossil_revive.recipe.CultivatorRecipe;
-import net.dylanvhs.fossil_revive.screens.ModRecipeTypes;
+import net.dylanvhs.fossil_revive.recipe.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -82,6 +82,7 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider, World
     public static void tick(Level pLevel, BlockPos pPos, BlockState pState, CultivatorEntity entity) {
         if (!entity.hasRecipe(pLevel)) {
             entity.progress = 0;
+            setChanged(pLevel,pPos,pState);
         } else {
             final Container input = entity.getContainer(pLevel);
             CultivatorRecipe recipe = entity.getRecipeFor(pLevel, input).get();
@@ -89,6 +90,7 @@ public class CultivatorEntity extends BlockEntity implements MenuProvider, World
             entity.maxProgress = processTime;
             if (entity.itemHandler.getStackInSlot(2).isEmpty()) {
                 entity.progress++;
+                setChanged(pLevel,pPos,pState);
             }
             if (entity.progress >= processTime) {
                 entity.progress = 0;

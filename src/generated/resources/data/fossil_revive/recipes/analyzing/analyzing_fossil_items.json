@@ -1,0 +1,40 @@
+{
+  "type": "fossil_revive:analyzer",
+  "extra_input": {
+    "item": "fossil_revive:dna_bottle"
+  },
+  "input": {
+    "item": "fossil_revive:fossil"
+  },
+  "output": [
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:amargasaurus_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:dilophosaurus_egg"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "minecraft:sand"
+      },
+      "weight": 30
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "minecraft:cobblestone"
+      },
+      "weight": 15
+    }
+  ],
+  "process_time": 1000
+}

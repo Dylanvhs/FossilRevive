@@ -40,7 +40,7 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
 
     private void renderProgressArrow(GuiGraphics guiGraphics, int x, int y) {
         if(menu.isCrafting()) {
-            guiGraphics.blit(TEXTURE, x + 59, y + 39, 176, 0, menu.getScaledProgress(), 11 );
+            guiGraphics.blit(TEXTURE, x + 58, y + 38, 176, 0, menu.getScaledProgress(), 11 );
         }
     }
 

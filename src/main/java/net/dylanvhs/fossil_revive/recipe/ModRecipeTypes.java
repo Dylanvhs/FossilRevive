@@ -1,7 +1,6 @@
-package net.dylanvhs.fossil_revive.screens;
+package net.dylanvhs.fossil_revive.recipe;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
-import net.dylanvhs.fossil_revive.recipe.CultivatorRecipe;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -18,6 +17,8 @@ public class ModRecipeTypes {
     public static final RegistryObject<RecipeType<CultivatorRecipe>> CULTIVATOR_TYPE = RECIPE_TYPES.register("cultivator_type", () -> new SimpleNamedRecipeType<>("cultivator"));
     public static final RegistryObject<RecipeSerializer<CultivatorRecipe>> CULTIVATOR = RECIPE_SERIALIZERS.register("cultivator", CultivatorRecipe.Serializer::new);
 
+    public static final RegistryObject<RecipeType<AnalyzerRecipe>> ANALYZER_RECIPE = RECIPE_TYPES.register("analyzer_type", () -> new SimpleNamedRecipeType<>("analyzer"));
+    public static final RegistryObject<RecipeSerializer<AnalyzerRecipe>> ANALYZER_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("analyzer", AnalyzerRecipe.Serializer::new);
 
     public record SimpleNamedRecipeType<T extends Recipe<?>>(String name) implements RecipeType<T> {
         @Override

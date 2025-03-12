@@ -10,7 +10,7 @@ import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.screens.AnalyzerScreen;
 import net.dylanvhs.fossil_revive.screens.CultivatorScreen;
 import net.dylanvhs.fossil_revive.screens.ModMenuTypes;
-import net.dylanvhs.fossil_revive.screens.ModRecipeTypes;
+import net.dylanvhs.fossil_revive.recipe.ModRecipeTypes;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;

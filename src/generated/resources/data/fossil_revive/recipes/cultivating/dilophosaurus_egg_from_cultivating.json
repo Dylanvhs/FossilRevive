@@ -1,10 +1,10 @@
 {
   "type": "fossil_revive:cultivator",
-  "dna": {
-    "item": "fossil_revive:amargasaurus_dna"
-  },
-  "egg": {
+  "extra_input": {
     "item": "minecraft:egg"
+  },
+  "input": {
+    "item": "fossil_revive:amargasaurus_dna"
   },
   "output": {
     "item": "fossil_revive:dilophosaurus_egg"

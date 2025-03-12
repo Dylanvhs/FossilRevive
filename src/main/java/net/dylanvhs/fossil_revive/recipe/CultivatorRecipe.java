@@ -1,12 +1,8 @@
 package net.dylanvhs.fossil_revive.recipe;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
-import net.dylanvhs.fossil_revive.screens.ModRecipeTypes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -90,8 +86,8 @@ public class CultivatorRecipe implements Recipe<Container> {
 
         @Override
         public CultivatorRecipe fromJson(ResourceLocation resourceLocation, JsonObject pJson) {
-            Ingredient dna = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson,"dna"));
-            Ingredient egg = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "egg"));
+            Ingredient dna = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson,"input"));
+            Ingredient egg = Ingredient.fromJson(GsonHelper.getAsJsonObject(pJson, "extra_input"));
             ItemStack output = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(pJson, "output"));
             int processTime = GsonHelper.getAsInt(pJson, "process_time", 1000);
 
