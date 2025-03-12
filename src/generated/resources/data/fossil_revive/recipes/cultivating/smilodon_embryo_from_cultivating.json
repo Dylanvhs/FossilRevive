@@ -1,13 +1,13 @@
 {
   "type": "fossil_revive:cultivator",
   "extra_input": {
-    "item": "minecraft:egg"
+    "item": "fossil_revive:syringe"
   },
   "input": {
-    "item": "fossil_revive:dilophosaurus_dna"
+    "item": "fossil_revive:smilodon_dna"
   },
   "output": {
-    "item": "fossil_revive:dilophosaurus_egg"
+    "item": "fossil_revive:smilodon_embryo"
   },
   "process_time": 800
 }

@@ -1,0 +1,13 @@
+{
+  "type": "fossil_revive:cultivator",
+  "extra_input": {
+    "item": "fossil_revive:syringe"
+  },
+  "input": {
+    "item": "fossil_revive:liopleurodon_dna"
+  },
+  "output": {
+    "item": "fossil_revive:liopleurodon_embryo"
+  },
+  "process_time": 800
+}

@@ -1,0 +1,13 @@
+{
+  "type": "fossil_revive:cultivator",
+  "extra_input": {
+    "item": "fossil_revive:syringe"
+  },
+  "input": {
+    "item": "fossil_revive:tasmanian_tiger_dna"
+  },
+  "output": {
+    "item": "fossil_revive:tasmanian_tiger_embryo"
+  },
+  "process_time": 800
+}

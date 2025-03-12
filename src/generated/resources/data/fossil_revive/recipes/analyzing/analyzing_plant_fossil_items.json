@@ -1,0 +1,61 @@
+{
+  "type": "fossil_revive:analyzer",
+  "extra_input": {
+    "item": "minecraft:brush"
+  },
+  "input": {
+    "item": "fossil_revive:plant_fossil"
+  },
+  "output": [
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:horsetail_seeds"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:montsechia_seeds"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:osmunda_seeds"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:pinkspark_seeds"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:spiralflower_seeds"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "minecraft:sand"
+      },
+      "weight": 30
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "minecraft:cobblestone"
+      },
+      "weight": 15
+    }
+  ],
+  "process_time": 750
+}

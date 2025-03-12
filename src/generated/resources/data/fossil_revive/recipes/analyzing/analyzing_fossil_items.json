@@ -17,7 +17,77 @@
     {
       "item": {
         "Count": 1,
-        "id": "fossil_revive:dilophosaurus_egg"
+        "id": "fossil_revive:dodo_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:kelenken_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:quetzalcoatlus_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:tasmanian_tiger_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:liopleurodon_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:oviraptor_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:smilodon_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:tapejara_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:troodon_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:microraptor_dna"
+      },
+      "weight": 15
+    },
+    {
+      "item": {
+        "Count": 1,
+        "id": "fossil_revive:carnotaurus_dna"
       },
       "weight": 15
     },
@@ -36,5 +106,5 @@
       "weight": 15
     }
   ],
-  "process_time": 1000
+  "process_time": 750
 }
