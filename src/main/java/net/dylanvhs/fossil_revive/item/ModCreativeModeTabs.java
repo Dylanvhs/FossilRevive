@@ -55,6 +55,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.TASMANIAN_TIGER_EMBRYO.get());
 
                         pOutput.accept(ModItems.DILOPHOSAURUS_EGG.get());
+                        pOutput.accept(ModItems.DODO_EGG.get());
 
                         pOutput.accept(ModBlocks.FERTILE_MOSS.get());
 

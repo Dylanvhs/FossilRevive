@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-11T23:35:29.9472597	Item Models: fossil_revive
+// 1.20.1	2025-03-12T21:54:53.6755332	Item Models: fossil_revive
 d459a90a9e42f7832d0cf35b6f72debadb6a9755 assets/fossil_revive/models/item/amargasaurus_dna.json
 1b18c1c8e32ccddec1a248ced8b964c2c64b380d assets/fossil_revive/models/item/bones_music_disc.json
 df1875a0c0f53fcc24faa6716c40c109bca360ce assets/fossil_revive/models/item/carnotaurus_dna.json
@@ -10,8 +10,10 @@ f03d9fed16e79e4d4e875beb953dd9ed08e2b124 assets/fossil_revive/models/item/diloph
 d87eabd4aecba1f58415e5119a1ce957023b1f5a assets/fossil_revive/models/item/dirty_cloth.json
 a59b90aa58392f0ecc6236215e973bcb600bb162 assets/fossil_revive/models/item/dna_bottle.json
 86ce8becabc16c3f8b150bcd40601a2ba03bd8a4 assets/fossil_revive/models/item/dodo_dna.json
+2a6df80b79b0c7f3f1afb1fd634682a91efabd30 assets/fossil_revive/models/item/dodo_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/dodo_spawn_egg.json
 a0017a88aa3059a65c20150c30341db0373a2128 assets/fossil_revive/models/item/fossil.json
+f572a814ab22602ba8efb763295286aa270b73a2 assets/fossil_revive/models/item/horsetail_seeds.json
 869d995812b3ed8e63c925d2df3b2ecfa6c213cf assets/fossil_revive/models/item/hybrid_dna_bottle.json
 644414d6dfd40ba49b12d9e273e43276083b97e0 assets/fossil_revive/models/item/kelenken_dna.json
 990c985ee1abc245a5758703f97ba2c49ec1b746 assets/fossil_revive/models/item/kelentaurus_dna.json
@@ -20,7 +22,10 @@ a0017a88aa3059a65c20150c30341db0373a2128 assets/fossil_revive/models/item/fossil
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/liopleurodon_spawn_egg.json
 7d9f85100ae3443bd845867f78fdda9bb1b78e8f assets/fossil_revive/models/item/microraptor_dna.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/microraptor_spawn_egg.json
+98e330b4627b9276afdd34871ed842ff6610a952 assets/fossil_revive/models/item/montsechia_seeds.json
+2cb5bd4dcb476794155dba9b6f461f750d783cd1 assets/fossil_revive/models/item/osmunda_seeds.json
 0c81e75970518b946b6de532c19afc121a2fa070 assets/fossil_revive/models/item/oviraptor_dna.json
+173dcfc82a836a485fc0df451b98627a319fbae2 assets/fossil_revive/models/item/pinkspark_seeds.json
 3b713791a7ba89f43e350c3cca04b682893ec10d assets/fossil_revive/models/item/plant_fossil.json
 66c4a3a419f5bb4ceb4e144e124f8685349af9ed assets/fossil_revive/models/item/quetzalcoatlus_dna.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/quetzalcoatlus_spawn_egg.json
@@ -28,6 +33,7 @@ a0017a88aa3059a65c20150c30341db0373a2128 assets/fossil_revive/models/item/fossil
 9ae90871a760aa08d8f94a71c8ac80f81c10f14f assets/fossil_revive/models/item/raw_xenacanthus.json
 77a270895ce76a8eccd5412aa93b2a56ef77dc33 assets/fossil_revive/models/item/smilodon_dna.json
 335fca3314f0b048dfe8bab842d3285ccb3febaf assets/fossil_revive/models/item/smilodon_embryo.json
+717213c122e050a5f6ed05e7a54064614f301c03 assets/fossil_revive/models/item/spiralflower_seeds.json
 8f52f66331b61517858a3472cb95ca699ea546c7 assets/fossil_revive/models/item/syringe.json
 58757c37e7e46c1809e002e19c6d1ce548c851fb assets/fossil_revive/models/item/tapejara_dna.json
 1c2be912a0c4b3edbb2523ce652bb76f683480d1 assets/fossil_revive/models/item/tasmanian_tiger_dna.json

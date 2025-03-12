@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "minecraft:moss_block"
+    },
+    "P": {
+      "item": "minecraft:podzol"
+    },
+    "pattern": [
+      "MP ",
+      "PM ",
+      "   "
+    ],
+    "result": {
+      "count": 4,
+      "item": "fossil_revive:fertile_moss"
+    },
+    "show_notification": true
+  }
+}

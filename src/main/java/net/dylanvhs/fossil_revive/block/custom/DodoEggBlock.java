@@ -33,7 +33,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 public class DodoEggBlock extends Block implements SimpleWaterloggedBlock {
-    protected static final VoxelShape SHAPE = Block.box(5, 0, 5, 11, 9, 11);
+    protected static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 10, 12);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     public static final IntegerProperty HATCH = BlockStateProperties.HATCH;
 
