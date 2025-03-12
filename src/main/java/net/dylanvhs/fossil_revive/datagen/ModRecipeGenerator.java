@@ -2,7 +2,6 @@ package net.dylanvhs.fossil_revive.datagen;
 
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.recipe.WeightedOutput;
-import net.minecraft.core.NonNullList;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -10,10 +9,7 @@ import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 import static net.dylanvhs.fossil_revive.FossilRevive.prefix;
@@ -25,10 +21,34 @@ public class ModRecipeGenerator extends RecipeProvider {
 
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
-        cultivating(consumer, ModItems.AMARGASAURUS_DNA.get(), Items.EGG, ModItems.DILOPHOSAURUS_EGG.get(), 1000);
-        AnalyzingRecipeBuilder.analyzing(ModItems.FOSSIL.get(), ModItems.DNA_BOTTLE.get(),1000)
+        cultivating(consumer, ModItems.DILOPHOSAURUS_DNA.get(), Items.EGG, ModItems.DILOPHOSAURUS_EGG.get(), 800);
+        cultivating(consumer, ModItems.LIOPLEURODON_DNA.get(), ModItems.SYRINGE.get(), ModItems.LIOPLEURODON_EMBRYO.get(), 800);
+        cultivating(consumer, ModItems.SMILODON_DNA.get(), ModItems.SYRINGE.get(), ModItems.SMILODON_EMBRYO.get(), 800);
+        cultivating(consumer, ModItems.TASMANIAN_TIGER_DNA.get(), ModItems.SYRINGE.get(), ModItems.TASMANIAN_TIGER_EMBRYO.get(), 800);
+
+        AnalyzingRecipeBuilder.analyzing(ModItems.FOSSIL.get(), ModItems.DNA_BOTTLE.get(),750)
                 .addOutput(ModItems.AMARGASAURUS_DNA.get(), 15)
-                .addOutput(ModItems.DILOPHOSAURUS_EGG.get(), 15)
+                .addOutput(ModItems.DODO_DNA.get(), 15)
+                .addOutput(ModItems.KELENKEN_DNA.get(), 15)
+                .addOutput(ModItems.QUETZALCOATLUS_DNA.get(), 15)
+                .addOutput(ModItems.TASMANIAN_TIGER_DNA.get(), 15)
+                .addOutput(ModItems.LIOPLEURODON_DNA.get(), 15)
+                .addOutput(ModItems.OVIRAPTOR_DNA.get(), 15)
+                .addOutput(ModItems.SMILODON_DNA.get(), 15)
+                .addOutput(ModItems.TAPEJARA_DNA.get(), 15)
+                .addOutput(ModItems.TROODON_DNA.get(), 15)
+                .addOutput(ModItems.MICRORAPTOR_DNA.get(), 15)
+                .addOutput(ModItems.CARNOTAURUS_DNA.get(), 15)
+                .addOutput(Items.SAND, 30)
+                .addOutput(Items.COBBLESTONE, 15)
+                .build(consumer);
+
+        AnalyzingRecipeBuilder.analyzing(ModItems.PLANT_FOSSIL.get(), Items.BRUSH,750)
+                .addOutput(ModItems.HORSETAIL_SEEDS.get(), 15)
+                .addOutput(ModItems.MONTSECHIA_SEEDS.get(), 15)
+                .addOutput(ModItems.OSMUNDA_SEEDS.get(), 15)
+                .addOutput(ModItems.PINKSPARK_SEEDS.get(), 15)
+                .addOutput(ModItems.SPIRALFLOWER_SEEDS.get(), 15)
                 .addOutput(Items.SAND, 30)
                 .addOutput(Items.COBBLESTONE, 15)
                 .build(consumer);
