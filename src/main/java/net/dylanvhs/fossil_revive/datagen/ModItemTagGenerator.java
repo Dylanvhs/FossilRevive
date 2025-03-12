@@ -25,20 +25,5 @@ public class ModItemTagGenerator extends ItemTagsProvider {
         this.tag(ItemTags.MUSIC_DISCS)
                 .add(ModItems.BONES_MUSIC_DISC.get()).add(ModItems.WHEN_YOURE_THE_LAST_MUSIC_DISC.get());
 
-        tag(ModTags.Items.DNA)
-                .add(ModItems.AMARGASAURUS_DNA.get())
-                .add(ModItems.DILOPHOSAURUS_DNA.get())
-                .add(ModItems.MICRORAPTOR_DNA.get())
-                .add(ModItems.TROODON_DNA.get())
-                .add(ModItems.TAPEJARA_DNA.get())
-                .add(ModItems.DODO_DNA.get())
-                .add(ModItems.SMILODON_DNA.get())
-                .add(ModItems.OVIRAPTOR_DNA.get())
-                .add(ModItems.LIOPLEURODON_DNA.get())
-                .add(ModItems.KELENTAURUS_DNA.get())
-                .add(ModItems.TASMANIAN_TIGER_DNA.get())
-                .add(ModItems.QUETZALCOATLUS_DNA.get())
-                .add(ModItems.KELENKEN_DNA.get());
-
     }
 }

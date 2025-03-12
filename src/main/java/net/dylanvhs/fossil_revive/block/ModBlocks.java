@@ -1,10 +1,7 @@
 package net.dylanvhs.fossil_revive.block;
 
 import net.dylanvhs.fossil_revive.FossilRevive;
-import net.dylanvhs.fossil_revive.block.custom.Analyzer;
-import net.dylanvhs.fossil_revive.block.custom.Cultivator;
-import net.dylanvhs.fossil_revive.block.custom.DilophosaurusEggBlock;
-import net.dylanvhs.fossil_revive.block.custom.SuspiciousCrumbledSiltstoneBlock;
+import net.dylanvhs.fossil_revive.block.custom.*;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
@@ -41,6 +38,8 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.MOSS)));
     public static final RegistryObject<Block> DILOPHOSAURUS_EGG = registerBlock("dilophosaurus_egg_block",
             () -> new DilophosaurusEggBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).forceSolidOn().strength(0.5F).sound(SoundType.METAL).randomTicks().noOcclusion().pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<Block> DODO_EGG = registerBlock("dodo_egg_block",
+            () -> new DodoEggBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).forceSolidOn().strength(0.5F).sound(SoundType.METAL).randomTicks().noOcclusion().pushReaction(PushReaction.DESTROY)));
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

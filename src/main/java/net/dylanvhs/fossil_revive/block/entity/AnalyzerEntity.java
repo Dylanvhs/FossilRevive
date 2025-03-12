@@ -213,7 +213,7 @@ public class AnalyzerEntity extends BlockEntity implements MenuProvider, Worldly
 
     public boolean canTakeItem(int slot, @NotNull ItemStack stack) {
 
-        if (slot == 0 && stack.is(ModItems.FOSSIL.get()) || slot == 1 && stack.is(ModItems.PLANT_FOSSIL.get())) {
+        if (slot == 0 && stack.is(ModItems.FOSSIL.get()) || slot == 0 && stack.is(ModItems.PLANT_FOSSIL.get())) {
             return true;
         }
 
