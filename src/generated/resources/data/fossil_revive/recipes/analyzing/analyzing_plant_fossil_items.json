@@ -1,6 +1,8 @@
 {
   "type": "fossil_revive:analyzer",
-  "extra_input": [],
+  "extra_input": {
+    "item": "minecraft:paper"
+  },
   "input": {
     "item": "fossil_revive:plant_fossil"
   },

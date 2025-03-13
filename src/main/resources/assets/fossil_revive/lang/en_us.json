@@ -10,6 +10,7 @@
 
   "item.fossil_revive.dna_bottle": "DNA Bottle",
   "item.fossil_revive.hybrid_dna_bottle": "Hybrid DNA Bottle",
+  "item.fossil_revive.syringe": "Syringe",
 
   "item.fossil_revive.amargasaurus_dna": "Amargasaurus DNA",
   "item.fossil_revive.carnotaurus_dna": "Carnotaurus DNA",
@@ -30,6 +31,10 @@
 
   "item.fossil_revive.dilophosaurus_egg": "Dilophosaurus Egg",
   "item.fossil_revive.dodo_egg": "Dodo Egg",
+
+  "item.fossil_revive.smilodon_embryo": "Smilodon Embryo",
+  "item.fossil_revive.tasmanian_tiger_embryo": "Tasmanian Tiger Embryo",
+  "item.fossil_revive.liopleurodon_embryo": "Liopleurodon Embryo",
 
   "item.fossil_revive.horsetail_seeds": "Horsetail Seeds",
   "item.fossil_revive.montsechia_seeds": "Montsechia Seeds",
@@ -56,7 +61,9 @@
   "block.fossil_revive.crumbled_siltstone": "Crumbled Siltstone",
   "block.fossil_revive.suspicious_crumbled_siltstone": "Suspicious Crumbled Siltstone",
   "block.fossil_revive.fertile_moss": "Fertile Moss",
-  "block.fossil_revive.osmunda_block": "Osmunda",
+  "block.fossil_revive.osmunda": "Osmunda",
+  "block.fossil_revive.horsetail": "Horsetail",
+  "block.fossil_revive.tall_horsetail": "Tall Horsetail",
   "block.fossil_revive.dilophosaurus_egg_block": "Dilophosaurus Egg",
   "block.fossil_revive.dodo_egg_block": "Dodo Egg",
 

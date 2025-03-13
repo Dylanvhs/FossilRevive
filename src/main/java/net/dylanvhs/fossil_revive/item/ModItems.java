@@ -77,7 +77,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> HORSETAIL_SEEDS = ITEMS.register("horsetail_seeds",
-            () -> new Item(new Item.Properties()));
+            () -> new ItemNameBlockItem(ModBlocks.HORSETAIL_CROP.get(), new Item.Properties()));
     public static final RegistryObject<Item> MONTSECHIA_SEEDS = ITEMS.register("montsechia_seeds",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OSMUNDA_SEEDS = ITEMS.register("osmunda_seeds",
@@ -86,8 +86,6 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SPIRALFLOWER_SEEDS = ITEMS.register("spiralflower_seeds",
             () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> OSMUNDA =
-            ITEMS.register("osmunda", () -> new BlockItem(ModBlocks.OSMUNDA.get(), (new Item.Properties())));
 
     public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_cloth",
             () -> new Item(new Item.Properties()));

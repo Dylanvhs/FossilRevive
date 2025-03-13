@@ -1,0 +1,13 @@
+{
+  "type": "fossil_revive:cultivator",
+  "extra_input": {
+    "item": "minecraft:egg"
+  },
+  "input": {
+    "item": "fossil_revive:dodo_dna"
+  },
+  "output": {
+    "item": "fossil_revive:dodo_egg"
+  },
+  "process_time": 800
+}

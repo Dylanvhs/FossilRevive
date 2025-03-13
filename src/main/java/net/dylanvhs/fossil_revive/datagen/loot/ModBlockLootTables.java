@@ -25,7 +25,12 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropWhenSilkTouch(ModBlocks.DODO_EGG.get());
         this.dropOther(ModBlocks.SUSPICIOUS_CRUMBLED_SILTSTONE.get(), Items.AIR);
         this.dropOther(ModBlocks.OSMUNDA_CROP.get(), ModItems.OSMUNDA_SEEDS.get());
-        this.dropWhenSilkTouch(ModBlocks.OSMUNDA.get());
+        this.dropOther(ModBlocks.HORSETAIL_CROP.get(), ModItems.HORSETAIL_SEEDS.get());
+        this.dropSelf(ModBlocks.OSMUNDA.get());
+        this.dropSelf(ModBlocks.HORSETAIL.get());
+        this.dropSelf(ModBlocks.FOSSIL_TORCH.get());
+        this.dropOther(ModBlocks.WALL_FOSSIL_TORCH.get(), ModBlocks.FOSSIL_TORCH.get());
+        this.dropSelf(ModBlocks.TALL_HORSETAIL.get());
     }
 
     @Override

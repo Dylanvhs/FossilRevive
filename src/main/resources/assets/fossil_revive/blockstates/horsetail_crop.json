@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "fossil_revive:block/horsetail_crop_stage0"
+    },
+    "age=1": {
+      "model": "fossil_revive:block/horsetail_crop_stage1"
+    }
+  }
+}

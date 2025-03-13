@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "fossil_revive:block/tall_horsetail_bottom"
+    },
+    "half=upper": {
+      "model": "fossil_revive:block/tall_horsetail_top"
+    }
+  }
+}

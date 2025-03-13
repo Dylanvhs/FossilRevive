@@ -45,7 +45,6 @@ public class DodoEggBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         return new ItemStack(ModItems.DODO_EGG.get());
-
     }
 
     public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {

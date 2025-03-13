@@ -1,6 +1,7 @@
 package net.dylanvhs.fossil_revive.block.custom;
 
 import net.dylanvhs.fossil_revive.block.ModBlocks;
+import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -46,7 +47,7 @@ public class OsmundaCropBlock extends CropBlock {
     }
 
     protected ItemLike getBaseSeedId() {
-        return Items.TORCHFLOWER_SEEDS;
+        return ModItems.OSMUNDA_SEEDS.get();
     }
 
     public BlockState getStateForAge(int p_275698_) {

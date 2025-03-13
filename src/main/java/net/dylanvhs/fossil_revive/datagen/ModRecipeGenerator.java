@@ -23,6 +23,7 @@ public class ModRecipeGenerator extends RecipeProvider {
     @Override
     protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
         cultivating(consumer, ModItems.DILOPHOSAURUS_DNA.get(), Items.EGG, ModItems.DILOPHOSAURUS_EGG.get(), 800);
+        cultivating(consumer, ModItems.DODO_DNA.get(), Items.EGG, ModItems.DODO_EGG.get(), 800);
         cultivating(consumer, ModItems.LIOPLEURODON_DNA.get(), ModItems.SYRINGE.get(), ModItems.LIOPLEURODON_EMBRYO.get(), 800);
         cultivating(consumer, ModItems.SMILODON_DNA.get(), ModItems.SYRINGE.get(), ModItems.SMILODON_EMBRYO.get(), 800);
         cultivating(consumer, ModItems.TASMANIAN_TIGER_DNA.get(), ModItems.SYRINGE.get(), ModItems.TASMANIAN_TIGER_EMBRYO.get(), 800);
@@ -44,7 +45,7 @@ public class ModRecipeGenerator extends RecipeProvider {
                 .addOutput(Items.COBBLESTONE, 15)
                 .build(consumer);
 
-        AnalyzingRecipeBuilder.analyzing(ModItems.PLANT_FOSSIL.get(), ItemStack.EMPTY.getItem(),750)
+        AnalyzingRecipeBuilder.analyzing(ModItems.PLANT_FOSSIL.get(), Items.PAPER,750)
                 .addOutput(ModItems.HORSETAIL_SEEDS.get(), 15)
                 .addOutput(ModItems.MONTSECHIA_SEEDS.get(), 15)
                 .addOutput(ModItems.OSMUNDA_SEEDS.get(), 15)

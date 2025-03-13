@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/tinted_cross",
+  "textures": {
+    "cross": "fossil_revive:block/tall_horsetail_bottom"
+  },
+  "ambientocclusion": false,
+  "render_type": "cutout"
+}

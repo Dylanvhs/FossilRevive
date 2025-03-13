@@ -1,8 +1,10 @@
 {
 	"texture_size": [32, 32],
 	"textures": {
-		"1": "fossil_torch_lit_model"
+		"1": "fossil_revive:block/fossil_torch_lit"
 	},
+	"ambientocclusion": false,
+	"render_type": "cutout",
 	"elements": [
 		{
 			"from": [7, 0, 7],
