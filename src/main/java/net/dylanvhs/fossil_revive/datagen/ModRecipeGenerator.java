@@ -7,6 +7,7 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.util.random.WeightedRandomList;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -43,7 +44,7 @@ public class ModRecipeGenerator extends RecipeProvider {
                 .addOutput(Items.COBBLESTONE, 15)
                 .build(consumer);
 
-        AnalyzingRecipeBuilder.analyzing(ModItems.PLANT_FOSSIL.get(), Items.BRUSH,750)
+        AnalyzingRecipeBuilder.analyzing(ModItems.PLANT_FOSSIL.get(), ItemStack.EMPTY.getItem(),750)
                 .addOutput(ModItems.HORSETAIL_SEEDS.get(), 15)
                 .addOutput(ModItems.MONTSECHIA_SEEDS.get(), 15)
                 .addOutput(ModItems.OSMUNDA_SEEDS.get(), 15)

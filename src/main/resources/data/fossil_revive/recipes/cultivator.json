@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "pattern": [
+      "GGG",
+      "GRG",
+      "III"
+    ],
+    "result": {
+      "count": 1,
+      "item": "fossil_revive:cultivator"
+    },
+    "show_notification": true
+  }
+}

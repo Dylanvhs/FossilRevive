@@ -1,6 +1,7 @@
 package net.dylanvhs.fossil_revive.datagen.loot;
 
 import net.dylanvhs.fossil_revive.block.ModBlocks;
+import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
@@ -23,7 +24,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropWhenSilkTouch(ModBlocks.DILOPHOSAURUS_EGG.get());
         this.dropWhenSilkTouch(ModBlocks.DODO_EGG.get());
         this.dropOther(ModBlocks.SUSPICIOUS_CRUMBLED_SILTSTONE.get(), Items.AIR);
-
+        this.dropOther(ModBlocks.OSMUNDA_CROP.get(), ModItems.OSMUNDA_SEEDS.get());
+        this.dropWhenSilkTouch(ModBlocks.OSMUNDA.get());
     }
 
     @Override

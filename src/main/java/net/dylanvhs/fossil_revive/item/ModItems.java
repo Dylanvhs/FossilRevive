@@ -14,6 +14,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -80,12 +81,13 @@ public class ModItems {
     public static final RegistryObject<Item> MONTSECHIA_SEEDS = ITEMS.register("montsechia_seeds",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> OSMUNDA_SEEDS = ITEMS.register("osmunda_seeds",
-            () -> new Item(new Item.Properties()));
+            () -> new ItemNameBlockItem(ModBlocks.OSMUNDA_CROP.get(), new Item.Properties()));
     public static final RegistryObject<Item> PINKSPARK_SEEDS = ITEMS.register("pinkspark_seeds",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SPIRALFLOWER_SEEDS = ITEMS.register("spiralflower_seeds",
             () -> new Item(new Item.Properties()));
-
+    public static final RegistryObject<Item> OSMUNDA =
+            ITEMS.register("osmunda", () -> new BlockItem(ModBlocks.OSMUNDA.get(), (new Item.Properties())));
 
     public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_cloth",
             () -> new Item(new Item.Properties()));
@@ -96,7 +98,7 @@ public class ModItems {
     public static final RegistryObject<Item> DILOPHOSAURUS_EGG =
             ITEMS.register("dilophosaurus_egg", () -> new BlockItem(ModBlocks.DILOPHOSAURUS_EGG.get(), (new Item.Properties()).stacksTo(4)));
     public static final RegistryObject<Item> DODO_EGG =
-            ITEMS.register("dodo_egg", () -> new BlockItem(ModBlocks.DODO_EGG.get(), (new Item.Properties()).stacksTo(1)));
+            ITEMS.register("dodo_egg", () -> new BlockItem(ModBlocks.DODO_EGG.get(), (new Item.Properties()).stacksTo(4)));
 
 
     public static final RegistryObject<Item> RAW_XENACANTHUS = ITEMS.register("raw_xenacanthus",

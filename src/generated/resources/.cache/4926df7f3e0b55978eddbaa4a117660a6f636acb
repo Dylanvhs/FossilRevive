@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-12T21:54:53.6755332	Item Models: fossil_revive
+// 1.20.1	2025-03-13T11:32:46.0031375	Item Models: fossil_revive
 d459a90a9e42f7832d0cf35b6f72debadb6a9755 assets/fossil_revive/models/item/amargasaurus_dna.json
 1b18c1c8e32ccddec1a248ced8b964c2c64b380d assets/fossil_revive/models/item/bones_music_disc.json
 df1875a0c0f53fcc24faa6716c40c109bca360ce assets/fossil_revive/models/item/carnotaurus_dna.json
@@ -23,6 +23,7 @@ f572a814ab22602ba8efb763295286aa270b73a2 assets/fossil_revive/models/item/horset
 7d9f85100ae3443bd845867f78fdda9bb1b78e8f assets/fossil_revive/models/item/microraptor_dna.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/microraptor_spawn_egg.json
 98e330b4627b9276afdd34871ed842ff6610a952 assets/fossil_revive/models/item/montsechia_seeds.json
+1f5dfb4d05c5e8c7b95338a4d677ea20d36e4749 assets/fossil_revive/models/item/osmunda.json
 2cb5bd4dcb476794155dba9b6f461f750d783cd1 assets/fossil_revive/models/item/osmunda_seeds.json
 0c81e75970518b946b6de532c19afc121a2fa070 assets/fossil_revive/models/item/oviraptor_dna.json
 173dcfc82a836a485fc0df451b98627a319fbae2 assets/fossil_revive/models/item/pinkspark_seeds.json

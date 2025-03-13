@@ -1,8 +1,6 @@
 {
   "type": "fossil_revive:analyzer",
-  "extra_input": {
-    "item": "minecraft:brush"
-  },
+  "extra_input": [],
   "input": {
     "item": "fossil_revive:plant_fossil"
   },

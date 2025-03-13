@@ -1,9 +1,11 @@
-// 1.20.1	2025-03-12T21:54:53.6785291	Loot Tables
+// 1.20.1	2025-03-13T11:32:46.0051381	Loot Tables
 3e618316ce29b841a4988ba716704ed5a10d0a48 data/fossil_revive/loot_tables/blocks/analyzer.json
 3f3b2e83caa72791e9cc73eaff5eb1654d32698f data/fossil_revive/loot_tables/blocks/crumbled_siltstone.json
 da75c5083797089943e0519ea7c208deabc156fc data/fossil_revive/loot_tables/blocks/cultivator.json
 c11b75bd68a3b1df258374764c459a57d0f8933e data/fossil_revive/loot_tables/blocks/dilophosaurus_egg_block.json
 18d6e918b291f6b0aa5b41306c5b51737a5c809e data/fossil_revive/loot_tables/blocks/dodo_egg_block.json
 468017cb66f265da4c626a9f9dee420d14863cc7 data/fossil_revive/loot_tables/blocks/fertile_moss.json
+02835ed59563e28add9c75003aa6c14eb7ddac93 data/fossil_revive/loot_tables/blocks/osmunda_block.json
+8b95dfd29e273e6817c5ceb8ab83a6d52dc49523 data/fossil_revive/loot_tables/blocks/osmunda_crop.json
 ca83d56b7c0054893d24e9be188f370088704c3f data/fossil_revive/loot_tables/blocks/suspicious_crumbled_siltstone.json
 debe15fe31bb61e23734a4b5b6f3fdcf5c50c546 data/fossil_revive/loot_tables/paleontology/fossil_loot.json

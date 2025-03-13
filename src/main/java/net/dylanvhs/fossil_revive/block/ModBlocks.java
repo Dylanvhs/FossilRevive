@@ -4,6 +4,7 @@ import net.dylanvhs.fossil_revive.FossilRevive;
 import net.dylanvhs.fossil_revive.block.custom.*;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
@@ -36,6 +37,11 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> FERTILE_MOSS = registerBlock("fertile_moss",
             () -> new Block(BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.MOSS)));
+
+    public static final RegistryObject<Block> OSMUNDA = registerBlock("osmunda_block",
+            () -> new FlowerBlock(MobEffects.NIGHT_VISION, 5,BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)));
+    public static final RegistryObject<Block> OSMUNDA_CROP = registerBlock("osmunda_crop",
+            () ->new OsmundaCropBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<Block> DILOPHOSAURUS_EGG = registerBlock("dilophosaurus_egg_block",
             () -> new DilophosaurusEggBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).forceSolidOn().strength(0.5F).sound(SoundType.METAL).randomTicks().noOcclusion().pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<Block> DODO_EGG = registerBlock("dodo_egg_block",

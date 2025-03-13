@@ -2,7 +2,6 @@ package net.dylanvhs.fossil_revive.block.custom;
 
 import net.dylanvhs.fossil_revive.block.ModBlockEntities;
 import net.dylanvhs.fossil_revive.block.entity.AnalyzerEntity;
-import net.dylanvhs.fossil_revive.block.entity.CultivatorEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

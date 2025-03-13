@@ -65,6 +65,8 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModItems.PINKSPARK_SEEDS.get());
                         pOutput.accept(ModItems.SPIRALFLOWER_SEEDS.get());
 
+                        pOutput.accept(ModItems.OSMUNDA.get());
+
                         pOutput.accept(ModItems.DIRTY_CLOTH.get());
 
                         pOutput.accept(ModItems.XENACANTHUS_BUCKET.get());

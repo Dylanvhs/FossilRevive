@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "pattern": [
+      "III",
+      "#G#",
+      "IRI"
+    ],
+    "result": {
+      "count": 1,
+      "item": "fossil_revive:analyzer"
+    },
+    "show_notification": true
+  }
+}

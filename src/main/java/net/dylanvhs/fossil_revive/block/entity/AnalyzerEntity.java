@@ -40,16 +40,6 @@ public class AnalyzerEntity extends BlockEntity implements MenuProvider, Worldly
     };
     private static final int INPUT_SLOT = 0;
     private static final int OTHER_INPUT_SLOT = 1;
-    private static final int OUTPUT_SLOT = 2;
-    private static final int OUTPUT_SLOT2 = 3;
-    private static final int OUTPUT_SLOT3 = 4;
-    private static final int OUTPUT_SLOT4 = 5;
-    private static final int OUTPUT_SLOT5 = 6;
-    private static final int OUTPUT_SLOT6 = 7;
-    private static final int OUTPUT_SLOT7 = 8;
-    private static final int OUTPUT_SLOT8 = 9;
-    private static final int OUTPUT_SLOT9 = 10;
-
     private static final int[] SLOTS_FOR_UP = new int[]{INPUT_SLOT};
     private static final int[] SLOTS_FOR_SIDES= new int[]{OTHER_INPUT_SLOT};
     private static final int[] SLOTS_FOR_DOWN = new int[]{2,3,4,5,6,7,8,9,10};

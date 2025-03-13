@@ -53,6 +53,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.XENACANTHUS_BUCKET);
         simpleItem(ModItems.DILOPHOSAURUS_EGG);
         simpleItem(ModItems.DODO_EGG);
+        simpleItem(ModItems.OSMUNDA);
         simpleItem(ModItems.HORSETAIL_SEEDS);
         simpleItem(ModItems.MONTSECHIA_SEEDS);
         simpleItem(ModItems.OSMUNDA_SEEDS);

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_nugget"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "pattern": [
+      " # ",
+      " G ",
+      "  "
+    ],
+    "result": {
+      "count": 6,
+      "item": "fossil_revive:dna_bottle"
+    },
+    "show_notification": true
+  }
+}

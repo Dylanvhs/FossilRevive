@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+
+    "pattern": [
+      "  #",
+      " S ",
+      "P  "
+    ],
+    "result": {
+      "count": 1,
+      "item": "fossil_revive:chisel"
+    },
+    "show_notification": true
+  }
+}

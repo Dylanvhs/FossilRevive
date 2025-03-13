@@ -28,6 +28,15 @@
 
   "item.fossil_revive.dirty_cloth": "Dirty Cloth",
 
+  "item.fossil_revive.dilophosaurus_egg": "Dilophosaurus Egg",
+  "item.fossil_revive.dodo_egg": "Dodo Egg",
+
+  "item.fossil_revive.horsetail_seeds": "Horsetail Seeds",
+  "item.fossil_revive.montsechia_seeds": "Montsechia Seeds",
+  "item.fossil_revive.osmunda_seeds": "Osmunda Seeds",
+  "item.fossil_revive.pinkspark_seeds": "Pinkspark Seeds",
+  "item.fossil_revive.spiralflower_seeds": "Spiralflower Seeds",
+
 
   "item.fossil_revive.xenacanthus_bucket": "Bucket Of Xenacanthus",
   "item.fossil_revive.raw_xenacanthus": "Raw Xenacanthus",
@@ -46,6 +55,10 @@
   "block.fossil_revive.cultivator": "Cultivator",
   "block.fossil_revive.crumbled_siltstone": "Crumbled Siltstone",
   "block.fossil_revive.suspicious_crumbled_siltstone": "Suspicious Crumbled Siltstone",
+  "block.fossil_revive.fertile_moss": "Fertile Moss",
+  "block.fossil_revive.osmunda_block": "Osmunda",
+  "block.fossil_revive.dilophosaurus_egg_block": "Dilophosaurus Egg",
+  "block.fossil_revive.dodo_egg_block": "Dodo Egg",
 
 
   "item.fossil_revive.liopleurodon_spawn_egg": "Liopleurodon Spawn Egg",
@@ -72,12 +85,12 @@
   "entity.fossil_revive.xenacanthus.variant_shell_crusher": "Shell Crusher",
 
 
-  "sounds.fossil_revive.dilo_ambient": "Dilophosaurus Hoots",
-  "sounds.fossil_revive.dilo_hurt": "Dilophosaurus Hurts",
+  "sounds.fossil_revive.dilo_ambient": "Dilophosaurus hoots",
+  "sounds.fossil_revive.dilo_hurt": "Dilophosaurus hurts",
 
 
-  "sounds.fossil_revive.lio_ambient": "Liopleurodon Growls",
-  "sounds.fossil_revive.lio_hurt": "Liopleurodon Hurts"
+  "sounds.fossil_revive.lio_ambient": "Liopleurodon growls",
+  "sounds.fossil_revive.lio_hurt": "Liopleurodon hurts"
 
 
 }
