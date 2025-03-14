@@ -43,7 +43,7 @@ public class WallFossilTorchBlock extends FossilTorchBlock {
 
     public WallFossilTorchBlock(BlockBehaviour.Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.FALSE));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(LIT, Boolean.FALSE));
     }
 
     @Override
@@ -69,38 +69,6 @@ public class WallFossilTorchBlock extends FossilTorchBlock {
         BlockState blockstate = pLevel.getBlockState(blockpos);
         return blockstate.isFaceSturdy(pLevel, blockpos, direction);
     }
-
-    @Override
-    public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-
-        ItemStack itemstack = pPlayer.getItemInHand(pHand);
-        if (isFlintandSteel(itemstack)) {
-            pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.TRUE), 2);
-            if (!pPlayer.isCreative()) {
-                itemstack.hurtAndBreak(1, pPlayer, (p_150686_) -> {
-                    p_150686_.broadcastBreakEvent(pHand);
-                });
-            }
-            pLevel.playSound(pPlayer, pPos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.NEUTRAL);
-        }
-
-        if (isWaterBucket(itemstack)) {
-            pLevel.setBlock(pPos, pState.setValue(LIT, Boolean.FALSE), 2);
-            if (!pPlayer.isCreative()) {
-                pPlayer.setItemInHand(pHand, new ItemStack(Items.BUCKET));
-            }
-            pLevel.playSound(pPlayer, pPos, SoundEvents.FIRE_EXTINGUISH, SoundSource.NEUTRAL);
-        }
-        return InteractionResult.sidedSuccess(pLevel.isClientSide);
-    }
-
-    private static boolean isFlintandSteel(ItemStack pStack) {
-        return pStack.is(Items.FLINT_AND_STEEL);
-    }
-    private static boolean isWaterBucket(ItemStack pStack) {
-        return pStack.is(Items.WATER_BUCKET);
-    }
-
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         BlockState blockstate = this.defaultBlockState();
@@ -124,13 +92,13 @@ public class WallFossilTorchBlock extends FossilTorchBlock {
     public BlockState updateShape(BlockState pState, Direction pFacing, BlockState pFacingState, LevelAccessor pLevel, BlockPos pCurrentPos, BlockPos pFacingPos) {
         return pFacing.getOpposite() == pState.getValue(FACING) && !pState.canSurvive(pLevel, pCurrentPos) ? Blocks.AIR.defaultBlockState() : pState;
     }
-
+    @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
         Direction direction = pState.getValue(FACING);
         if (pState.getValue(LIT)) {
-            double d0 = (double) pPos.getX() + 0.5D;
-            double d1 = (double) pPos.getY() + 0.2D;
-            double d2 = (double) pPos.getZ() + 0.5D;
+            double d0 = (double) pPos.getX() + 0.10D;
+            double d1 = (double) pPos.getY() + 0.14D;
+            double d2 = (double) pPos.getZ() + 0.10D;
             double d3 = 0.22D;
             double d4 = 0.27D;
             Direction direction1 = direction.getOpposite();
@@ -147,8 +115,8 @@ public class WallFossilTorchBlock extends FossilTorchBlock {
     public BlockState mirror(BlockState pState, Mirror pMirror) {
         return pState.rotate(pMirror.getRotation(pState.getValue(FACING)));
     }
-
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(LIT, FACING);
+        pBuilder.add(LIT, FACING, WATERLOGGED);
     }
 }

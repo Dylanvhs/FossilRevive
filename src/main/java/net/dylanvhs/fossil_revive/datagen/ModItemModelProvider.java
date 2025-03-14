@@ -58,6 +58,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.OSMUNDA_SEEDS);
         simpleItem(ModItems.PINKSPARK_SEEDS);
         simpleItem(ModItems.SPIRALFLOWER_SEEDS);
+        simpleItem(ModItems.FOSSIL_TORCH);
 
         withExistingParent(ModItems.LIOPLEURODON_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
         withExistingParent(ModItems.QUETZALCOATLUS_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));

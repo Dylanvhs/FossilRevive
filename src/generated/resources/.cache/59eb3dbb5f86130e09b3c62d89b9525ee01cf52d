@@ -1,11 +1,11 @@
-// 1.20.1	2025-03-14T00:05:13.3902532	Loot Tables
+// 1.20.1	2025-03-14T19:32:54.0459719	Loot Tables
 3e618316ce29b841a4988ba716704ed5a10d0a48 data/fossil_revive/loot_tables/blocks/analyzer.json
 3f3b2e83caa72791e9cc73eaff5eb1654d32698f data/fossil_revive/loot_tables/blocks/crumbled_siltstone.json
 da75c5083797089943e0519ea7c208deabc156fc data/fossil_revive/loot_tables/blocks/cultivator.json
 c11b75bd68a3b1df258374764c459a57d0f8933e data/fossil_revive/loot_tables/blocks/dilophosaurus_egg_block.json
 18d6e918b291f6b0aa5b41306c5b51737a5c809e data/fossil_revive/loot_tables/blocks/dodo_egg_block.json
 468017cb66f265da4c626a9f9dee420d14863cc7 data/fossil_revive/loot_tables/blocks/fertile_moss.json
-b17b2a06217ce4f0b9b0b032c879cfd6a17f7f81 data/fossil_revive/loot_tables/blocks/fossil_torch.json
+6353b08c0d07e6846c377c8380d1254cdcb7d550 data/fossil_revive/loot_tables/blocks/fossil_torch_block.json
 bca5c51447e54b9c8e68c6c0b7bbf1c13a279a4f data/fossil_revive/loot_tables/blocks/horsetail.json
 15a371f65ef52c663d9ab88a50c546be14f136b4 data/fossil_revive/loot_tables/blocks/horsetail_crop.json
 4c554286c15e2bf3b9ad991e7640a2c3945855dc data/fossil_revive/loot_tables/blocks/osmunda.json

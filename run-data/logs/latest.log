@@ -1,28 +1,28 @@
-[14mrt.2025 00:05:02.646] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.3.1, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, fossil_revive, --all, --output, C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\src\main\resources]
-[14mrt.2025 00:05:02.675] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.8.1 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[14mrt.2025 00:05:02.803] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[14mrt.2025 00:05:02.861] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/dylan/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[14mrt.2025 00:05:03.210] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.3.1\b9fa98d5c9fa107169a3390a1c8993d2134fbf54\javafmllanguage-1.20.1-47.3.1.jar is missing mods.toml file
-[14mrt.2025 00:05:03.214] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.3.1\aaa252b4d4c34d0c02e647d7a2ef3df3bc11d73a\lowcodelanguage-1.20.1-47.3.1.jar is missing mods.toml file
-[14mrt.2025 00:05:03.216] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.3.1\1722b26446496b5e686cdf124342e8f7fd33dc91\mclanguage-1.20.1-47.3.1.jar is missing mods.toml file
-[14mrt.2025 00:05:03.221] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.3.1\4ed2bfe4ae3a6c27f587d45f58d648db68d19c00\fmlcore-1.20.1-47.3.1.jar is missing mods.toml file
-[14mrt.2025 00:05:03.407] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 3 dependencies adding them to mods collection
-[14mrt.2025 00:05:04.944] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[14mrt.2025 00:05:04.950] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, fossil_revive, --all, --output, C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\src\main\resources]
-[14mrt.2025 00:05:05.105] [main/INFO] [Xenon/]: Loaded configuration file for Xenon: 61 options available, 0 override(s) found
-[14mrt.2025 00:05:05.107] [main/INFO] [Xenon-GraphicsAdapterProbe/]: Searching for graphics cards...
-[14mrt.2025 00:05:05.354] [main/INFO] [Xenon-GraphicsAdapterProbe/]: Found graphics card: GraphicsAdapterInfo[vendor=INTEL, name=Intel(R) UHD Graphics, version=DriverVersion=31.0.101.5333]
-[14mrt.2025 00:05:05.354] [main/INFO] [Xenon-GraphicsAdapterProbe/]: Found graphics card: GraphicsAdapterInfo[vendor=NVIDIA, name=NVIDIA GeForce RTX 2050, version=DriverVersion=32.0.15.6607]
-[14mrt.2025 00:05:05.368] [main/WARN] [Xenon-Workarounds/]: Sodium has applied one or more workarounds to prevent crashes or other issues on your system: [NVIDIA_THREADED_OPTIMIZATIONS]
-[14mrt.2025 00:05:05.369] [main/WARN] [Xenon-Workarounds/]: This is not necessarily an issue, but it may result in certain features or optimizations being disabled. You can sometimes fix these issues by upgrading your graphics driver.
-[14mrt.2025 00:05:05.809] [main/INFO] [mixin/]: Remapping refMap xenon-refmap.json using C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\build\createSrgToMcp\output.srg
-[14mrt.2025 00:05:05.814] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\build\createSrgToMcp\output.srg
-[14mrt.2025 00:05:06.764] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [fossil_revive]
-[14mrt.2025 00:05:07.176] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.3.5).
-[14mrt.2025 00:05:11.818] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.3.1, for MC 1.20.1 with MCP 20230612.114412
-[14mrt.2025 00:05:11.822] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.3.1 Initialized
-[14mrt.2025 00:05:12.149] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
-[14mrt.2025 00:05:12.149] [modloading-worker-0/ERROR] [Xenon/]: Failed to update fingerprint
+[14mrt.2025 19:58:38.264] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.3.1, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, fossil_revive, --all, --output, C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\src\main\resources]
+[14mrt.2025 19:58:38.274] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.8.1 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[14mrt.2025 19:58:38.442] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[14mrt.2025 19:58:38.493] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/dylan/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[14mrt.2025 19:58:38.829] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.3.1\b9fa98d5c9fa107169a3390a1c8993d2134fbf54\javafmllanguage-1.20.1-47.3.1.jar is missing mods.toml file
+[14mrt.2025 19:58:38.834] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.3.1\aaa252b4d4c34d0c02e647d7a2ef3df3bc11d73a\lowcodelanguage-1.20.1-47.3.1.jar is missing mods.toml file
+[14mrt.2025 19:58:38.837] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.3.1\1722b26446496b5e686cdf124342e8f7fd33dc91\mclanguage-1.20.1-47.3.1.jar is missing mods.toml file
+[14mrt.2025 19:58:38.840] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\dylan\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.3.1\4ed2bfe4ae3a6c27f587d45f58d648db68d19c00\fmlcore-1.20.1-47.3.1.jar is missing mods.toml file
+[14mrt.2025 19:58:39.061] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 3 dependencies adding them to mods collection
+[14mrt.2025 19:58:40.748] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[14mrt.2025 19:58:40.754] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\dylan\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, fossil_revive, --all, --output, C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\src\generated\resources, --existing, C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\src\main\resources]
+[14mrt.2025 19:58:40.888] [main/INFO] [Xenon/]: Loaded configuration file for Xenon: 61 options available, 0 override(s) found
+[14mrt.2025 19:58:40.890] [main/INFO] [Xenon-GraphicsAdapterProbe/]: Searching for graphics cards...
+[14mrt.2025 19:58:41.117] [main/INFO] [Xenon-GraphicsAdapterProbe/]: Found graphics card: GraphicsAdapterInfo[vendor=INTEL, name=Intel(R) UHD Graphics, version=DriverVersion=31.0.101.5333]
+[14mrt.2025 19:58:41.118] [main/INFO] [Xenon-GraphicsAdapterProbe/]: Found graphics card: GraphicsAdapterInfo[vendor=NVIDIA, name=NVIDIA GeForce RTX 2050, version=DriverVersion=32.0.15.6607]
+[14mrt.2025 19:58:41.125] [main/WARN] [Xenon-Workarounds/]: Sodium has applied one or more workarounds to prevent crashes or other issues on your system: [NVIDIA_THREADED_OPTIMIZATIONS]
+[14mrt.2025 19:58:41.125] [main/WARN] [Xenon-Workarounds/]: This is not necessarily an issue, but it may result in certain features or optimizations being disabled. You can sometimes fix these issues by upgrading your graphics driver.
+[14mrt.2025 19:58:41.292] [main/INFO] [mixin/]: Remapping refMap xenon-refmap.json using C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\build\createSrgToMcp\output.srg
+[14mrt.2025 19:58:41.294] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Program Files\workspaces\fossil-revive-forge-1.20.1-workspace\build\createSrgToMcp\output.srg
+[14mrt.2025 19:58:41.961] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [fossil_revive]
+[14mrt.2025 19:58:42.170] [main/INFO] [MixinExtras|Service/]: Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.3.5).
+[14mrt.2025 19:58:45.969] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.3.1, for MC 1.20.1 with MCP 20230612.114412
+[14mrt.2025 19:58:45.974] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.3.1 Initialized
+[14mrt.2025 19:58:46.298] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
+[14mrt.2025 19:58:46.298] [modloading-worker-0/ERROR] [Xenon/]: Failed to update fingerprint
 java.lang.NullPointerException: Cannot invoke "net.minecraft.client.Minecraft.getUser()" because the return value of "net.minecraft.client.Minecraft.getInstance()" is null
 	at me.jellysquid.mods.sodium.client.data.fingerprint.FingerprintMeasure.create(FingerprintMeasure.java:19) ~[xenon-564239-5374393_mapped_parchment_2023.06.26-1.20.1.jar%23199!/:?]
 	at me.jellysquid.mods.sodium.client.SodiumClientMod.updateFingerprint(SodiumClientMod.java:101) ~[xenon-564239-5374393_mapped_parchment_2023.06.26-1.20.1.jar%23199!/:?]
@@ -41,19 +41,19 @@ java.lang.NullPointerException: Cannot invoke "net.minecraft.client.Minecraft.ge
 	at java.util.concurrent.ForkJoinPool.scan(ForkJoinPool.java:1655) ~[?:?]
 	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1622) ~[?:?]
 	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:165) ~[?:?]
-[14mrt.2025 00:05:12.917] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.3.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[14mrt.2025 00:05:12.918] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.3.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[14mrt.2025 00:05:13.202] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[14mrt.2025 00:05:13.284] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 81 ms
-[14mrt.2025 00:05:13.285] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: fossil_revive
-[14mrt.2025 00:05:13.285] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: fossil_revive finished after 0 ms
-[14mrt.2025 00:05:13.285] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: fossil_revive
-[14mrt.2025 00:05:13.335] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: fossil_revive finished after 49 ms
-[14mrt.2025 00:05:13.335] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[14mrt.2025 00:05:13.359] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 24 ms
-[14mrt.2025 00:05:13.360] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id fossil_revive
-[14mrt.2025 00:05:13.365] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id fossil_revive finished after 5 ms
-[14mrt.2025 00:05:13.365] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id fossil_revive
-[14mrt.2025 00:05:13.384] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id fossil_revive finished after 17 ms
-[14mrt.2025 00:05:13.385] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 182 ms
-[14mrt.2025 00:05:13.407] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 65, old count: 65, new count: 66, removed stale: 0, written: 2
+[14mrt.2025 19:58:47.467] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.3.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[14mrt.2025 19:58:47.467] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/dylan/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.3.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.3.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[14mrt.2025 19:58:47.691] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[14mrt.2025 19:58:47.773] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 80 ms
+[14mrt.2025 19:58:47.773] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: fossil_revive
+[14mrt.2025 19:58:47.773] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: fossil_revive finished after 0 ms
+[14mrt.2025 19:58:47.773] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: fossil_revive
+[14mrt.2025 19:58:47.843] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: fossil_revive finished after 70 ms
+[14mrt.2025 19:58:47.844] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[14mrt.2025 19:58:47.867] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 23 ms
+[14mrt.2025 19:58:47.867] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:block mod id fossil_revive
+[14mrt.2025 19:58:47.974] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:block mod id fossil_revive finished after 107 ms
+[14mrt.2025 19:58:47.975] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:item mod id fossil_revive
+[14mrt.2025 19:58:47.986] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:item mod id fossil_revive finished after 11 ms
+[14mrt.2025 19:58:47.986] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 295 ms
+[14mrt.2025 19:58:48.002] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 66, old count: 66, new count: 67, removed stale: 0, written: 0

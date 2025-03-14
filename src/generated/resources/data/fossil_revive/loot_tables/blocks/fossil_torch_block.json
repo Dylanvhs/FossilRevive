@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fossil_revive:fossil_torch"
+          "name": "fossil_revive:fossil_torch_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "fossil_revive:blocks/fossil_torch"
+  "random_sequence": "fossil_revive:blocks/fossil_torch_block"
 }

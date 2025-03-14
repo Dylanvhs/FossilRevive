@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-13T17:46:00.2534148	Item Models: fossil_revive
+// 1.20.1	2025-03-14T19:32:54.0418977	Item Models: fossil_revive
 d459a90a9e42f7832d0cf35b6f72debadb6a9755 assets/fossil_revive/models/item/amargasaurus_dna.json
 1b18c1c8e32ccddec1a248ced8b964c2c64b380d assets/fossil_revive/models/item/bones_music_disc.json
 df1875a0c0f53fcc24faa6716c40c109bca360ce assets/fossil_revive/models/item/carnotaurus_dna.json
@@ -13,6 +13,7 @@ a59b90aa58392f0ecc6236215e973bcb600bb162 assets/fossil_revive/models/item/dna_bo
 2a6df80b79b0c7f3f1afb1fd634682a91efabd30 assets/fossil_revive/models/item/dodo_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/dodo_spawn_egg.json
 a0017a88aa3059a65c20150c30341db0373a2128 assets/fossil_revive/models/item/fossil.json
+e67d38e3547ed83f1dd49ff684e6a04fddcf7a2b assets/fossil_revive/models/item/fossil_torch.json
 f572a814ab22602ba8efb763295286aa270b73a2 assets/fossil_revive/models/item/horsetail_seeds.json
 869d995812b3ed8e63c925d2df3b2ecfa6c213cf assets/fossil_revive/models/item/hybrid_dna_bottle.json
 644414d6dfd40ba49b12d9e273e43276083b97e0 assets/fossil_revive/models/item/kelenken_dna.json

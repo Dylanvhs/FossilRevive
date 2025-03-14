@@ -8,6 +8,7 @@ import net.dylanvhs.fossil_revive.item.custom.ItemModFishBucket;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.world.food.FoodProperties;
@@ -89,6 +90,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> DIRTY_CLOTH = ITEMS.register("dirty_cloth",
             () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> FOSSIL_TORCH = ITEMS.register("fossil_torch",
+            () -> new StandingAndWallBlockItem(ModBlocks.FOSSIL_TORCH.get(), ModBlocks.WALL_FOSSIL_TORCH.get(), new Item.Properties(), Direction.DOWN));
 
     public static final RegistryObject<Item> CHISEL = ITEMS.register("chisel",
             () -> new ChiselItem(new Item.Properties().durability(64)));

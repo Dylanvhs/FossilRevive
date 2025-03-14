@@ -70,7 +70,7 @@ public class ModCreativeModeTabs {
                         pOutput.accept(ModBlocks.TALL_HORSETAIL.get());
 
                         pOutput.accept(ModItems.DIRTY_CLOTH.get());
-                        pOutput.accept(ModBlocks.FOSSIL_TORCH.get());
+                        pOutput.accept(ModItems.FOSSIL_TORCH.get());
 
                         pOutput.accept(ModItems.XENACANTHUS_BUCKET.get());
                         pOutput.accept(ModItems.RAW_XENACANTHUS.get());

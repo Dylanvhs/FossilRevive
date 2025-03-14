@@ -41,7 +41,7 @@ public class ModBlocks {
     public static final RegistryObject<Block> FERTILE_MOSS = registerBlock("fertile_moss",
             () -> new Block(BlockBehaviour.Properties.of().strength(1.0F).sound(SoundType.MOSS)));
 
-    public static final RegistryObject<Block> FOSSIL_TORCH = registerBlock("fossil_torch",
+    public static final RegistryObject<Block> FOSSIL_TORCH = registerBlock("fossil_torch_block",
             () -> new FossilTorchBlock(BlockBehaviour.Properties.of().noCollission().instabreak().lightLevel(litBlockEmission(15)).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)));
     public static final RegistryObject<Block> WALL_FOSSIL_TORCH = registerBlock("wall_fossil_torch",
             () -> new WallFossilTorchBlock(BlockBehaviour.Properties.of().noCollission().instabreak().lightLevel(litBlockEmission(15)).sound(SoundType.WOOD).dropsLike(FOSSIL_TORCH.get()).pushReaction(PushReaction.DESTROY)));
