@@ -40,6 +40,8 @@ public final class ModEvents {
         event.put(ModEntities.QUETZALCOATLUS.get(), QuetzalcoatlusEntity.setAttributes());
         event.put(ModEntities.DODO.get(), DodoEntity.setAttributes());
         event.put(ModEntities.XENACANTHUS.get(), XenacanthusEntity.setAttributes());
+        event.put(ModEntities.RANALOPHOSAURUS.get(), RanalophosaurusEntity.setAttributes());
+        event.put(ModEntities.MICRORAPTOR.get(), MicroraptorEntity.setAttributes());
     }
 
     public static class RegisterRenderers extends EntityRenderersEvent

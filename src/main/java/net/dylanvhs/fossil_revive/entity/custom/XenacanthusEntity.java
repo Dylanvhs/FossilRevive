@@ -1,5 +1,7 @@
 package net.dylanvhs.fossil_revive.entity.custom;
 
+import net.dylanvhs.fossil_revive.entity.ai.CustomRandomSwimGoal;
+import net.dylanvhs.fossil_revive.entity.ai.SmoothSwimmingMoveControlButNotBad;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
@@ -9,6 +11,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -18,6 +21,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.*;
@@ -63,8 +67,9 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
 
     public XenacanthusEntity(EntityType<? extends XenacanthusEntity> entityType, Level level) {
         super(entityType, level);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.1F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControlButNotBad(this, 1000, 4, 0.1F, 0.1F, false);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
+        this.moveControl = new MoveHelperController(this);
     }
 
     @Override
@@ -97,7 +102,7 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(2, new RandomSwimmingGoal(this, 0.8D, 1));
+        this.goalSelector.addGoal(2, new CustomRandomSwimGoal(this, 1, 1, 20, 20, 3));
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Cod.class, true));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Salmon.class, true));
@@ -249,6 +254,55 @@ public class XenacanthusEntity extends AbstractFish implements Bucketable, Neutr
     @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.TROPICAL_FISH_FLOP;
+    }
+
+    static class MoveHelperController extends MoveControl {
+        private final XenacanthusEntity liopleurodon;
+
+        public MoveHelperController(XenacanthusEntity dolphinIn) {
+            super(dolphinIn);
+            this.liopleurodon = dolphinIn;
+        }
+
+        public void tick() {
+            if (this.liopleurodon.isInWater()) {
+                this.liopleurodon.setDeltaMovement(this.liopleurodon.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
+            }
+
+            if (this.operation == MoveControl.Operation.MOVE_TO && !this.liopleurodon.getNavigation().isDone()) {
+                double d0 = this.wantedX - this.liopleurodon.getX();
+                double d1 = this.wantedY - this.liopleurodon.getY();
+                double d2 = this.wantedZ - this.liopleurodon.getZ();
+                double d3 = d0 * d0 + d1 * d1 + d2 * d2;
+                if (d3 < (double) 2.5000003E-7F) {
+                    this.mob.setZza(0.0F);
+                } else {
+                    float f = (float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
+                    this.liopleurodon.setYRot(this.rotlerp(this.liopleurodon.getYRot(), f, 10.0F));
+                    this.liopleurodon.yBodyRot = this.liopleurodon.getYRot();
+                    this.liopleurodon.yHeadRot = this.liopleurodon.getYRot();
+                    float f1 = (float) (this.speedModifier * this.liopleurodon.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    if (this.liopleurodon.isInWater()) {
+                        this.liopleurodon.setSpeed(f1 * 0.02F);
+                        float f2 = -((float) (Mth.atan2(d1, Mth.sqrt((float) (d0 * d0 + d2 * d2))) * (double) (180F / (float) Math.PI)));
+                        f2 = Mth.clamp(Mth.wrapDegrees(f2), -85.0F, 85.0F);
+                        this.liopleurodon.setXRot(this.rotlerp(this.liopleurodon.getXRot(), f2, 5.0F));
+                        float f3 = Mth.cos(this.liopleurodon.getXRot() * ((float) Math.PI / 180F));
+                        float f4 = Mth.sin(this.liopleurodon.getXRot() * ((float) Math.PI / 180F));
+                        this.liopleurodon.zza = f3 * f1;
+                        this.liopleurodon.yya = -f4 * f1;
+                    } else {
+                        this.liopleurodon.setSpeed(f1 * 0.1F);
+                    }
+
+                }
+            } else {
+                this.liopleurodon.setSpeed(0.0F);
+                this.liopleurodon.setXxa(0.0F);
+                this.liopleurodon.setYya(0.0F);
+                this.liopleurodon.setZza(0.0F);
+            }
+        }
     }
 
     @Override

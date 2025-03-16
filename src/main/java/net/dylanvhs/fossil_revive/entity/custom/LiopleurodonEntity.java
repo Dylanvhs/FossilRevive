@@ -2,7 +2,9 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 
 import net.dylanvhs.fossil_revive.entity.ModEntities;
+import net.dylanvhs.fossil_revive.entity.ai.CustomRandomSwimGoal;
 import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonJumpGoal;
+import net.dylanvhs.fossil_revive.entity.ai.SmoothSwimmingMoveControlButNotBad;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.core.particles.ParticleTypes;
@@ -57,11 +59,10 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.COD);
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(LiopleurodonEntity.class, EntityDataSerializers.INT);
 
-
     public LiopleurodonEntity(EntityType<? extends LiopleurodonEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.moveControl = new SmoothSwimmingMoveControl(this, 45, 10, 0.02F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControlButNotBad(this, 1000, 4, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
         this.moveControl = new MoveHelperController(this);
     }
@@ -109,7 +110,7 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
             }
         });
         this.goalSelector.addGoal(0, new TryFindWaterGoal(this));
-        this.goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0D, 10));
+        this.goalSelector.addGoal(0, new CustomRandomSwimGoal(this, 0.8, 1, 40, 30, 3));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
@@ -121,7 +122,7 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
         });
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this)).setAlertOthers());
 
-        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (p_28879_) -> {
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, 5, false, false, (p_28879_) -> {
             return !(p_28879_ instanceof LiopleurodonEntity || p_28879_ instanceof Creeper);
         }));
 
@@ -131,6 +132,55 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
     @Override
     public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
         return ModEntities.LIOPLEURODON.get().create(pLevel);
+    }
+
+    static class MoveHelperController extends MoveControl {
+        private final LiopleurodonEntity liopleurodon;
+
+        public MoveHelperController(LiopleurodonEntity dolphinIn) {
+            super(dolphinIn);
+            this.liopleurodon = dolphinIn;
+        }
+
+        public void tick() {
+            if (this.liopleurodon.isInWater()) {
+                this.liopleurodon.setDeltaMovement(this.liopleurodon.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
+            }
+
+            if (this.operation == MoveControl.Operation.MOVE_TO && !this.liopleurodon.getNavigation().isDone()) {
+                double d0 = this.wantedX - this.liopleurodon.getX();
+                double d1 = this.wantedY - this.liopleurodon.getY();
+                double d2 = this.wantedZ - this.liopleurodon.getZ();
+                double d3 = d0 * d0 + d1 * d1 + d2 * d2;
+                if (d3 < (double) 2.5000003E-7F) {
+                    this.mob.setZza(0.0F);
+                } else {
+                    float f = (float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
+                    this.liopleurodon.setYRot(this.rotlerp(this.liopleurodon.getYRot(), f, 10.0F));
+                    this.liopleurodon.yBodyRot = this.liopleurodon.getYRot();
+                    this.liopleurodon.yHeadRot = this.liopleurodon.getYRot();
+                    float f1 = (float) (this.speedModifier * this.liopleurodon.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    if (this.liopleurodon.isInWater()) {
+                        this.liopleurodon.setSpeed(f1 * 0.02F);
+                        float f2 = -((float) (Mth.atan2(d1, Mth.sqrt((float) (d0 * d0 + d2 * d2))) * (double) (180F / (float) Math.PI)));
+                        f2 = Mth.clamp(Mth.wrapDegrees(f2), -85.0F, 85.0F);
+                        this.liopleurodon.setXRot(this.rotlerp(this.liopleurodon.getXRot(), f2, 5.0F));
+                        float f3 = Mth.cos(this.liopleurodon.getXRot() * ((float) Math.PI / 180F));
+                        float f4 = Mth.sin(this.liopleurodon.getXRot() * ((float) Math.PI / 180F));
+                        this.liopleurodon.zza = f3 * f1;
+                        this.liopleurodon.yya = -f4 * f1;
+                    } else {
+                        this.liopleurodon.setSpeed(f1 * 0.1F);
+                    }
+
+                }
+            } else {
+                this.liopleurodon.setSpeed(0.0F);
+                this.liopleurodon.setXxa(0.0F);
+                this.liopleurodon.setYya(0.0F);
+                this.liopleurodon.setZza(0.0F);
+            }
+        }
     }
 
     public boolean isFood(ItemStack pStack) {
@@ -262,55 +312,6 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
         return SoundEvents.DOLPHIN_SWIM;
     }
 
-
-    static class MoveHelperController extends MoveControl {
-        private final LiopleurodonEntity liopleurodon;
-
-        public MoveHelperController(LiopleurodonEntity dolphinIn) {
-            super(dolphinIn);
-            this.liopleurodon = dolphinIn;
-        }
-
-        public void tick() {
-            if (this.liopleurodon.isInWater()) {
-                this.liopleurodon.setDeltaMovement(this.liopleurodon.getDeltaMovement().add(0.0D, 0.005D, 0.0D));
-            }
-
-            if (this.operation == MoveControl.Operation.MOVE_TO && !this.liopleurodon.getNavigation().isDone()) {
-                double d0 = this.wantedX - this.liopleurodon.getX();
-                double d1 = this.wantedY - this.liopleurodon.getY();
-                double d2 = this.wantedZ - this.liopleurodon.getZ();
-                double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-                if (d3 < (double) 2.5000003E-7F) {
-                    this.mob.setZza(0.0F);
-                } else {
-                    float f = (float) (Mth.atan2(d2, d0) * (double) (180F / (float) Math.PI)) - 90.0F;
-                    this.liopleurodon.setYRot(this.rotlerp(this.liopleurodon.getYRot(), f, 10.0F));
-                    this.liopleurodon.yBodyRot = this.liopleurodon.getYRot();
-                    this.liopleurodon.yHeadRot = this.liopleurodon.getYRot();
-                    float f1 = (float) (this.speedModifier * this.liopleurodon.getAttributeValue(Attributes.MOVEMENT_SPEED));
-                    if (this.liopleurodon.isInWater()) {
-                        this.liopleurodon.setSpeed(f1 * 0.02F);
-                        float f2 = -((float) (Mth.atan2(d1, Mth.sqrt((float) (d0 * d0 + d2 * d2))) * (double) (180F / (float) Math.PI)));
-                        f2 = Mth.clamp(Mth.wrapDegrees(f2), -85.0F, 85.0F);
-                        this.liopleurodon.setXRot(this.rotlerp(this.liopleurodon.getXRot(), f2, 5.0F));
-                        float f3 = Mth.cos(this.liopleurodon.getXRot() * ((float) Math.PI / 180F));
-                        float f4 = Mth.sin(this.liopleurodon.getXRot() * ((float) Math.PI / 180F));
-                        this.liopleurodon.zza = f3 * f1;
-                        this.liopleurodon.yya = -f4 * f1;
-                    } else {
-                        this.liopleurodon.setSpeed(f1 * 0.1F);
-                    }
-
-                }
-            } else {
-                this.liopleurodon.setSpeed(0.0F);
-                this.liopleurodon.setXxa(0.0F);
-                this.liopleurodon.setYya(0.0F);
-                this.liopleurodon.setZza(0.0F);
-            }
-        }
-    }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {

@@ -2,6 +2,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 import com.google.common.collect.Sets;
 
+import net.dylanvhs.fossil_revive.entity.ModEntities;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -35,12 +36,22 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.*;
 import java.util.function.Predicate;
 
-public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
+public class MicroraptorEntity extends TamableAnimal implements NeutralMob, GeoEntity {
 
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(MicroraptorEntity.class, EntityDataSerializers.INT);
 
     public static String getVariantName(int variant) {
@@ -73,13 +84,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     private static final Set<Item> TAME_FOOD = Sets.newHashSet(Items.FERMENTED_SPIDER_EYE);
 
     private int rideCooldown = 0;
-
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeOut = 0;
-    public final AnimationState flapAnimationState = new AnimationState();
-    private int flapAnimationTimeOut = 0;
-    public final AnimationState sitAnimationState = new AnimationState();
-    private int sitAnimationTimeOut = 0;
     private int ticksSinceEaten;
 
     @Override
@@ -87,7 +91,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         super.tick();
 
         if (this.level().isClientSide()) {
-            setupAnimationState();
         }
 
         this.interestedAngleO = this.interestedAngle;
@@ -113,50 +116,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
-
-    private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0) {
-            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeOut;
-        }
-        if (this.getPose() == Pose.FALL_FLYING && flapAnimationTimeOut <= 0) {
-            this.flapAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.flapAnimationState.start(this.tickCount);
-        } else {
-            --this.flapAnimationTimeOut;
-        }
-
-        if (this.getPose() == Pose.STANDING) {
-            flapAnimationState.stop();
-        }
-
-        if (this.isOrderedToSit() && sitAnimationTimeOut <= 0) {
-            this.sitAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.sitAnimationState.start(this.tickCount);
-        } else {
-            --this.sitAnimationTimeOut;
-        }
-
-        if (!this.isOrderedToSit()) {
-            sitAnimationState.stop();
-        }
-
-    }
-
-    @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            f = 0f;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
-    }
-
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -174,17 +133,27 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         this.goalSelector.addGoal(2, new MicroraptorEntity.MicroraptorMeleeAttackGoal());
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return TamableAnimal.createLivingAttributes()
+    public static AttributeSupplier setAttributes() {
+        return TamableAnimal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 8D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 2f)
                 .add(Attributes.ATTACK_SPEED, 0.4f)
-                .add(Attributes.ATTACK_KNOCKBACK, 0.1f);
+                .add(Attributes.ATTACK_KNOCKBACK, 0.1f)
+                .build();
     }
-
+    @Nullable
+    public MicroraptorEntity getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
+        MicroraptorEntity microraptor = ModEntities.MICRORAPTOR.get().create(pLevel);
+        if (microraptor != null) {
+            int i = this.random.nextBoolean() ? this.getVariant() : ((MicroraptorEntity) pOtherParent).getVariant();
+            microraptor.setVariant(i);
+            microraptor.setPersistenceRequired();
+        }
+        return microraptor;
+    }
     public boolean isPushable() {
         return true;
     }
@@ -259,10 +228,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             this.stopRiding();
         } else if (mount instanceof Player player && this.isPassenger()) {
             this.setDeltaMovement(0, 0, 0);
-            //this.yBodyRot = ((LivingEntity) player).yBodyRot;
-            //this.setYRot(player.getYRot());
-            //this.yHeadRot = ((LivingEntity) player).yHeadRot;
-            //this.yRotO = ((LivingEntity) player).yHeadRot;
             float radius = 0F;
             float angle = (0.01745329251F * (((LivingEntity) player).yBodyRot - 180F));
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
@@ -277,12 +242,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
             if (mount.isInWater()) {
                 this.stopRiding();
                 this.removeEffect(MobEffects.SLOW_FALLING);
-            }
-
-            if (!mount.onGround()) {
-                setPose(Pose.FALL_FLYING);
-            } else {
-                setPose(Pose.STANDING);
             }
         } else {
             super.rideTick();
@@ -299,9 +258,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         this.flapSpeed = Mth.clamp(this.flapSpeed, 0.0F, 1.0F);
         if (!this.onGround() && this.flapping < 1.0F) {
             this.flapping = 1.0F;
-            setPose(Pose.FALL_FLYING);
-        } else {
-            setPose(Pose.STANDING);
         }
         this.flapping *= 0.9F;
         Vec3 vec3 = this.getDeltaMovement();
@@ -534,12 +490,6 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
         }
     }
 
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-        return null;
-    }
-
     @Override
     public int getRemainingPersistentAngerTime() {
         return 0;
@@ -565,4 +515,56 @@ public class MicroraptorEntity extends TamableAnimal implements NeutralMob {
     public void startPersistentAngerTimer() {
 
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (!this.onGround()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.microraptor.flap", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2.5F);
+            return PlayState.CONTINUE;
+        }
+        if (this.isInSittingPose()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.microraptor.sit", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1.0F);
+            return PlayState.CONTINUE;
+        }
+        if (geoAnimatableAnimationState.isMoving() && !this.isBaby()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.microraptor.walk", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
+            return PlayState.CONTINUE;
+        }
+        if (geoAnimatableAnimationState.isMoving() && this.isBaby()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.microraptor.walk", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2F);
+            return PlayState.CONTINUE;
+        }
+        else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.microraptor.idle", Animation.LoopType.LOOP));
+        geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
+        return PlayState.CONTINUE;
+    }
+
+    private <T extends GeoAnimatable> PlayState attackPredicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (this.swinging && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            geoAnimatableAnimationState.getController().forceAnimationReset();
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.dilophosaurus.attack", Animation.LoopType.PLAY_ONCE));
+            this.swinging = false;
+        }  return PlayState.CONTINUE;
+    }
+
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public double getTick(Object object) {
+        return tickCount;
+    }
+
+
+
 }

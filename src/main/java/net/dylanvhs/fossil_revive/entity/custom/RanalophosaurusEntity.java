@@ -16,12 +16,22 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.Animation;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.EnumSet;
 import java.util.UUID;
 
-public class RanalophosaurusEntity extends PathfinderMob implements NeutralMob, RangedAttackMob {
+public class RanalophosaurusEntity extends PathfinderMob implements NeutralMob, RangedAttackMob, GeoEntity {
 
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final EntityDataAccessor<Integer> CHARGE_COOLDOWN_TICKS = SynchedEntityData.defineId(RanalophosaurusEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> HAS_TARGET = SynchedEntityData.defineId(RanalophosaurusEntity.class, EntityDataSerializers.BOOLEAN);
     public RanalophosaurusEntity(EntityType<? extends PathfinderMob> pEntityType, Level pLevel) {
@@ -29,43 +39,6 @@ public class RanalophosaurusEntity extends PathfinderMob implements NeutralMob, 
     }
 
     private boolean canBePushed = true;
-
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeOut = 0;
-
-    public final AnimationState spitAnimationState = new AnimationState();
-    public final AnimationState angryAnimationState = new AnimationState();
-
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        if (this.level().isClientSide()) {
-            setupAnimationState();
-        }
-    }
-
-    private void setupAnimationState() {
-        if (this.idleAnimationTimeOut <= 0) {
-            this.idleAnimationTimeOut = this.random.nextInt(40) + 80;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeOut;
-        }
-    }
-
-    @Override
-    protected void updateWalkAnimation(float pPartialTick) {
-        float f;
-        if (this.getPose() == Pose.STANDING) {
-            f = Math.min(pPartialTick * 6F, 1f);
-        } else {
-            f = 0f;
-        }
-
-        this.walkAnimation.update(f, 0.2f);
-    }
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -78,15 +51,16 @@ public class RanalophosaurusEntity extends PathfinderMob implements NeutralMob, 
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Animal.class, true));
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return PathfinderMob.createLivingAttributes()
+    public static AttributeSupplier setAttributes() {
+        return PathfinderMob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 45D)
                 .add(Attributes.FOLLOW_RANGE, 24D)
                 .add(Attributes.ARMOR_TOUGHNESS, 0.1f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_DAMAGE, 4f)
                 .add(Attributes.ATTACK_SPEED, 0.5f)
-                .add(Attributes.ATTACK_KNOCKBACK, 0.1f);
+                .add(Attributes.ATTACK_KNOCKBACK, 0.1f)
+                .build();
     }
 
     @Override
@@ -95,6 +69,15 @@ public class RanalophosaurusEntity extends PathfinderMob implements NeutralMob, 
         this.entityData.define(CHARGE_COOLDOWN_TICKS, 0);
         this.entityData.define(HAS_TARGET, false);
 
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (this.level().isClientSide()) {
+
+        }
     }
 
     @Override
@@ -225,5 +208,48 @@ public class RanalophosaurusEntity extends PathfinderMob implements NeutralMob, 
         this.playSound(SoundEvents.SNOW_GOLEM_SHOOT, 1.0F, 0.4F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
         this.level().addFreshEntity(snowball);
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "controller", 4, this::predicate));
+        controllerRegistrar.add(new AnimationController<GeoAnimatable>(this, "attackController", 4, this::attackPredicate));
+    }
+
+    private <T extends GeoAnimatable> PlayState predicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+
+        if (geoAnimatableAnimationState.isMoving() && !this.isBaby()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.rana.walk", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
+            return PlayState.CONTINUE;
+        }
+        if (geoAnimatableAnimationState.isMoving() && this.isBaby()) {
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.rana.walk", Animation.LoopType.LOOP));
+            geoAnimatableAnimationState.getController().setAnimationSpeed(2F);
+            return PlayState.CONTINUE;
+        }
+        else geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.rana.idle", Animation.LoopType.LOOP));
+        geoAnimatableAnimationState.getController().setAnimationSpeed(1F);
+        return PlayState.CONTINUE;
+    }
+
+    private <T extends GeoAnimatable> PlayState attackPredicate(software.bernie.geckolib.core.animation.AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
+        if (this.swinging && geoAnimatableAnimationState.getController().getAnimationState().equals(AnimationController.State.STOPPED)) {
+            geoAnimatableAnimationState.getController().forceAnimationReset();
+            geoAnimatableAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.rana.spit", Animation.LoopType.PLAY_ONCE));
+            this.swinging = false;
+        }  return PlayState.CONTINUE;
+    }
+
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public double getTick(Object object) {
+        return tickCount;
+    }
+
+
+
 
 }
