@@ -2,9 +2,7 @@ package net.dylanvhs.fossil_revive.entity.custom;
 
 
 import net.dylanvhs.fossil_revive.entity.ModEntities;
-import net.dylanvhs.fossil_revive.entity.ai.CustomRandomSwimGoal;
-import net.dylanvhs.fossil_revive.entity.ai.LiopleurodonJumpGoal;
-import net.dylanvhs.fossil_revive.entity.ai.SmoothSwimmingMoveControlButNotBad;
+import net.dylanvhs.fossil_revive.entity.ai.*;
 import net.dylanvhs.fossil_revive.item.ModItems;
 import net.dylanvhs.fossil_revive.sounds.ModSounds;
 import net.minecraft.core.particles.ParticleTypes;
@@ -57,12 +55,15 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
 
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final Ingredient TEMPTATION_ITEM = Ingredient.of(Items.COD);
+
+    private static final EntityDataAccessor<Integer> CHARGE_COOLDOWN_TICKS = SynchedEntityData.defineId(LiopleurodonEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> HAS_TARGET = SynchedEntityData.defineId(LiopleurodonEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> MOISTNESS_LEVEL = SynchedEntityData.defineId(LiopleurodonEntity.class, EntityDataSerializers.INT);
 
     public LiopleurodonEntity(EntityType<? extends LiopleurodonEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
-        this.moveControl = new SmoothSwimmingMoveControlButNotBad(this, 1000, 4, 0.02F, 0.1F, true);
+        this.moveControl = new SmoothSwimmingMoveControlButNotBad(this, 20, 4, 0.02F, 0.1F, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
         this.moveControl = new MoveHelperController(this);
     }
@@ -91,6 +92,8 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(MOISTNESS_LEVEL, 2400);
+        this.entityData.define(CHARGE_COOLDOWN_TICKS, 0);
+        this.entityData.define(HAS_TARGET, false);
     }
 
     @Override
@@ -114,6 +117,8 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25D));
+        this.goalSelector.addGoal(2, new LiopleurodonPrepareJumpGoal(this));
+        this.goalSelector.addGoal(3, new LiopleurodonJumpToAttackGoal(this,1.5F,1));
         this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D) {
             @Override
             public boolean canUse() {
@@ -252,6 +257,64 @@ public class LiopleurodonEntity extends Animal implements GeoEntity {
         super.readAdditionalSaveData(pCompound);
         this.setMoisntessLevel(pCompound.getInt("Moistness"));
     }
+
+    protected boolean hasTargets() {
+        return true;
+    }
+
+    public void setChargeCooldownTicks(int ticks) {
+        this.entityData.set(CHARGE_COOLDOWN_TICKS, ticks);
+    }
+
+    public int getChargeCooldownTicks() {
+        return this.entityData.get(CHARGE_COOLDOWN_TICKS);
+    }
+
+    public boolean hasChargeCooldown() {
+        return this.entityData.get(CHARGE_COOLDOWN_TICKS) > 0;
+    }
+
+    public void resetChargeCooldownTicks() {
+        this.entityData.set(CHARGE_COOLDOWN_TICKS, 40);
+    }
+
+
+    public void setHasTarget(boolean hasTarget) {
+        this.entityData.set(HAS_TARGET, hasTarget);
+    }
+
+    public boolean hasTarget() {
+        return this.entityData.get(HAS_TARGET);
+    }
+
+    @Override
+    public boolean canAttack(LivingEntity entity) {
+        boolean prev = super.canAttack(entity);
+        if (isBaby()) {
+            return false;
+        }
+        return prev;
+    }
+
+    public boolean isWithinYRange(LivingEntity target) {
+        if (target == null) {
+            return false;
+        }
+        return Math.abs(target.getY() - this.getY()) < 3;
+    }
+
+    public void performAttack() {
+        if (!this.level().isClientSide) {
+            this.goalSelector.getRunningGoals().forEach(WrappedGoal::stop);
+            for (Entity entity : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(4.0D))) {
+                if (!(entity instanceof LiopleurodonEntity) && !(entity instanceof Player)) {
+                    entity.hurt(this.damageSources().mobAttack(this), 10.0F);
+                }
+            }
+            this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.23F);
+        }
+    }
+
 
     public void tick() {
         super.tick();
