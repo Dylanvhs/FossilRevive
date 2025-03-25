@@ -19,7 +19,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<QuetzalcoatlusEntity>> QUETZALCOATLUS =
             ENTITY_TYPES.register("quetzalcoatlus", () -> EntityType.Builder.of(QuetzalcoatlusEntity::new, MobCategory.CREATURE)
-                    .sized(4.5f, 4.5f).build("quetzalcoatlus"));
+                    .sized(2.0f, 3.0f).build("quetzalcoatlus"));
 
     public static final RegistryObject<EntityType<MicroraptorEntity>> MICRORAPTOR =
             ENTITY_TYPES.register("microraptor", () -> EntityType.Builder.of(MicroraptorEntity::new, MobCategory.CREATURE)
@@ -40,6 +40,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<RanalophosaurusEntity>> RANALOPHOSAURUS =
             ENTITY_TYPES.register("ranalophosaurus", () -> EntityType.Builder.of(RanalophosaurusEntity::new, MobCategory.CREATURE)
                     .sized(1f, 2f).build("ranalophosaurus"));
+
+    public static final RegistryObject<EntityType<SpinosaurusEntity>> SPINOSAURUS =
+            ENTITY_TYPES.register("spinosaurus", () -> EntityType.Builder.of(SpinosaurusEntity::new, MobCategory.CREATURE)
+                    .sized(2.25f, 3.5f).build("spinosaurus"));
 
 
 

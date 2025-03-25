@@ -130,7 +130,9 @@ public class ModItems {
     public static final RegistryObject<Item> XENACANTHUS_SPAWN_EGG = ITEMS.register("xenacanthus_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.XENACANTHUS, 0x978077, 0xd17f6e, new Item.Properties()));
     public static final RegistryObject<Item> RANALOPHOSAURUS_SPAWN_EGG = ITEMS.register("ranalophosaurus_spawn_egg",
-            () -> new ForgeSpawnEggItem(ModEntities.RANALOPHOSAURUS, 0x8e4730, 0x5c31c5, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(ModEntities.RANALOPHOSAURUS, 0x288329, 0x11534b, new Item.Properties()));
+    public static final RegistryObject<Item> SPINOSAURUS_SPAWN_EGG = ITEMS.register("spinosaurus_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.SPINOSAURUS, 0xb85832, 0x1b8287, new Item.Properties()));
 
     public static void initDispenser() {
         DispenseItemBehavior bucketDispenseBehavior = new DefaultDispenseItemBehavior() {

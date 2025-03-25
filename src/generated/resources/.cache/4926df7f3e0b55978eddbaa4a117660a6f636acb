@@ -1,4 +1,4 @@
-// 1.20.1	2025-03-14T19:32:54.0418977	Item Models: fossil_revive
+// 1.20.1	2025-03-25T22:07:48.5359432	Item Models: fossil_revive
 d459a90a9e42f7832d0cf35b6f72debadb6a9755 assets/fossil_revive/models/item/amargasaurus_dna.json
 1b18c1c8e32ccddec1a248ced8b964c2c64b380d assets/fossil_revive/models/item/bones_music_disc.json
 df1875a0c0f53fcc24faa6716c40c109bca360ce assets/fossil_revive/models/item/carnotaurus_dna.json
@@ -34,6 +34,7 @@ f572a814ab22602ba8efb763295286aa270b73a2 assets/fossil_revive/models/item/horset
 9ae90871a760aa08d8f94a71c8ac80f81c10f14f assets/fossil_revive/models/item/raw_xenacanthus.json
 77a270895ce76a8eccd5412aa93b2a56ef77dc33 assets/fossil_revive/models/item/smilodon_dna.json
 335fca3314f0b048dfe8bab842d3285ccb3febaf assets/fossil_revive/models/item/smilodon_embryo.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/fossil_revive/models/item/spinosaurus_spawn_egg.json
 717213c122e050a5f6ed05e7a54064614f301c03 assets/fossil_revive/models/item/spiralflower_seeds.json
 8f52f66331b61517858a3472cb95ca699ea546c7 assets/fossil_revive/models/item/syringe.json
 58757c37e7e46c1809e002e19c6d1ce548c851fb assets/fossil_revive/models/item/tapejara_dna.json

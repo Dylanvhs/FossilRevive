@@ -76,6 +76,7 @@
   "item.fossil_revive.xenacanthus_spawn_egg": "Xenacanthus Spawn Egg",
   "item.fossil_revive.dodo_spawn_egg": "Dodo Spawn Egg",
   "item.fossil_revive.ranalophosaurus_spawn_egg": "Ranalophosaurus Spawn Egg",
+  "item.fossil_revive.spinosaurus_spawn_egg": "Spinosaurus Spawn Egg",
 
 
   "entity.fossil_revive.liopleurodon": "Liopleurodon",
@@ -85,6 +86,7 @@
   "entity.fossil_revive.xenacanthus": "Xenacanthus",
   "entity.fossil_revive.dodo": "Dodo",
   "entity.fossil_revive.ranalophosaurus": "Ranalophosaurus",
+  "entity.fossil_revive.spinosaurus": "Spinosaurus",
 
 
   "entity.fossil_revive.xenacanthus.variant_coral_stalker": "Coral Stalker",

@@ -95,6 +95,9 @@ public class FossilRevive
             EntityRenderers.register
                     (ModEntities.MICRORAPTOR.get(), MicroraptorRenderer:: new);
 
+            EntityRenderers.register
+                    (ModEntities.SPINOSAURUS.get(), SpinosaurusRenderer:: new);
+
 
 
             MenuScreens.register(ModMenuTypes.ANALYZER_MENU.get(), AnalyzerScreen::new);
